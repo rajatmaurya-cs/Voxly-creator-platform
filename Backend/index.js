@@ -92,7 +92,7 @@ app.use("/api/ai", authMiddleware, AiRouter);
 app.use("/api/ai/config", authMiddleware,configRoutes);
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 2000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);

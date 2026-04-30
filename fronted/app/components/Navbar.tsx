@@ -19,13 +19,28 @@ const Navbar = () => {
           />
         </Link>
 
+        <div className="flex space-x-6">
 
-        <Link href="/login">
-          <button className="flex items-center gap-2 px-5 py-2 rounded-xl bg-white shadow">
-            <User size={18} />
-            <span>Sign In</span>
-          </button>
-        </Link>
+          <Link href="/login">
+            <button className="flex items-center gap-2 px-5 py-2 rounded-xl bg-white shadow">
+              <User size={18} />
+              <span>Sign In</span>
+            </button>
+          </Link>
+
+          <Link href="/admin">
+            <button className="flex items-center gap-2 px-5 py-2 rounded-xl bg-white shadow">
+              <User size={18} />
+              <span>AdminGo</span>
+            </button>
+          </Link>
+
+
+
+        </div>
+
+
+
 
       </div>
     </nav>

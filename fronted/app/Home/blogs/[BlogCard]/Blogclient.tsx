@@ -111,7 +111,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
 
   const addCommentMutation = useMutation({
     mutationFn: async () => {
-      const res = await fetch("https://postifybackend-six.vercel.app/api/comment/addcomment", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/addcomment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

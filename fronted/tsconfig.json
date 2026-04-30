@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "app/page.tsx", "app/hooks/useBlogsInfinite.js", "app/hooks/useWholeBlog.js", "app/admin/commentslist"  ],
+, "app/page.tsx", "app/hooks/useHomeBlogs.js", "app/hooks/useWholeBlog.js", "app/admin/commentslist"  ],
   "exclude": ["node_modules"]
 }

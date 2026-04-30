@@ -1,7 +1,7 @@
 "use client";
 import { blogCategories } from "@/app/assets/assets";
 import { useState } from "react";
-import { useBlogsInfinite } from "../../hooks/useBlogsInfinite";
+import { useHomeBlogs } from "../../hooks/useHomeBlogs";
 import Link from "next/link";
 
 type Blog = {
@@ -50,6 +50,8 @@ type Props = {
 
 export default function BlogClient({ initialData }: Props) {
 
+  console.log("The Backend url is from blogclient✅: ",process.env.NEXT_PUBLIC_API_URL)
+
   const [search, setSearch] = useState("");
 
   const [activeCategory, setActiveCategory] = useState("All");
@@ -59,7 +61,7 @@ export default function BlogClient({ initialData }: Props) {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useBlogsInfinite({
+  } = useHomeBlogs({
     category: activeCategory,
     limit: 3,
     initialData,

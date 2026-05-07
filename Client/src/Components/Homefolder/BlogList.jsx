@@ -26,7 +26,7 @@ const BlogList = () => {
   }, [data]);
 
   const { filteredBlogs, publishedBlogs } = useMemo(() => {
-    
+
     const searchText = search.toLowerCase().trim();
 
     const filtered = (blogs || []).filter((blog) => {
@@ -40,70 +40,70 @@ const BlogList = () => {
   }, [blogs, search]);
 
 
-  if(isLoading) return (
-    <div className="skeleton-fade mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 md:grid-cols-3">
-      
-      {/* Card 1 - LIFESTYLE */}
-      <div className="overflow-hidden rounded-3xl bg-white">
-        <div className="animate-shimmer relative aspect-[16/10] w-full">
-          <div className="absolute left-4 top-4 h-7 w-24 rounded-full bg-gray-200" />
-        </div>
-        <div className="p-6">
-          <div className="animate-shimmer mb-4 h-6 w-4/5 rounded-md" />
-          <div className="mb-4 h-px w-full bg-gray-100" />
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="animate-shimmer h-8 w-8 rounded-full" />
-              <div className="animate-shimmer h-4 w-24 rounded-md" />
-            </div>
-            <div className="animate-shimmer h-8 w-8 rounded-full" />
-          </div>
-        </div>
-      </div>
+  // if (isLoading) return (
+  //   <div className="skeleton-fade mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 md:grid-cols-3">
 
-      {/* Card 2 - STARTUP */}
-      <div className="overflow-hidden rounded-3xl bg-white">
-        <div className="animate-shimmer relative aspect-[16/10] w-full">
-          <div className="absolute left-4 top-4 h-7 w-20 rounded-full bg-gray-200" />
-        </div>
-        <div className="p-6">
-          <div className="animate-shimmer mb-4 h-6 w-3/4 rounded-md" />
-          <div className="mb-4 h-px w-full bg-gray-100" />
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="animate-shimmer h-8 w-8 rounded-full" />
-              <div className="animate-shimmer h-4 w-24 rounded-md" />
-            </div>
-            <div className="animate-shimmer h-8 w-8 rounded-full" />
-          </div>
-        </div>
-      </div>
+  //     {/* Card 1 - LIFESTYLE */}
+  //     <div className="overflow-hidden rounded-3xl bg-white">
+  //       <div className="animate-shimmer relative aspect-[16/10] w-full">
+  //         <div className="absolute left-4 top-4 h-7 w-24 rounded-full bg-gray-200" />
+  //       </div>
+  //       <div className="p-6">
+  //         <div className="animate-shimmer mb-4 h-6 w-4/5 rounded-md" />
+  //         <div className="mb-4 h-px w-full bg-gray-100" />
+  //         <div className="flex items-center justify-between">
+  //           <div className="flex items-center gap-3">
+  //             <div className="animate-shimmer h-8 w-8 rounded-full" />
+  //             <div className="animate-shimmer h-4 w-24 rounded-md" />
+  //           </div>
+  //           <div className="animate-shimmer h-8 w-8 rounded-full" />
+  //         </div>
+  //       </div>
+  //     </div>
 
-      
-      <div className="overflow-hidden rounded-3xl bg-white">
-        <div className="animate-shimmer relative aspect-[16/10] w-full">
-          <div className="absolute left-4 top-4 h-7 w-28 rounded-full bg-gray-200" />
-        </div>
-        <div className="p-6">
-          <div className="mb-4 space-y-2">
-            <div className="animate-shimmer h-6 w-11/12 rounded-md" />
-            <div className="animate-shimmer h-6 w-2/3 rounded-md" />
-          </div>
-          <div className="mb-4 h-px w-full bg-gray-100" />
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="animate-shimmer h-8 w-8 rounded-full" />
-              <div className="animate-shimmer h-4 w-24 rounded-md" />
-            </div>
-            <div className="animate-shimmer h-8 w-8 rounded-full" />
-          </div>
-        </div>
-      </div>
+  //     {/* Card 2 - STARTUP */}
+  //     <div className="overflow-hidden rounded-3xl bg-white">
+  //       <div className="animate-shimmer relative aspect-[16/10] w-full">
+  //         <div className="absolute left-4 top-4 h-7 w-20 rounded-full bg-gray-200" />
+  //       </div>
+  //       <div className="p-6">
+  //         <div className="animate-shimmer mb-4 h-6 w-3/4 rounded-md" />
+  //         <div className="mb-4 h-px w-full bg-gray-100" />
+  //         <div className="flex items-center justify-between">
+  //           <div className="flex items-center gap-3">
+  //             <div className="animate-shimmer h-8 w-8 rounded-full" />
+  //             <div className="animate-shimmer h-4 w-24 rounded-md" />
+  //           </div>
+  //           <div className="animate-shimmer h-8 w-8 rounded-full" />
+  //         </div>
+  //       </div>
+  //     </div>
 
-    </div>
-     
-          
-  )
+
+  //     <div className="overflow-hidden rounded-3xl bg-white">
+  //       <div className="animate-shimmer relative aspect-[16/10] w-full">
+  //         <div className="absolute left-4 top-4 h-7 w-28 rounded-full bg-gray-200" />
+  //       </div>
+  //       <div className="p-6">
+  //         <div className="mb-4 space-y-2">
+  //           <div className="animate-shimmer h-6 w-11/12 rounded-md" />
+  //           <div className="animate-shimmer h-6 w-2/3 rounded-md" />
+  //         </div>
+  //         <div className="mb-4 h-px w-full bg-gray-100" />
+  //         <div className="flex items-center justify-between">
+  //           <div className="flex items-center gap-3">
+  //             <div className="animate-shimmer h-8 w-8 rounded-full" />
+  //             <div className="animate-shimmer h-4 w-24 rounded-md" />
+  //           </div>
+  //           <div className="animate-shimmer h-8 w-8 rounded-full" />
+  //         </div>
+  //       </div>
+  //     </div>
+
+  //   </div>
+
+
+  // )
 
 
 
@@ -158,18 +158,13 @@ const BlogList = () => {
               </button>
             ))}
           </div>
+
         </div>
 
         {/* Content Area */}
         <div className="relative w-full z-10 min-h-[400px]">
-          {filteredBlogs.length > 0 && (
-            <div className="flex items-center justify-between mb-12">
-              <h2 className="text-2xl font-bold tracking-tight text-gray-900 font-[family-name:var(--font-display)]">
-                Latest Insights
-              </h2>
-              <div className="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent ml-8"></div>
-            </div>
-          )}
+
+        
 
           {isError && (
             <div className="p-6 bg-red-50/50 rounded-3xl border border-red-100 text-center max-w-lg mx-auto">
@@ -177,107 +172,147 @@ const BlogList = () => {
             </div>
           )}
 
-         
 
 
 
-          {!isLoading && !isError && publishedBlogs.length > 0 ? (
+          {!isLoading ? (
             <div className="space-y-16">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-                {publishedBlogs.map((blog) => (
-                  <Link
-                    key={blog._id}
-                    to={`/blog/${blog._id}`}
-                    className="group flex flex-col bg-white rounded-[2rem] overflow-hidden border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-500"
+              <div className="flex items-center justify-between mb-12">
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900 font-[family-name:var(--font-display)]">
+                  Latest Insights
+                </h2>
+                <div className="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent ml-8"></div>
+              </div>
+
+              <div className="skeleton-fade grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+                {[1,2,3].map((_, index) => (
+                  <div
+                    key={index}
+                    className="overflow-hidden rounded-[2rem] border border-gray-100 bg-white shadow-[0_4px_20px_rgb(0,0,0,0.03)]"
                   >
-                    <div className="relative h-64 overflow-hidden bg-gray-50">
-                      <div className="absolute inset-0 bg-gray-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
-                      <img
-                        src={blog.image}
-                        alt={blog.title}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div className="absolute top-4 left-4 z-20">
-                        <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-xs font-semibold tracking-wider uppercase text-gray-900 shadow-sm border border-white/20">
-                          {blog.category}
-                        </span>
-                      </div>
+                    <div className="animate-shimmer relative aspect-[16/10] w-full">
+                      <div className="absolute left-4 top-4 h-7 w-24 rounded-full bg-gray-200" />
                     </div>
 
-                    <div className="p-8 flex-1 flex flex-col">
-                      <h3 className="text-lg font-semibold text-gray-900 leading-snug mb-4 group-hover:text-indigo-600 transition-colors line-clamp-2">
-                        {blog.title}
-                      </h3>
+                    <div className="p-8">
+                      <div className="mb-4 space-y-3">
+                        <div className="animate-shimmer h-6 w-11/12 rounded-md" />
+                        <div className="animate-shimmer h-6 w-2/3 rounded-md" />
+                      </div>
 
-                      <div className="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between">
+                      <div className="mb-6 h-px w-full bg-gray-100" />
+
+                      <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <img
-                            src={blog?.createdBy?.avatar || assets.user_icon}
-                            alt={blog?.createdBy?.fullName || "Author"}
-                            referrerPolicy="no-referrer"
-                            onError={(e) => {
-                              e.currentTarget.src = assets.user_icon;
-                            }}
-                            className="w-8 h-8 rounded-full object-cover bg-gray-100 ring-2 ring-white shadow-sm"
-                          />
-                          <span className="text-sm font-medium text-gray-700">{blog.createdBy?.fullName || "Author"}</span>
+                          <div className="animate-shimmer h-8 w-8 rounded-full" />
+                          <div className="animate-shimmer h-4 w-24 rounded-md" />
                         </div>
-                        <div className="p-2 rounded-full bg-gray-50 group-hover:bg-indigo-50 transition-colors">
-                          <svg className="w-4 h-4 text-gray-400 group-hover:text-indigo-600 transition-colors transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                          </svg>
-                        </div>
+
+                        <div className="animate-shimmer h-8 w-8 rounded-full" />
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </div>
-
-              <div className="flex flex-col items-center justify-center pt-8">
-                {hasNextPage ? (
-                  <button
-                    onClick={() => fetchNextPage()}
-                    disabled={isFetchingNextPage}
-                    className="group relative inline-flex items-center justify-center px-10 py-4 bg-white border border-gray-200 text-gray-900 font-semibold tracking-normal rounded-full overflow-hidden transition-all hover:border-gray-300 hover:shadow-lg disabled:opacity-50 disabled:hover:shadow-none"
-                  >
-                    <span className="absolute inset-0 bg-gray-50 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {isFetchingNextPage ? (
-                      <span className="relative flex items-center gap-3">
-                        <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-900 rounded-full animate-spin"></div>
-                        Retrieving...
-                      </span>
-                    ) : (
-                      <span className="relative z-10">Discover More</span>
-                    )}
-                  </button>
-                ) : (
-                  <div className="flex items-center gap-4 text-gray-400">
-                    <div className="h-px w-12 bg-gray-200"></div>
-                    <p className="text-sm font-medium tracking-wider uppercase">End of Insights</p>
-                    <div className="h-px w-12 bg-gray-200"></div>
-                  </div>
-                )}
-
-                {!isFetchingNextPage && isFetching && (
-                  <p className="text-center text-gray-400 mt-6 text-sm font-normal animate-pulse">Syncing latest metrics...</p>
-                )}
-              </div>
             </div>
-          ) : (
-            !isLoading && !isError && (
-              <div className="py-32 text-center bg-white rounded-[3rem] border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.02)]">
-                <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-10 h-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                  </svg>
+          ) : 
+            !isError && publishedBlogs.length > 0 ? (
+              <div className="space-y-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+                  {publishedBlogs.map((blog) => (
+                    <Link
+                      key={blog._id}
+                      to={`/blog/${blog._id}`}
+                      className="group flex flex-col bg-white rounded-[2rem] overflow-hidden border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-500"
+                    >
+                      <div className="relative h-64 overflow-hidden bg-gray-50">
+                        <div className="absolute inset-0 bg-gray-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+                        <img
+                          src={blog.image}
+                          alt={blog.title}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute top-4 left-4 z-20">
+                          <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-xs font-semibold tracking-wider uppercase text-gray-900 shadow-sm border border-white/20">
+                            {blog.category}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="p-8 flex-1 flex flex-col">
+                        <h3 className="text-lg font-semibold text-gray-900 leading-snug mb-4 group-hover:text-indigo-600 transition-colors line-clamp-2">
+                          {blog.title}
+                        </h3>
+
+                        <div className="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={blog?.createdBy?.avatar || assets.user_icon}
+                              alt={blog?.createdBy?.fullName || "Author"}
+                              referrerPolicy="no-referrer"
+                              onError={(e) => {
+                                e.currentTarget.src = assets.user_icon;
+                              }}
+                              className="w-8 h-8 rounded-full object-cover bg-gray-100 ring-2 ring-white shadow-sm"
+                            />
+                            <span className="text-sm font-medium text-gray-700">{blog.createdBy?.fullName || "Author"}</span>
+                          </div>
+                          <div className="p-2 rounded-full bg-gray-50 group-hover:bg-indigo-50 transition-colors">
+                            <svg className="w-4 h-4 text-gray-400 group-hover:text-indigo-600 transition-colors transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
-                <h3 className="text-xl font-semibold tracking-tight text-gray-900 mb-2">No Insights Found</h3>
-                <p className="text-gray-500 font-normal">Try adjusting your filters or search terms.</p>
+
+                <div className="flex flex-col items-center justify-center pt-8">
+                  {hasNextPage ? (
+                    <button
+                      onClick={() => fetchNextPage()}
+                      disabled={isFetchingNextPage}
+                      className="group relative inline-flex items-center justify-center px-10 py-4 bg-white border border-gray-200 text-gray-900 font-semibold tracking-normal rounded-full overflow-hidden transition-all hover:border-gray-300 hover:shadow-lg disabled:opacity-50 disabled:hover:shadow-none"
+                    >
+                      <span className="absolute inset-0 bg-gray-50 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                      {isFetchingNextPage ? (
+                        <span className="relative flex items-center gap-3">
+                          <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-900 rounded-full animate-spin"></div>
+                          Retrieving...
+                        </span>
+                      ) : (
+                        <span className="relative z-10">Discover More</span>
+                      )}
+                    </button>
+                  ) : (
+                    <div className="flex items-center gap-4 text-gray-400">
+                      <div className="h-px w-12 bg-gray-200"></div>
+                      <p className="text-sm font-medium tracking-wider uppercase">End of Insights</p>
+                      <div className="h-px w-12 bg-gray-200"></div>
+                    </div>
+                  )}
+
+                  {!isFetchingNextPage && isFetching && (
+                    <p className="text-center text-gray-400 mt-6 text-sm font-normal animate-pulse">Syncing latest metrics...</p>
+                  )}
+                </div>
               </div>
-            )
-          )}
+            ) : (
+              !isLoading && !isError && (
+                <div className="py-32 text-center bg-white rounded-[3rem] border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.02)]">
+                  <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg className="w-10 h-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold tracking-tight text-gray-900 mb-2">No Insights Found</h3>
+                  <p className="text-gray-500 font-normal">Try adjusting your filters or search terms.</p>
+                </div>
+              )
+            )}
         </div>
       </div>
     </section>

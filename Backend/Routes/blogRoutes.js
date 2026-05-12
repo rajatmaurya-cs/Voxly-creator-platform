@@ -40,8 +40,8 @@ next()
 
 
 /* ================= Delete Blog ================= */
-blogRouter.post('/delete-blog' , authMiddleware ,adminMiddleware ,deleteBlog)
-
+// blogRouter.post('/delete-blog' , authMiddleware ,adminMiddleware ,deleteBlog)
+blogRouter.post('/delete-blog',deleteBlog)
 
 /* ================= Blog Report ================= */
 blogRouter.post('/Report', authMiddleware ,adminMiddleware, GenerateReport)

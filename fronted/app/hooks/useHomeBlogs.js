@@ -5,17 +5,17 @@ export function useHomeBlogs({
   limit = 3,
   initialData,
 } = {}) {
-  
+
   // const endpoint = "https://postifybackend-six.vercel.app/api/blog/allblog";
-  
+
   const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/blog/allblog`
 
   return useInfiniteQuery({
     queryKey: ["blogs", category, limit],
 
     queryFn: async ({ pageParam = 1 }) => {
-      
-      const url = `${endpoint}?page=${pageParam}&limit=${limit}&category=${category}`;
+
+      const url = `${endpoint}?page=${pageParam}&limit=${limit}&category=${encodeURIComponent(category)}`;
 
       const res = await fetch(url);
 
@@ -35,9 +35,9 @@ export function useHomeBlogs({
     initialData:
       category === "All" && initialData
         ? {
-            pages: [initialData],
-            pageParams: [1],
-          }
+          pages: [initialData],
+          pageParams: [1],
+        }
         : undefined,
 
     getNextPageParam: (lastPage) =>

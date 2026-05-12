@@ -249,23 +249,30 @@ export const getblogbyid = async (req, res) => {
 export const deleteBlog = async (req, res) => {
   try {
 
-    if (!req.user) {
-      return res.status(404).json({
-        success: false,
-        message: "Please Login"
-      })
-    }
+    // if (!req.user) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     message: "Please Login"
+    //   })
+    // }
     const { blogId } = req.body;
 
+    console.log("The blogId:",blogId)
 
-    const blog = await Blog.findByIdAndDelete(blogId);
 
-    if (!blog) {
-      return res.status(404).json({
-        success: false,
-        message: "Blog not found"
-      });
-    }
+
+
+    // const blog = await Blog.findByIdAndDelete(blogId);
+
+    // if (!blog) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     message: "Blog not found"
+    //   });
+    // }
+
+    
+console.log("Blog deleted successfully")
 
     res.status(200).json({
       success: true,

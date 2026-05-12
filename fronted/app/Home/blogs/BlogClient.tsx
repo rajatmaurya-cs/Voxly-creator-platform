@@ -50,7 +50,7 @@ type Props = {
 
 export default function BlogClient({ initialData }: Props) {
 
-  console.log("The Backend url is from blogclient✅: ",process.env.NEXT_PUBLIC_API_URL)
+  // console.log("The Backend url is from blogclient✅: ",process.env.NEXT_PUBLIC_API_URL)
 
   const [search, setSearch] = useState("");
 
@@ -61,11 +61,7 @@ export default function BlogClient({ initialData }: Props) {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useHomeBlogs({
-    category: activeCategory,
-    limit: 3,
-    initialData,
-  });
+  } = useHomeBlogs({ category: activeCategory,limit: 3, initialData, });
 
   const blogs: Blog[] =
     data?.pages?.flatMap((page: Page) => page.blogs) ?? [];

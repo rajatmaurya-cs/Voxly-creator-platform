@@ -6,122 +6,104 @@ import {
   Sparkles,
   BrainCircuit,
   FileText,
+  Terminal,
 } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="relative overflow-hidden bg-[#050816] text-white">
+    <section className="relative overflow-hidden bg-zinc-950 text-zinc-50 selection:bg-zinc-800 selection:text-zinc-100">
       
-      {/* BACKGROUND */}
-      <div className="absolute inset-0">
-        <div className="absolute left-[-10%] top-[-10%] h-[500px] w-[500px] rounded-full bg-purple-500/10 blur-3xl" />
-
-        <div className="absolute bottom-[-20%] right-[-10%] h-[500px] w-[500px] rounded-full bg-cyan-500/10 blur-3xl" />
-
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:70px_70px]" />
+      {/* BACKGROUND GRAPHICS: Sophisticated, subdued ambient lighting */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Fine, dim grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f29370a_1px,transparent_1px),linear-gradient(to_bottom,#1f29370a_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+        
+        {/* Soft, top-centered premium ambient glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[500px] w-[1000px] bg-gradient-to-r from-violet-500/10 via-indigo-500/5 to-cyan-500/10 blur-[120px] rounded-full opacity-70" />
       </div>
 
-      <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-6 py-24 text-center">
+      <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-6 py-32 text-center z-10">
         
-        {/* BADGE */}
-        <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2 text-sm text-gray-300 backdrop-blur-xl">
-          <Sparkles size={16} className="text-purple-400" />
-
-          <span>
-            AI Powered Blogging Experience
-          </span>
+        {/* PREMIUM BADGE */}
+        <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/40 px-3.5 py-1.5 text-xs font-medium tracking-wider text-zinc-400 uppercase backdrop-blur-md transition-colors duration-300 hover:border-zinc-700">
+          <Sparkles size={12} className="text-violet-400 animate-pulse" />
+          <span>The Future of Publishing</span>
         </div>
 
-        {/* HEADING */}
-        <h1 className="max-w-5xl text-5xl font-black leading-[1.1] tracking-tight md:text-7xl xl:text-8xl">
-          Write.
-          <span className="bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent">
-            {" "}Summarize.
-          </span>
+        {/* HEADING: Stark, tight, and high-contrast */}
+        <h1 className="mt-8 max-w-4xl text-4xl  tracking-tighter sm:text-6xl lg:text-7xl xl:text-8xl bg-gradient-to-b from-zinc-50 via-zinc-200 to-zinc-500 bg-clip-text text-transparent leading-[1.05]">
+          Write. Summarize.
           <br />
-          Publish with
-          <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-            {" "}Postify AI
+          <span className="bg-gradient-to-r from-indigo-200 via-white to-violet-400 bg-clip-text text-transparent">
+            Publish with Postify
           </span>
         </h1>
 
-        {/* SUBTEXT */}
-        <p className="mt-8 max-w-3xl text-base leading-relaxed text-gray-400 md:text-xl">
-          Create blogs faster with AI generation, summarize articles in
-          seconds, moderate comments intelligently, and explore modern content
-          crafted for developers, creators, and startups.
+        {/* SUBTEXT: Clean, readable, and perfectly balanced */}
+        <p className="mt-8 max-w-2xl text-base tracking-tight text-zinc-400 sm:text-lg lg:text-xl leading-relaxed">
+          An intelligent ecosystem built for modern creators. Generate high-fidelity blogs, condense complex articles instantly, and distribute content seamlessly.
         </p>
 
-        {/* BUTTONS */}
-        <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
+        {/* CALL TO ACTIONS */}
+        <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row w-full sm:w-auto px-4">
+          <Link
+            href="/Home/create"
+            className="group inline-flex items-center justify-center gap-2 rounded-lg bg-zinc-50 px-6 py-3 text-sm font-medium text-zinc-950 transition-all duration-200 hover:bg-zinc-200 w-full sm:w-auto"
+          >
+            Start Writing
+            <ArrowRight size={16} className="text-zinc-950 transition-transform duration-200 group-hover:translate-x-0.5" />
+          </Link>
           
           <Link
-            href="/summarizer"
-            className="group flex items-center gap-2 rounded-2xl bg-white px-7 py-4 text-sm font-semibold text-black transition-all duration-300 hover:scale-[1.03] hover:bg-gray-200"
-          >
-            Start Summarizing
-
-            <ArrowRight
-              size={18}
-              className="transition-transform duration-300 group-hover:translate-x-1"
-            />
-          </Link>
-
-          <Link
             href="/Home/blogs"
-            className="rounded-2xl border border-white/10 bg-white/[0.03] px-7 py-4 text-sm font-medium text-gray-200 backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]"
+            className="inline-flex items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/20 px-6 py-3 text-sm font-medium text-zinc-400 backdrop-blur-md transition-all duration-200 hover:border-zinc-700 hover:text-zinc-200 w-full sm:w-auto"
           >
-            Explore Blogs
+            See Blogs
           </Link>
         </div>
 
-        {/* STATS */}
-        <div className="mt-20 grid w-full max-w-5xl grid-cols-1 gap-5 md:grid-cols-3">
+        {/* FEATURE GRID: Clean architecture with micro-interactions */}
+        <div className="mt-28 grid w-full max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 text-left">
           
-          <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
-            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-500/10">
-              <BrainCircuit size={28} className="text-purple-400" />
+          {/* Card 1 */}
+          <div className="group relative overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/20 p-8 backdrop-blur-sm transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-900/40">
+            <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-400 group-hover:text-violet-400 group-hover:border-violet-500/30 transition-colors duration-300">
+              <BrainCircuit size={20} />
             </div>
-
-            <h3 className="text-xl font-semibold">
-              AI Blog Generation
+            <h3 className="text-lg font-medium text-zinc-200 tracking-tight">
+              AI Engine
             </h3>
-
-            <p className="mt-2 text-sm leading-relaxed text-gray-400">
-              Generate complete high-quality blogs instantly with powerful AI
-              assistance.
+            <p className="mt-2.5 text-sm leading-relaxed text-zinc-400">
+              Generate fully articulated, structurally sound prose dynamically customized to your unique editorial tone.
             </p>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
-            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/10">
-              <Sparkles size={28} className="text-cyan-400" />
+          {/* Card 2 */}
+          <div className="group relative overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/20 p-8 backdrop-blur-sm transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-900/40">
+            <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-400 group-hover:text-indigo-400 group-hover:border-indigo-500/30 transition-colors duration-300">
+              <Terminal size={20} />
             </div>
-
-            <h3 className="text-xl font-semibold">
-              Smart Summarization
+            <h3 className="text-lg font-medium text-zinc-200 tracking-tight">
+              Smart Context
             </h3>
-
-            <p className="mt-2 text-sm leading-relaxed text-gray-400">
-              Read long articles in under a minute with intelligent AI
-              summaries.
+            <p className="mt-2.5 text-sm leading-relaxed text-zinc-400">
+              Distill high-density technical articles or research into clear, ultra-readable summaries in milliseconds.
             </p>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
-            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-pink-500/10">
-              <FileText size={28} className="text-pink-400" />
+          {/* Card 3 */}
+          <div className="group relative overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/20 p-8 backdrop-blur-sm transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-900/40">
+            <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-400 group-hover:text-cyan-400 group-hover:border-cyan-500/30 transition-colors duration-300">
+              <FileText size={20} />
             </div>
-
-            <h3 className="text-xl font-semibold">
-              Premium Publishing
+            <h3 className="text-lg font-medium text-zinc-200 tracking-tight">
+              Premium Engine
             </h3>
-
-            <p className="mt-2 text-sm leading-relaxed text-gray-400">
-              Publish beautifully designed blogs with modern UI and smooth user
-              experience.
+            <p className="mt-2.5 text-sm leading-relaxed text-zinc-400">
+              Ship content via a meticulously crafted infrastructure optimized explicitly for reading experience, speed, and aesthetics.
             </p>
           </div>
+
         </div>
       </div>
     </section>

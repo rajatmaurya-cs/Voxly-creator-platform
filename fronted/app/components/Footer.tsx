@@ -16,7 +16,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             className="flex items-center gap-2 font-semibold hover:text-gray-300"
           >
-            Designed & Developed by Rajat
+            Designed & Developed by Rajat Maurya
             <CiShare1 size={18} />
           </a>
 

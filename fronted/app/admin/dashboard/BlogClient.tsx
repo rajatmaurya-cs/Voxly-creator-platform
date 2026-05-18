@@ -12,6 +12,8 @@ import {
   Eye,
   EyeOff,
   Loader2,
+  FileText,
+  Layers,
 } from "lucide-react";
 
 type ModeratedBy = {
@@ -32,7 +34,6 @@ const BlogClient = () => {
   const [deletingBlog, setdeletingBlog] = useState<string | null>(null);
 
   const LIMIT: number = 5;
-
   const queryClient = useQueryClient();
 
   const {
@@ -70,13 +71,13 @@ const BlogClient = () => {
     },
 
     onMutate: () => {
-      toast.loading("Updating blog status...", {
+      toast.loading("Updating visibility status...", {
         id: "toggle",
       });
     },
 
     onSuccess: (data) => {
-      toast.success(data.message || "Updated!", {
+      toast.success(data.message || "Status updated", {
         id: "toggle",
       });
 
@@ -90,7 +91,7 @@ const BlogClient = () => {
     },
 
     onError: (err: any) => {
-      toast.error(err?.message || "Failed to update blog status", {
+      toast.error(err?.message || "Failed to update status", {
         id: "toggle",
       });
     },
@@ -108,13 +109,12 @@ const BlogClient = () => {
 
   if (isLoading) {
     return (
-      <div className="flex h-[70vh] items-center justify-center bg-[#050505]">
-        <div className="flex items-center gap-3 rounded-3xl border border-zinc-800 bg-zinc-900/80 px-8 py-5 shadow-2xl backdrop-blur-xl">
-          <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
-
-          <h1 className="text-lg font-semibold text-zinc-300">
-            Loading Blogs...
-          </h1>
+      <div className="flex h-[75vh] items-center justify-center bg-zinc-950 font-sans antialiased">
+        <div className="flex items-center gap-3 rounded-xl border border-zinc-800/60 bg-zinc-900/30 px-5 py-3.5 backdrop-blur-md">
+          <Loader2 className="h-4 w-4 animate-spin text-zinc-400" />
+          <span className="text-sm font-medium text-zinc-400 tracking-tight">
+            Syncing registry...
+          </span>
         </div>
       </div>
     );
@@ -122,232 +122,167 @@ const BlogClient = () => {
 
   if (isError) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center bg-[#050505] px-4">
-        <div className="rounded-3xl border border-red-500/20 bg-red-500/10 p-8 text-center shadow-2xl backdrop-blur-xl">
-          <h1 className="text-lg font-bold text-red-400">
-            {(error as Error).message || "Something went wrong"}
-          </h1>
+      <div className="flex min-h-[60vh] items-center justify-center bg-zinc-950 px-4 font-sans antialiased">
+        <div className="w-full max-w-md rounded-xl border border-red-950/40 bg-red-950/10 p-5 backdrop-blur-md">
+          <p className="text-sm font-medium text-red-400 text-center tracking-tight">
+            {(error as Error).message || "An unexpected system error occurred."}
+          </p>
         </div>
       </div>
     );
   }
 
- return (
-  <div className="min-h-screen bg-[#050505] px-4 py-10 text-white">
-
-    <div className="mx-auto max-w-7xl">
-
-      {/* HEADER */}
-      <div className="mb-10 flex flex-col gap-5 rounded-[32px] border border-zinc-800 bg-gradient-to-br from-zinc-900 to-black p-8 shadow-[0px_0px_80px_rgba(59,130,246,0.08)] lg:flex-row lg:items-center lg:justify-between">
-
-        <div>
-
-          <h1 className="text-4xl font-semibold tracking-[-0.03em] text-zinc-100 md:text-5xl">
-            Blog Dashboard
-          </h1>
-
-          <p className="mt-3 max-w-2xl text-[15px] font-normal leading-7 text-zinc-500 md:text-base">
-            Manage your publications, moderation status and visibility with a
-            premium admin experience.
-          </p>
-
+  return (
+    <div className="min-h-screen bg-zinc-950 px-6 py-12 text-zinc-200 font-sans antialiased selection:bg-zinc-800 selection:text-zinc-100">
+      <div className="mx-auto max-w-5xl">
+        
+        {/* CONTROL HUB HEADER */}
+        <div className="mb-10 flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-zinc-900 pb-8 gap-4">
+          <div>
+            <div className="flex items-center gap-2 text-zinc-500 mb-1.5 text-[11px] font-semibold tracking-widest uppercase">
+              <Layers className="w-3.5 h-3.5 stroke-[2]" />
+              <span>Admin Workspace</span>
+            </div>
+            <h1 className="text-2xl font-medium tracking-tight text-zinc-100 sm:text-3xl">
+              Blog Publications
+            </h1>
+            <p className="mt-1.5 text-sm font-normal text-zinc-400 max-w-xl leading-relaxed">
+              Audit index architecture, modify visibility flags, and supervise deployment lifecycles.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 bg-zinc-900/30 border border-zinc-800/60 px-3 py-1.5 rounded-lg text-xs font-medium text-zinc-400 self-start sm:self-center">
+            <FileText className="w-3.5 h-3.5 text-zinc-500" />
+            <span>{latestBlogs.length} Records Loaded</span>
+          </div>
         </div>
 
-      </div>
-
-      {/* BLOG LIST */}
-      <div className="space-y-6">
-
-        {latestBlogs.map((blog: Blog) => (
-
-          <div
-            key={blog._id}
-            className="group relative overflow-hidden rounded-[30px] border border-zinc-800 bg-gradient-to-b from-zinc-900 via-zinc-950 to-black p-7 transition-all duration-500 hover:-translate-y-1 hover:border-zinc-700 hover:shadow-[0px_0px_60px_rgba(59,130,246,0.08)]"
-          >
-
-            {/* TOP BAR */}
-            <div
-              className={`absolute left-0 top-0 h-1 w-full ${
-                blog.isPublished
-                  ? "bg-gradient-to-r from-emerald-400 via-green-500 to-emerald-600"
-                  : "bg-gradient-to-r from-red-400 via-rose-500 to-red-600"
-              }`}
-            />
-
-            {/* BACKGROUND GLOW */}
-            <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-
-              <div className="absolute left-0 top-0 h-52 w-52 rounded-full bg-blue-500/10 blur-3xl" />
-
-              <div className="absolute bottom-0 right-0 h-52 w-52 rounded-full bg-purple-500/10 blur-3xl" />
-
+        {/* COMPACT DATA LIST */}
+        <div className="space-y-3">
+          {latestBlogs.length === 0 ? (
+            <div className="text-center py-16 border border-dashed border-zinc-900 rounded-xl bg-zinc-900/5">
+              <p className="text-sm text-zinc-500 tracking-tight">No modern entries found in this sequence.</p>
             </div>
+          ) : (
+            latestBlogs.map((blog: Blog) => {
+              const isUpdating = toggleMutation.isPending && deletingBlog === blog._id;
 
-            <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-
-              {/* LEFT SIDE */}
-              <div className="flex-1">
-
-                {/* BADGES */}
-                <div className="mb-5 flex flex-wrap items-center gap-3">
-
-                  <div
-                    className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[11px] font-medium tracking-wide ${
-                      blog.isPublished
-                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
-                        : "border-red-500/20 bg-red-500/10 text-red-400"
-                    }`}
-                  >
-
-                    {blog.isPublished ? (
-                      <Eye className="h-4 w-4" />
-                    ) : (
-                      <EyeOff className="h-4 w-4" />
-                    )}
-
-                    {blog.isPublished ? "Published" : "Draft"}
-
-                  </div>
-
-                </div>
-
-                {/* TITLE */}
-                <h1 className="mb-3 text-2xl font-semibold leading-tight tracking-[-0.025em] text-zinc-100 transition-colors duration-300 group-hover:text-blue-400 md:text-[30px]">
-                  {blog.title}
-                </h1>
-
-                {/* SUBTITLE */}
-                <p className="max-w-3xl text-[15px] font-normal leading-7 text-zinc-400 md:text-base">
-                  {blog.subTitle}
-                </p>
-
-                {/* META */}
-                <div className="mt-7 flex flex-wrap items-center gap-5">
-
-                  {/* DATE */}
-                  <div className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-2">
-
-                    <CalendarDays className="h-4 w-4 text-blue-400" />
-
-                    <span className="text-sm font-medium tracking-wide text-zinc-300">
-                      {blog.createdAt
-                        ? new Date(blog.createdAt).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            }
-                          )
-                        : "—"}
-                    </span>
-
-                  </div>
-
-                  {/* MODERATOR */}
-                  <div className='flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2'>
-
-                    <div className='flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-sm font-semibold text-white shadow-lg'>
-
-                      <UserRound className='h-4 w-4' />
-
-                    </div>
-
-                    <div className='flex flex-col leading-tight'>
-
-                      <span className='text-[10px] font-medium uppercase tracking-[0.18em] text-zinc-500'>
-                        Moderated By
-                      </span>
-
-                      <span className='text-sm font-medium text-zinc-200 break-words'>
-                        {blog.moderatedBy?.fullName || "System"}
-                      </span>
-
-                    </div>
-
-                    <ShieldCheck className='h-4 w-4 text-emerald-400' />
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              {/* RIGHT SIDE */}
-              <div className="flex items-center">
-
-                <button
-                  disabled={
-                    toggleMutation.isPending &&
-                    deletingBlog === blog._id
-                  }
-                  onClick={() => handletoggle(blog._id)}
-                  className={`group/button relative overflow-hidden rounded-2xl px-6 py-3.5 text-sm font-semibold tracking-wide text-white shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 ${
-                    blog.isPublished
-                      ? "bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700"
-                      : "bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700"
-                  }`}
+              return (
+                <div
+                  key={blog._id}
+                  className="group relative rounded-xl border border-zinc-900 bg-zinc-900/10 p-5 transition-all duration-200 hover:bg-zinc-900/30 hover:border-zinc-800/80 flex flex-col md:flex-row md:items-start justify-between gap-6"
                 >
+                  {/* METADATA & CORE CONTENT BLOCK */}
+                  <div className="flex-1 space-y-3 min-w-0">
+                    
+                    {/* STATUS INDICATORS */}
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[10px] font-semibold tracking-wider uppercase border ${
+                          blog.isPublished
+                            ? "border-emerald-500/10 bg-emerald-500/5 text-emerald-400"
+                            : "border-zinc-800 bg-zinc-800/40 text-zinc-400"
+                        }`}
+                      >
+                        <span className={`h-1 w-1 rounded-full ${blog.isPublished ? "bg-emerald-400" : "bg-zinc-500"}`} />
+                        {blog.isPublished ? "Active Deployment" : "Draft Terminal"}
+                      </span>
+                    </div>
 
-                  <span className="relative z-10 flex items-center gap-2">
+                    {/* TEXT WRAPPERS */}
+                    <div className="space-y-1.5">
+                      <h2 className="text-base font-medium text-zinc-100 tracking-tight transition-colors duration-150 group-hover:text-white break-words">
+                        {blog.title}
+                      </h2>
+                      {blog.subTitle && (
+                        <p className="text-sm font-normal text-zinc-400 max-w-3xl leading-relaxed line-clamp-2">
+                          {blog.subTitle}
+                        </p>
+                      )}
+                    </div>
 
-                    {toggleMutation.isPending &&
-                    deletingBlog === blog._id ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        Updating...
-                      </>
-                    ) : blog.isPublished ? (
-                      <>
-                        <EyeOff className="h-4 w-4" />
-                        Unpublish
-                      </>
-                    ) : (
-                      <>
-                        <Eye className="h-4 w-4" />
-                        Publish
-                      </>
-                    )}
+                    {/* PLATFORM INLINE META DATA */}
+                    <div className="flex flex-wrap items-center gap-y-2 gap-x-4 pt-1 text-xs text-zinc-500 font-medium">
+                      
+                      {/* DATE FIELD */}
+                      <div className="flex items-center gap-1.5">
+                        <CalendarDays className="h-3.5 w-3.5 text-zinc-600" />
+                        <span>
+                          {blog.createdAt
+                            ? new Date(blog.createdAt).toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              })
+                            : "—"}
+                        </span>
+                      </div>
 
-                  </span>
+                      <span className="text-zinc-800 hidden sm:inline">•</span>
 
-                  <div className="absolute inset-0 translate-y-full bg-white/10 transition-transform duration-300 group-hover/button:translate-y-0" />
+                      {/* MODERATION PROFILE */}
+                      <div className="flex items-center gap-2">
+                        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-zinc-900 border border-zinc-800 text-[10px] font-bold text-zinc-400">
+                          <UserRound className="h-2.5 w-2.5" />
+                        </div>
+                        <span className="text-zinc-400">
+                          {blog.moderatedBy?.fullName || "Core Engine"}
+                        </span>
+                        <ShieldCheck className="h-3.5 w-3.5 text-zinc-600" />
+                      </div>
+                    </div>
+                  </div>
 
-                </button>
+                  {/* MINIMAL CONTROL ACTIONS */}
+                  <div className="flex items-center shrink-0 border-t border-zinc-900/60 md:border-t-0 pt-4 md:pt-0 self-start sm:self-end md:self-center">
+                    <button
+                      disabled={isUpdating}
+                      onClick={() => handletoggle(blog._id)}
+                      className={`h-8 inline-flex items-center justify-center gap-2 rounded-lg px-3.5 text-xs font-medium tracking-tight transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed border ${
+                        blog.isPublished
+                          ? "bg-zinc-900 border-zinc-800/80 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-200"
+                          : "bg-zinc-100 border-transparent text-zinc-950 hover:bg-zinc-200"
+                      }`}
+                    >
+                      {isUpdating ? (
+                        <>
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                          <span>Syncing...</span>
+                        </>
+                      ) : blog.isPublished ? (
+                        <>
+                          <EyeOff className="h-3.5 w-3.5 stroke-[1.8]" />
+                          <span>Unpublish Entry</span>
+                        </>
+                      ) : (
+                        <>
+                          <Eye className="h-3.5 w-3.5 stroke-[1.8]" />
+                          <span>Push Live</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
 
-              </div>
-
-            </div>
-
-          </div>
-
-        ))}
-
-      </div>
-
-      {/* FETCHING */}
-      {isFetching && (
-
-        <div className="mt-8 flex justify-center">
-
-          <div className="flex items-center gap-3 rounded-full border border-zinc-800 bg-zinc-900/80 px-6 py-3 shadow-xl backdrop-blur-xl">
-
-            <Loader2 className="h-4 w-4 animate-spin text-blue-400" />
-
-            <span className="text-sm font-medium tracking-wide text-zinc-400">
-              Refreshing blogs...
-            </span>
-
-          </div>
-
+                </div>
+              );
+            })
+          )}
         </div>
 
-      )}
+        {/* LIVE STREAM PROCESSOR SYSTEM FOOTER */}
+        {isFetching && !isLoading && (
+          <div className="mt-6 flex justify-center">
+            <div className="flex items-center gap-2 rounded-full border border-zinc-900/80 bg-zinc-900/10 px-4 py-1.5 backdrop-blur-md">
+              <Loader2 className="h-3 w-3 animate-spin text-zinc-500" />
+              <span className="text-[11px] font-medium tracking-tight text-zinc-500">
+                Refreshing document index...
+              </span>
+            </div>
+          </div>
+        )}
 
+      </div>
     </div>
-
-  </div>
-);
+  );
 };
 
 export default BlogClient;

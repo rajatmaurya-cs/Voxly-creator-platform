@@ -72,11 +72,13 @@ export const articleSummariser = async ({ user, prompt }) => {
     ],
   });
 
-  await AILog.create({
-    userId: user.id,
-    role: user.role,
-    action: "AI Summariser",
-  });
-  console.log(completion.choices[0].message.content)
+  // await AILog.create({
+  //   userId: user.id,
+  //   role: user.role,
+  //   action: "AI Summariser",
+  // });
+
+  
+
   return completion.choices[0].message.content;
 };

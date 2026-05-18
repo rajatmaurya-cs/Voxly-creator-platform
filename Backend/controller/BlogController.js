@@ -227,7 +227,7 @@ export const getblogbyid = async (req, res) => {
     const blog = await Blog.findById(blogId).populate("createdBy", "fullName email avatar");
 
 
-
+    console.log("The fetched blog is :",blog.content)
 
 
     if (!blog) return res.json({ success: false, message: "Blog not found" })

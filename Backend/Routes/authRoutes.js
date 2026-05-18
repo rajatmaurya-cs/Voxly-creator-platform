@@ -42,7 +42,11 @@ const authRouter = express.Router();
 
 
 authRouter.post("/signup", signup);
-authRouter.post("/login", login);
+
+authRouter.post("/login",(req,res,next)=>{
+console.log("Request goes from authroutes")
+next()
+}, login);
 authRouter.post("/google", googleLogin);
 
 

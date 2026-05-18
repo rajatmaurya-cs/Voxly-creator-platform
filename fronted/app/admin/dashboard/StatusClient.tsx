@@ -1,164 +1,148 @@
-"use client";
+'use client'
 
-import { useQuery } from "@tanstack/react-query";
-
+import { useQuery } from '@tanstack/react-query'
 import {
   FileText,
   MessageSquare,
   FileClock,
-} from "lucide-react";
+  AlertCircle,
+} from 'lucide-react'
 
-const StatusClient = () => {
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["dashboard-data"],
+export default function StatusClient() {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['dashboard-data'],
 
     queryFn: async () => {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/blog/BlogDashboard`
-      );
+      )
 
       if (!res.ok) {
-        throw new Error("Failed to fetch dashboard data");
+        throw new Error('Failed to fetch dashboard data')
       }
 
-      const json = await res.json();
+      const json = await res.json()
 
       if (!json.success) {
         throw new Error(
-          json.message || "Failed to load dashboard data"
-        );
+          json.message || 'Failed to load dashboard data'
+        )
       }
 
-      const {
-        totalBlogs,
-        totalComments,
-        draftBlogs,
-      } = json.stats;
-
       return {
-        totalBlogs,
-        totalComments,
-        draftBlogs,
-      };
+        totalBlogs: json.stats.totalBlogs,
+        totalComments: json.stats.totalComments,
+        draftBlogs: json.stats.draftBlogs,
+      }
     },
 
     staleTime: 30_000,
     refetchOnWindowFocus: false,
-  });
+  })
+
+  const wrapper = 'w-full max-w-2xl mx-auto'
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className={wrapper}>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="rounded-3xl border border-zinc-800/60 bg-zinc-950/40 p-5 backdrop-blur-xl"
+            >
+              <div className="flex items-start justify-between">
+                <div className="space-y-3">
+                  <div className="h-3 w-20 animate-pulse rounded-full bg-zinc-800" />
+                  <div className="h-8 w-14 animate-pulse rounded-xl bg-zinc-800" />
+                </div>
 
-        {[1, 2, 3].map((item) => (
-          <div
-            key={item}
-            className="animate-pulse rounded-[28px] border border-zinc-800 bg-zinc-900 p-6"
-          >
-            <div className="h-4 w-32 rounded bg-zinc-800" />
-
-            <div className="mt-6 h-10 w-24 rounded bg-zinc-700" />
-          </div>
-        ))}
-
+                <div className="h-11 w-11 animate-pulse rounded-2xl bg-zinc-800" />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    );
+    )
   }
 
   if (isError) {
     return (
-      <div className="rounded-3xl border border-red-500/20 bg-red-500/10 p-6 text-center">
-        <h1 className="text-lg font-semibold text-red-400">
-          {(error as Error).message}
-        </h1>
+      <div className={wrapper}>
+        <div className="flex justify-center">
+          <div className="inline-flex items-center gap-2 rounded-xl border border-red-900/40 bg-red-950/20 px-4 py-2.5 text-sm font-medium text-red-400 backdrop-blur-md">
+            <AlertCircle className="h-4 w-4" />
+            <p>{error?.message || 'Failed to load system metrics.'}</p>
+          </div>
+        </div>
       </div>
-    );
+    )
   }
 
   const stats = [
     {
-      title: "Total Blogs",
-      value: data?.totalBlogs,
+      title: 'Total Blogs',
+      value: data?.totalBlogs ?? 0,
       icon: FileText,
-      iconColor: "text-blue-400",
-      glow: "from-blue-500/20 to-cyan-500/5",
-      border: "border-blue-500/10",
-      width: "85%",
+
+      iconClass:
+        'text-sky-300 border-sky-500/20 bg-gradient-to-br from-sky-500/20 via-blue-500/10 to-cyan-500/20 shadow-[0_0_25px_rgba(56,189,248,0.18)]',
     },
 
     {
-      title: "Total Comments",
-      value: data?.totalComments,
+      title: 'Total Comments',
+      value: data?.totalComments ?? 0,
       icon: MessageSquare,
-      iconColor: "text-emerald-400",
-      glow: "from-emerald-500/20 to-green-500/5",
-      border: "border-emerald-500/10",
-      width: "70%",
+
+      iconClass:
+        'text-fuchsia-300 border-fuchsia-500/20 bg-gradient-to-br from-fuchsia-500/20 via-pink-500/10 to-violet-500/20 shadow-[0_0_25px_rgba(217,70,239,0.18)]',
     },
 
     {
-      title: "Draft Blogs",
-      value: data?.draftBlogs,
+      title: 'Draft Blogs',
+      value: data?.draftBlogs ?? 0,
       icon: FileClock,
-      iconColor: "text-red-400",
-      glow: "from-red-500/20 to-rose-500/5",
-      border: "border-red-500/10",
-      width: "45%",
+
+      iconClass:
+        'text-amber-200 border-amber-500/20 bg-gradient-to-br from-amber-500/20 via-orange-500/10 to-yellow-500/20 shadow-[0_0_25px_rgba(251,191,36,0.18)]',
     },
-  ];
+  ]
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-3 ml-6">
+    <div className={wrapper}>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {stats.map((stat) => {
+          const Icon = stat.icon
 
-      {stats.map((item) => {
-        const Icon = item.icon;
+          return (
+            <div
+              key={stat.title}
+              className="group relative overflow-hidden rounded-3xl border border-zinc-800/60 bg-zinc-950/50 p-5 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-zinc-700/80 hover:bg-zinc-900/50"
+            >
+              {/* subtle glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-        return (
-          <div
-            key={item.title}
-            className={`group relative overflow-hidden rounded-[30px] border bg-gradient-to-b ${item.glow} ${item.border} bg-zinc-900/90 p-6 shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:border-zinc-700 hover:shadow-black/50`}
-          >
-
-      
-            <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-              <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-white/5 blur-3xl" />
-            </div>
-
-            <div className="relative z-10">
-
-              {/* TOP */}
-              <div className="flex items-start justify-between">
-
-                <div>
-                  <p className="text-sm font-medium tracking-wide text-zinc-500">
-                    {item.title}
+              <div className="relative flex items-start justify-between">
+                <div className="min-w-0">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-zinc-500">
+                    {stat.title}
                   </p>
 
-                  <h1 className="mt-4 text-5xl font-semibold tracking-[-0.03em] text-zinc-100">
-                    {item.value}
-                  </h1>
+                  <h3 className="mt-3 text-4xl font-semibold tracking-tight text-white">
+                    {stat.value.toLocaleString()}
+                  </h3>
                 </div>
 
-                {/* ICON */}
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
-                  <Icon className={`h-7 w-7 ${item.iconColor}`} />
+                <div
+                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-0.5 ${stat.iconClass}`}
+                >
+                  <Icon className="h-5 w-5 stroke-[2]" />
                 </div>
-
               </div>
-
-
-
             </div>
-          </div>
-        );
-      })}
+          )
+        })}
+      </div>
     </div>
-  );
-};
-
-export default StatusClient;
+  )
+}

@@ -76,7 +76,11 @@ app.use(cookieParser());
 
 
 /* ================= ROUTES ================= */
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", (req,res,next)=>{
+
+  console.log("Request goes from index.js for auth")
+  next()
+},authRoutes);
 
 app.use("/api/blog",(req,res,next)=>{ 
 
@@ -89,7 +93,13 @@ app.use("/api/blog",(req,res,next)=>{
 app.use("/api/comment", commentRouter);
 
 // app.use("/api/ai", authMiddleware, AiRouter);
-app.use("/api/ai", AiRouter);
+app.use("/api/ai",(req,res , next)=>{
+
+  console.log("Request Goes to /api/ai")
+
+  next()
+
+}, AiRouter);
 
 app.use("/api/ai/config", authMiddleware,configRoutes);
 

@@ -54,6 +54,8 @@ console.log("The Time taken to fetch blogs:",((end-start) || 0)/1000)
 
   const data: BlogResponse = await res.json();
 
+
+
   return (
     <div>
       <Blogclient blog={data.blog} />

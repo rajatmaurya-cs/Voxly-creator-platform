@@ -85,7 +85,13 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
   try {
 
+   console.log("Local Login 1")
+
     let { email, password } = req.body;
+
+    console.log("The data we recieved: ",email)
+
+    console.log("Local Login 2")
     
     email = email.toLowerCase().trim();
 
@@ -99,8 +105,12 @@ export const login = async (req, res) => {
       });
     }
 
+    console.log("Local Login 3")
+
 
     const user = await User.findOne({ email });
+
+    console.log("Local Login 4")
 
     if (!user) {
       return res.status(401).json({
@@ -108,6 +118,8 @@ export const login = async (req, res) => {
         message: "Invalid email or password",
       });
     }
+
+    console.log("Local Login 5")
 
 
     const isPasswordMatch = await bcrypt.compare(

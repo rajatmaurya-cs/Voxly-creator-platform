@@ -390,7 +390,7 @@ export const logout = async (req, res) => {
 export const refreshAccessToken = async (req, res) => {
   try {
 
-    console.log("refreshAccessToken: 1")
+    // console.log("refreshAccessToken: 1")
 
     const refreshToken = req.cookies.refreshToken;
 
@@ -405,18 +405,18 @@ export const refreshAccessToken = async (req, res) => {
       return res.status(401).json({ message: "Invalid email or Password" });
     }
 
-    console.log("refreshAccessToken: 2")
+    // console.log("refreshAccessToken: 2")
 
 
     const hashedToken = hashToken(refreshToken);
 
-    console.log("refreshAccessToken: 3")
+    // console.log("refreshAccessToken: 3")
 
     const storedToken = await RefreshToken.findOne({
       token: hashedToken,
     });
 
-    console.log("refreshAccessToken: 4")
+    // console.log("refreshAccessToken: 4")
 
     // console.log("The StoredToken is: ", storedToken)
 
@@ -424,19 +424,19 @@ export const refreshAccessToken = async (req, res) => {
       return res.status(403).json({ message: "Invalid Email or Password" });
     }
 
-    console.log("refreshAccessToken: 5")
+    // console.log("refreshAccessToken: 5")
 
     const decoded = jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET
     );
 
-    console.log("refreshAccessToken: 6")
+    // console.log("refreshAccessToken: 6")
 
     const user = await User.findById(decoded.id);
 
 
-    console.log("refreshAccessToken: 7")
+    // console.log("refreshAccessToken: 7")
 
     // console.log("user is: ", user)
 
@@ -444,15 +444,15 @@ export const refreshAccessToken = async (req, res) => {
       return res.status(403).json({ message: "User not found" });
     }
 
-    console.log("refreshAccessToken: 8")
+    // console.log("refreshAccessToken: 8")
 
     const newAccessToken = createAccessToken(user);
 
-    console.log("refreshAccessToken: 9")
+    // console.log("refreshAccessToken: 9")
 
     const newrefreshToken = createRefreshToken(user);
 
-    console.log("refreshAccessToken: 10")
+    // console.log("refreshAccessToken: 10")
 
 
     await RefreshToken.deleteMany({ userId: user._id });
@@ -461,7 +461,7 @@ export const refreshAccessToken = async (req, res) => {
       token: hashToken(newrefreshToken),
     });
 
-    console.log("refreshAccessToken: 11")
+    // console.log("refreshAccessToken: 11")
 
     // res.cookie("refreshToken", newrefreshToken, {
     //   httpOnly: true,
@@ -497,7 +497,7 @@ export const refreshAccessToken = async (req, res) => {
       maxAge: 15 * 60 * 1000,
     });
 
-    console.log("refreshAccessToken: 13")
+    // console.log("refreshAccessToken: 13")
 
 
     return res.status(200).json({

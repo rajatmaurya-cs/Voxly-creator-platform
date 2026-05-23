@@ -82,6 +82,10 @@ app.use("/api/auth", (req,res,next)=>{
   next()
 },authRoutes);
 
+
+
+
+
 app.use("/api/blog",(req,res,next)=>{ 
 
   // console.log("METHOD:", req.method, "URL:", req.originalUrl);

@@ -5,13 +5,19 @@ import { Aidashboard } from '../controller/Dashboard.js'
 
 import checkAiLimit from '../Middleware/aiLimitMiddleware.js'
 import adminMiddleware from '../Middleware/adminMiddleware.js'
+import authMiddleware from '../Middleware/authMiddleware.js'
 
 
 
 const AiRouter = express.Router();
 
 /* ================= GenerateContent for Blog ================= */
-AiRouter.post('/Generatecontent', checkAiLimit, adminMiddleware, generateContent)
+// AiRouter.post('/Generatecontent', checkAiLimit, adminMiddleware, generateContent)
+
+AiRouter.post('/Generatecontent', (req,res,next)=>{
+    console.log("Requst goes from /GenerateContent from airoutes")
+    next()
+},authMiddleware,generateContent)
 
 
 /* ================= Ai Summariser For Users ================= */

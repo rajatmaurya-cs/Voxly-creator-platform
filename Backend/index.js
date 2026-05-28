@@ -100,7 +100,10 @@ app.use("/api/auth", authRoutes);
 
 app.use("/api/blog", blogRouter);
 
-app.use("/api/comment", commentRouter);
+app.use("/api/comment",(req,res,next)=>{
+  console.log("Request enteted in comment")
+  next()
+}, commentRouter);
 
 app.use("/api/ai", authMiddleware, AiRouter);
 

@@ -47,7 +47,8 @@ const Login = () => {
     onSuccess: (data) => {
       login(data.user, data.accessToken);
       toast.success("Login successful");
-      navigate("/admin");
+      if(data.user.role === 'ADMIN') navigate('/admin')
+      else navigate("/");
 
 
     },

@@ -69,6 +69,7 @@ export const AuthProvider = ({ children }) => {
     })();
 
     return refreshPromiseRef;
+    
   }, [clearAuth]);
 
   

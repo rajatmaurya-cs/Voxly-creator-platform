@@ -42,8 +42,11 @@ const WholeBlog = () => {
 
 
   const [comment, setComment] = useState("");
+
   const [content, setContent] = useState("");
+
   const [originalContent, setOriginalContent] = useState("");
+  
   const [aicontent, setaicontent] = useState(false);
 
 
@@ -132,7 +135,7 @@ useEffect(() => {
       block: 'start' 
     });
   }
-}, [aicontent, ailoading]);
+}, [aicontent, ailoading , ]);
 
 
 
@@ -226,6 +229,7 @@ useEffect(() => {
                   className="w-full h-full rounded-full border-2 border-white object-cover"
                   alt="Author avatar"
                 />
+                <h1 className="bg-amber-400">{blog._id}</h1>
               </div>
               <span className="text-base text-gray-900 font-semibold tracking-tight">{blog.createdBy?.fullName}</span>
             </div>

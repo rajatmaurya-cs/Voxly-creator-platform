@@ -167,9 +167,6 @@ export const getallblog = async (req, res) => {
 
 
 
-
-
-
 export const allBlogAdmin = async (req, res) => {
 
   const page = parseInt(req.query.page, 10) || 1;
@@ -210,10 +207,6 @@ export const allBlogAdmin = async (req, res) => {
 
 
 
-
-
-
-
 export const getblogbyid = async (req, res) => {
   try {
 
@@ -222,7 +215,8 @@ export const getblogbyid = async (req, res) => {
 
 
 
-    const blog = await Blog.findById(blogId).populate("createdBy", "fullName email avatar");
+    const blog = await Blog.findById(blogId)
+                      .populate("createdBy", "_id fullName email avatar");
 
 
 

@@ -31,6 +31,7 @@ import RefreshToken from "../Models/RefreshToken.js";
 
 export const signup = async (req, res) => {
   try {
+
     let { fullName, email, password } = req.body;
 
     fullName = fullName.trim();
@@ -87,12 +88,11 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
   try {
 
+
+
+    console.log("1")
+
     let { email, password } = req.body;
-    
-    email = email.toLowerCase().trim();
-
-
-
 
     if (!email || !password) {
       return res.status(401).json({
@@ -101,8 +101,16 @@ export const login = async (req, res) => {
       });
     }
 
+    console.log("2")
 
-    const user = await User.findOne({ email });
+    email = email.toLowerCase().trim();
+
+    const user = await User.findOne({ email }).select("+password");
+
+    console.log(user.fullName)
+
+
+    console.log("3")
 
     if (!user) {
       return res.status(401).json({
@@ -110,12 +118,25 @@ export const login = async (req, res) => {
         message: "Invalid email or password",
       });
     }
+    console.log("4")
+
+
+    if (!user.authProvider.includes("LOCAL")) {
+      return res.status(401).json({
+        success: false,
+        message: "This account uses Google login. Try Google Login.",
+      });
+    }
+    console.log("5")
 
 
     const isPasswordMatch = await bcrypt.compare(
       password,
       user.password
     );
+
+    console.log("6")
+
 
     if (!isPasswordMatch) {
       return res.status(401).json({
@@ -124,43 +145,40 @@ export const login = async (req, res) => {
       });
     }
 
+    console.log("7")
+
 
     const accessToken = createAccessToken(user);
-
     const refreshToken = createRefreshToken(user);
 
-
-
     await RefreshToken.deleteMany({ userId: user._id });
+
+    console.log("8")
+
 
     await RefreshToken.create({
       userId: user._id,
       token: hashToken(refreshToken),
     });
 
-
-
-
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "Lax",  
+      sameSite: "Lax",
       path: "/",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: true,
       sameSite: "Lax",
       path: "/",
-      maxAge: 15 * 60 * 1000, // 15 min
+      maxAge: 15 * 60 * 1000,
     });
 
     return res.status(200).json({
       success: true,
-
       user: {
         id: user._id,
         name: user.fullName,
@@ -171,9 +189,8 @@ export const login = async (req, res) => {
       },
     });
 
-
   } catch (error) {
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
@@ -189,7 +206,7 @@ export const googleLogin = async (req, res) => {
 
     const { code } = req.body;
 
-  
+
 
     console.log("The code is : ", code)
 
@@ -216,7 +233,7 @@ export const googleLogin = async (req, res) => {
       }
     );
 
-  
+
     const {
       id: googleId,
 
@@ -350,10 +367,10 @@ export const logout = async (req, res) => {
 
 export const refreshAccessToken = async (req, res) => {
   try {
-    
-    
+
+
     const refreshToken = req.cookies.refreshToken;
-    
+
 
 
 
@@ -432,8 +449,8 @@ export const sendOtp = async (req, res) => {
   try {
     let { email, purpose } = req.body;
 
-    console.log("The Email that we Recicved: ",email);
-    console.log("The purpose that we recieved: ",purpose);
+    console.log("The Email that we Recicved: ", email);
+    console.log("The purpose that we recieved: ", purpose);
     email = email.toLowerCase().trim();
     purpose = purpose.toUpperCase().trim();
 
@@ -465,13 +482,13 @@ export const verifyOtp = async (req, res) => {
 
     email = email.toLowerCase().trim();
 
-    purpose = purpose.toUpperCase().trim(); 
+    purpose = purpose.toUpperCase().trim();
 
     const otpKey = `otp:${purpose}:${email}`;
 
     const attemptsKey = `otpAttempts:${purpose}:${email}`;
 
-    
+
     const storedOtp = await redisClient.get(otpKey);
 
     if (!storedOtp) {
@@ -481,7 +498,7 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
-   
+
     const attempts = await redisClient.incr(attemptsKey);
 
     if (attempts === 1) {
@@ -505,7 +522,7 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
- 
+
     await redisClient.del(otpKey);
 
     await redisClient.del(attemptsKey);

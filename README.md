@@ -305,3 +305,10 @@ Focused on building production-grade, scalable, AI-powered web applications.
 
 
 
+{
+avgSentenceLength: "15.5"
+paragraphs: 23
+sentences: 38
+totalScore: 68
+verdict: "Average"
+words: 590}

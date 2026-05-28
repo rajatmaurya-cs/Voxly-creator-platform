@@ -25,20 +25,16 @@ const BlogList = () => {
     return data?.pages?.flatMap((p) => p.blogs) ?? [];
   }, [data]);
 
-  const { filteredBlogs, publishedBlogs } = useMemo(() => {
-
+  const { filteredBlogs } = useMemo(() => {
     const searchText = search.toLowerCase().trim();
 
-    const filtered = (blogs || []).filter((blog) => {
-      const matchesSearch = (blog.title || "").toLowerCase().includes(searchText);
-      return matchesSearch;
-    });
+  
+    const filtered = (blogs || []).filter((blog) =>
+      (blog.title || "").toLowerCase().includes(searchText)
+    );
 
-    const published = filtered.filter((blog) => blog.isPublished === true);
-
-    return { filteredBlogs: filtered, publishedBlogs: published };
+    return { filteredBlogs: filtered };
   }, [blogs, search]);
-
 
   // if (isLoading) return (
   //   <div className="skeleton-fade mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 md:grid-cols-3">
@@ -164,7 +160,7 @@ const BlogList = () => {
         {/* Content Area */}
         <div className="relative w-full z-10 min-h-[400px]">
 
-        
+
 
           {isError && (
             <div className="p-6 bg-red-50/50 rounded-3xl border border-red-100 text-center max-w-lg mx-auto">
@@ -185,7 +181,7 @@ const BlogList = () => {
               </div>
 
               <div className="skeleton-fade grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
-                {[1,2,3].map((_, index) => (
+                {[1, 2, 3].map((_, index) => (
                   <div
                     key={index}
                     className="overflow-hidden rounded-[2rem] border border-gray-100 bg-white shadow-[0_4px_20px_rgb(0,0,0,0.03)]"
@@ -215,11 +211,11 @@ const BlogList = () => {
                 ))}
               </div>
             </div>
-          ) : 
-            !isError && publishedBlogs.length > 0 ? (
+          ) :
+            !isError && filteredBlogs.length > 0 ? (
               <div className="space-y-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-                  {publishedBlogs.map((blog) => (
+                  {filteredBlogs.map((blog) => (
                     <Link
                       key={blog._id}
                       to={`/blog/${blog._id}`}

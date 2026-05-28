@@ -9,12 +9,14 @@ export default function useSendOtp(purpose) {
 
   const mutation = useMutation({
     mutationFn: async ({ email }) => {
+
       const res = await API.post("/auth/sendotp", {
         email,
         purpose,
       });
       return res.data;
     },
+    
     onSuccess: (data) => {
       if (data?.success) {
         toast.success(data.message || "OTP sent successfully");

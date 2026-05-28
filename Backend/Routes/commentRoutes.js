@@ -16,7 +16,10 @@ commentRouter.get('/allcomment/:blogId', getCommentsByBlogId)
 
 
 /* ================= Get AllComments ================= */
-commentRouter.get('/comments' , getAllComments)
+commentRouter.get('/comments' , authMiddleware , (req,res,next)=>{
+    console.log("Request goes through comment router")
+    next()
+},getAllComments)
 
 
 /* ================= toggleComments ================= */

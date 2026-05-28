@@ -4,11 +4,22 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../Context/Authcontext";
 import ProfileModal from "../../Pop-Up/ProfileModal";
 import { User, LayoutDashboard } from "lucide-react";
+import toast from 'react-hot-toast'
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
+
+
+  const handleDashboard = ()=>{
+    try{
+      if(user?.role === 'ADMIN') navigate('/admin')
+      else toast.error("You are Not Admin")
+    }catch(error){
+      toast.error("Something Went Wrong")
+  }
+  }
 
 return (
   <nav className="fixed inset-x-0 top-0 z-50 border-b border-gray-100/80 bg-white/80 backdrop-blur-xl shadow-[0_2px_8px_rgb(0,0,0,0.04)]">
@@ -42,7 +53,7 @@ return (
           <>
             {/* Fixed: Dashboard now shows on mobile too */}
             <button
-              onClick={() => navigate("/admin")}
+              onClick={() => handleDashboard()}
               className="inline-flex h-10 items-center gap-2 rounded-full border border-gray-200/80 bg-gray-50 px-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 sm:px-4"
             >
               <LayoutDashboard size={16} />

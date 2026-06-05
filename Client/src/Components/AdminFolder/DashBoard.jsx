@@ -55,8 +55,6 @@ const StatCardSkeleton = () => (
 
 const DashBoard = () => {
 
-
-
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
@@ -70,10 +68,6 @@ const DashBoard = () => {
     error,
     isFetching,
   } = useLatestBlogs({ limit: LIMIT, isAdmin: true, category: "All" });
-
-
-
-
 
   const {
 

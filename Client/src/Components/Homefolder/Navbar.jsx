@@ -14,8 +14,9 @@ const Navbar = () => {
 
   const handleDashboard = ()=>{
     try{
-      if(user?.role === 'ADMIN') navigate('/admin')
-      else toast.error("You are Not Admin")
+      
+      navigate('/admin')
+     
     }catch(error){
       toast.error("Something Went Wrong")
   }

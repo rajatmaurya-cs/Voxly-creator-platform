@@ -88,7 +88,7 @@ const DashBoard = () => {
 
       return { totalBlogs, totalComments, draftBlogs };
     },
-    // enabled: !!latestBlogs?.length,
+    enabled: !!latestBlogs?.length,
     staleTime: 30_000,
   });
 

@@ -66,7 +66,7 @@ export default function LoginPage() {
       const data: LoginResponse = await res.json();
 
       if (!res.ok || !data.success) {
-        throw new Error("Login failed");
+        throw new Error("Invalid email or password");
       }
 
       return data;
@@ -121,61 +121,64 @@ export default function LoginPage() {
 
   return (
 
+  <div className="min-h-screen bg-[#0b0d11] px-4 py-8 text-[#f3f4f6] antialiased selection:bg-[#1d2430] selection:text-white">
+  
+  <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center">
+
     <div
       className="
-        min-h-screen
-        flex
-        items-center
-        justify-center
-        bg-[#0b0d11]
-        px-4
+        relative
+        w-full
+        max-w-md
+        overflow-hidden
+        rounded-[32px]
+        border
+        border-[#1b1f27]
+        bg-[#11141a]/95
+        p-7
+        sm:p-8
+        shadow-[0_25px_80px_rgba(0,0,0,0.45)]
+        backdrop-blur-xl
       "
     >
 
-      <div
-        className="
-          w-full
-          max-w-md
-          rounded-3xl
-          border
-          border-[#20242c]
-          bg-[#111418]
-          p-8
-          shadow-[0_0_40px_rgba(0,0,0,0.35)]
-        "
-      >
+      {/* ambient glow */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_55%)]" />
+
+      <div className="relative">
 
         {/* ---------- HEADER ---------- */}
 
-        <div className="mb-8">
+        <div className="mb-9">
 
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex items-center justify-center gap-4">
 
             <div
               className="
                 flex
-                h-12
-                w-12
+                h-14
+                w-14
                 items-center
                 justify-center
                 rounded-2xl
-                bg-[#1b2028]
-                ring-1
-                ring-[#2a2f3a]
+                border
+                border-[#2a313d]
+                bg-[#171b22]
+                shadow-inner
               "
             >
-              <span className="text-lg font-bold text-[#f3f4f6]">
+              <span className="text-xl font-bold tracking-tight text-white">
                 P
               </span>
             </div>
 
             <div>
 
-              <h1 className="text-2xl font-bold text-[#f3f4f6]">
+              <h1 className="text-3xl font-semibold tracking-[-0.03em] text-white">
                 Postify
               </h1>
 
-              <p className="text-sm text-[#7d8590]">
+              <p className="mt-1 text-sm text-[#8b90a0]">
                 Welcome back
               </p>
 
@@ -189,9 +192,9 @@ export default function LoginPage() {
 
           {/* EMAIL */}
 
-          <div>
+          <div className="space-y-2">
 
-            <label className="mb-2 block text-sm text-[#9ca3af]">
+            <label className="block text-sm font-medium text-[#c2c8d3]">
               Email
             </label>
 
@@ -202,18 +205,20 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="
+                h-13
                 w-full
                 rounded-2xl
                 border
-                border-[#2a2f3a]
+                border-[#222733]
                 bg-[#171b22]
                 px-4
-                py-3
+                text-[15px]
                 text-[#f3f4f6]
                 outline-none
                 transition-all
+                duration-200
                 placeholder:text-[#6b7280]
-                focus:border-[#3b4250]
+                focus:border-[#3a4252]
                 focus:bg-[#1b2028]
               "
             />
@@ -221,9 +226,9 @@ export default function LoginPage() {
 
           {/* PASSWORD */}
 
-          <div>
+          <div className="space-y-2">
 
-            <label className="mb-2 block text-sm text-[#9ca3af]">
+            <label className="block text-sm font-medium text-[#c2c8d3]">
               Password
             </label>
 
@@ -234,18 +239,20 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               className="
+                h-13
                 w-full
                 rounded-2xl
                 border
-                border-[#2a2f3a]
+                border-[#222733]
                 bg-[#171b22]
                 px-4
-                py-3
+                text-[15px]
                 text-[#f3f4f6]
                 outline-none
                 transition-all
+                duration-200
                 placeholder:text-[#6b7280]
-                focus:border-[#3b4250]
+                focus:border-[#3a4252]
                 focus:bg-[#1b2028]
               "
             />
@@ -253,20 +260,23 @@ export default function LoginPage() {
 
           {/* FORGOT PASSWORD */}
 
-          <div className="flex justify-end">
+          <div className="flex justify-end pt-1">
 
             <button
               type="button"
               onClick={() => router.push("/auth/forgotpassword")}
               className="
                 text-sm
-                text-[#8b93a7]
+                font-medium
+                text-[#8b90a0]
                 transition-colors
+                duration-200
                 hover:text-[#d1d5db]
               "
             >
               Forgot Password?
             </button>
+
           </div>
 
           {/* LOGIN BUTTON */}
@@ -275,16 +285,21 @@ export default function LoginPage() {
             type="submit"
             disabled={isLoading}
             className="
+              flex
+              h-13
               w-full
+              items-center
+              justify-center
               rounded-2xl
+              border
+              border-transparent
               bg-[#f3f4f6]
-              py-3.5
               text-sm
               font-semibold
-              text-[#111418]
+              text-[#0f1115]
               transition-all
-              duration-300
-              hover:opacity-90
+              duration-200
+              hover:bg-white
               active:scale-[0.99]
               disabled:cursor-not-allowed
               disabled:opacity-60
@@ -300,19 +315,23 @@ export default function LoginPage() {
         <div className="relative my-8">
 
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-[#2a2f3a]" />
+            <div className="w-full border-t border-[#222733]" />
           </div>
 
           <div className="relative flex justify-center">
 
             <span
               className="
-                bg-[#111418]
+                rounded-full
+                border
+                border-[#222733]
+                bg-[#11141a]
                 px-4
-                text-xs
-                font-medium
-                tracking-[0.2em]
-                text-[#7d8590]
+                py-1
+                text-[11px]
+                font-semibold
+                tracking-[0.22em]
+                text-[#7c8393]
               "
             >
               OR CONTINUE WITH
@@ -325,7 +344,7 @@ export default function LoginPage() {
 
         <button
           type="button"
-          onClick={()=>handleGoogleLogin()}
+          onClick={() => handleGoogleLogin()}
           className="
             group
             relative
@@ -333,14 +352,14 @@ export default function LoginPage() {
             overflow-hidden
             rounded-2xl
             border
-            border-[#2a2f3a]
+            border-[#222733]
             bg-[#171b22]
             px-5
-            py-3.5
+            py-4
             transition-all
             duration-300
-            hover:border-[#3b4250]
-            hover:bg-[#1c2129]
+            hover:border-[#364152]
+            hover:bg-[#1d2430]
             active:scale-[0.99]
           "
         >
@@ -353,10 +372,7 @@ export default function LoginPage() {
               transition-opacity
               duration-300
               group-hover:opacity-100
-              bg-gradient-to-r
-              from-white/[0.03]
-              via-transparent
-              to-white/[0.03]
+              bg-[linear-gradient(120deg,transparent,rgba(255,255,255,0.03),transparent)]
             "
           />
 
@@ -365,14 +381,14 @@ export default function LoginPage() {
             <div
               className="
                 flex
-                h-10
-                w-10
+                h-11
+                w-11
                 items-center
                 justify-center
                 rounded-full
+                border
+                border-[#2f3541]
                 bg-[#20252e]
-                ring-1
-                ring-[#2f3541]
               "
             >
 
@@ -391,7 +407,7 @@ export default function LoginPage() {
                 Continue with Google
               </span>
 
-              <span className="text-xs text-[#7d8590]">
+              <span className="text-xs text-[#7c8393]">
                 Fast & secure authentication
               </span>
 
@@ -401,17 +417,18 @@ export default function LoginPage() {
 
         {/* ---------- SIGNUP ---------- */}
 
-        <p className="mt-8 text-center text-sm text-[#7d8590]">
+        <p className="mt-8 text-center text-sm text-[#7c8393]">
 
           Don&apos;t have an account?{" "}
 
-          <Link href = {'/auth/createaccount'}
+          <Link
+            href={"/auth/createaccount"}
             onClick={() => router.push("/auth/signup")}
             className="
-              cursor-pointer
-              font-medium
+              font-semibold
               text-[#d1d5db]
               transition-colors
+              duration-200
               hover:text-white
             "
           >
@@ -422,5 +439,7 @@ export default function LoginPage() {
 
       </div>
     </div>
+  </div>
+</div>
   );
 }

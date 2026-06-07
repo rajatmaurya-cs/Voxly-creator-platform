@@ -17,17 +17,7 @@ blogRouter.get('/allblog',getallblog)
 
 
 /* ================= GetAllBlogs for Admin ================= */
-// blogRouter.get('/admin/blogs' , authMiddleware ,BlogAdmin)
-blogRouter.get('/admin/blogs',(req,res,next)=>{
-
-
-    
-    
-    next();
-
-},authMiddleware ,BlogAdmin)
-
-
+blogRouter.get('/admin/blogs' , authMiddleware ,BlogAdmin)
 
 
 /* ================= getBlogById=================  */
@@ -57,9 +47,10 @@ blogRouter.post('/Report', authMiddleware ,adminMiddleware, GenerateReport)
 /* ================= Blog Dashboard =================  */
 
 // blogRouter.get('/BlogDashBoard', authMiddleware ,getDashboardStats)
-blogRouter.get('/BlogDashBoard',(req,res,next)=>{
 
-    // console.log("Blogrouter dashboard ✅:",req?.cookies?.accessToken)
+blogRouter.get('/BlogDashBoard',authMiddleware,(req,res,next)=>{
+
+    // console.log("Request Goes for Blogrouter dashboard ✅:")
     next()
     
 },getDashboardStats)

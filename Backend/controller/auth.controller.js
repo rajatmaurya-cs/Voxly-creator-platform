@@ -154,8 +154,8 @@ export const login = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "Lax",  
+      secure: process.env.NODE_ENV === "production", 
+      sameSite: "Lax",
       path: "/",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -163,27 +163,13 @@ export const login = async (req, res) => {
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production", 
       sameSite: "Lax",
       path: "/",
-      maxAge: 15 * 60 * 1000, // 15 min
+      maxAge: 15 * 60 * 1000    
     });
 
-    // res.cookie("refreshToken", refreshToken, {
-    //   httpOnly: true,
-    //   secure: false,
-    //   sameSite: "lax",
-    //   path: "/",
-    //   maxAge: 7 * 24 * 60 * 60 * 1000,
-    // });
 
-    // res.cookie("accessToken",accessToken, {
-    //   httpOnly: true,
-    //   secure: false,
-    //   sameSite: "lax",
-    //   path: "/",
-    //   maxAge: 15 * 60 * 1000,
-    // });
 
     return res.status(200).json({
       success: true,
@@ -200,7 +186,7 @@ export const login = async (req, res) => {
 
 
   } catch (error) {
-    console.log("The error is Login: ",error)
+    console.log("The error is Login: ", error)
     return res.json({
       success: false,
       message: error.message,
@@ -211,134 +197,6 @@ export const login = async (req, res) => {
 
 
 
-// export const googleLogin = async (req, res) => {
-//   try {
-
-
-//     // const { code } = req.body;
-
-
-
-//     // console.log("The code is : ", code)
-
-//     // if (!code) {
-//     //   return res.json({ success: false, message: "Google auth code missing" });
-//     // }
-
-
-//     // const { tokens } = await oauth2client.getToken(code);
-//     // oauth2client.setCredentials(tokens);
-
-
-//     // console.log("The Token is : ", tokens)
-
-
-
-//     // const userRes = await axios.get(
-//     //   "https://www.googleapis.com/oauth2/v2/userinfo",
-//     //   {
-//     //     headers: {
-//     //       Authorization: `Bearer ${tokens.access_token}`,
-//     //     },
-//     //   }
-//     // );
-
-//     // const {
-//     //   id: googleId,
-
-//     //   email,
-//     //   name: fullName,
-//     //   picture,
-//     // } = userRes.data;
-
-//     const { name , email , avatar} = req.body;
-
-
-//     let user = await User.findOne({
-//       $or: [{ googleId }, { email }],
-//     });
-
-
-//     if (!user) {
-//       user = await User.create({
-//         fullName,
-//         email,
-//         googleId,
-//         authProvider: "GOOGLE",
-//         avatar: picture
-//       });
-//     }
-
-
-//     if (user && !user.googleId) {
-//       user.googleId = googleId;
-//       if (!user.authProvider.includes("GOOGLE")) {
-//         user.authProvider.push("GOOGLE");
-//       }
-//       if (user && !user.avatar) user.avatar = picture
-//       await user.save();
-//     }
-
-
-
-//     const accessToken = createAccessToken(user);
-
-//     const refreshToken = createRefreshToken(user);
-
-
-//     await RefreshToken.deleteMany({ userId: user._id });
-//     await RefreshToken.create({ userId: user._id, token: hashToken(refreshToken) });
-
-
-   
-
-
-//     res.cookie("refreshToken", newrefreshToken, {
-//       httpOnly: true,
-//       secure: false,
-//       sameSite: "lax",
-//       path: "/",
-//       maxAge: 7 * 24 * 60 * 60 * 1000,
-//     });
-
-//     res.cookie("accessToken", newAccessToken, {
-//       httpOnly: true,
-//       secure: false,
-//       sameSite: "lax",
-//       path: "/",
-//       maxAge: 15 * 60 * 1000,
-//     });
-
-//     return res.status(200).json({
-//       success: true,
-
-//       user: {
-//         id: user._id,
-//         name: user.fullName,
-//         email: user.email,
-//         avatar: user.avatar,
-//         role: user.role,
-//         createdAt: user.createdAt,
-//       },
-//     });
-
-
-
-//   } catch (error) {
-//     console.log("GoogleLogin ERROR:", error?.response?.data || error);
-
-//     return res.status(500).json({
-//       success: false,
-//       message:
-//         error?.response?.data?.error_description ||
-//         error?.response?.data?.error ||
-//         error.message ||
-//         "Google login failed",
-//     });
-//   }
-
-// };
-
 
 export const googleLogin = async (req, res) => {
   try {
@@ -348,7 +206,7 @@ export const googleLogin = async (req, res) => {
 
     const code = req.query.code;
 
-     console.log("GoogleLogin 2 code:",code)
+    console.log("GoogleLogin 2 code:", code)
 
     // ---------------- EXCHANGE CODE FOR TOKEN ----------------
 
@@ -366,11 +224,11 @@ export const googleLogin = async (req, res) => {
       }
     );
 
-     console.log("GoogleLogin 3")
+    console.log("GoogleLogin 3")
 
     const { access_token } = data;
 
-     console.log("GoogleLogin 4")
+    console.log("GoogleLogin 4")
 
     // ---------------- GET GOOGLE USER ----------------
 
@@ -382,14 +240,14 @@ export const googleLogin = async (req, res) => {
         },
       }
     );
- console.log("GoogleLogin 5")
+    console.log("GoogleLogin 5")
     // ---------------- FIND USER ----------------
 
     let user = await User.findOne({
       email: googleUser.email,
     });
 
-     console.log("GoogleLogin 6")
+    console.log("GoogleLogin 6")
 
     // ---------------- CREATE USER ----------------
 
@@ -407,7 +265,7 @@ export const googleLogin = async (req, res) => {
       });
     }
 
-    
+
 
     // ---------------- UPDATE EXISTING USER ----------------
 
@@ -429,14 +287,14 @@ export const googleLogin = async (req, res) => {
       await user.save();
     }
 
-     console.log("GoogleLogin 8")
+    console.log("GoogleLogin 8")
 
     // ---------------- TOKENS ----------------
 
     const accessToken = createAccessToken(user);
 
 
-     console.log("GoogleLogin 9")
+    console.log("GoogleLogin 9")
 
     const refreshToken = createRefreshToken(user);
 
@@ -446,7 +304,7 @@ export const googleLogin = async (req, res) => {
       userId: user._id,
     });
 
-     console.log("GoogleLogin 10")
+    console.log("GoogleLogin 10")
 
     await RefreshToken.create({
 
@@ -455,7 +313,7 @@ export const googleLogin = async (req, res) => {
       token: hashToken(refreshToken),
     });
 
-     console.log("GoogleLogin 11")
+    console.log("GoogleLogin 11")
 
     // ---------------- COOKIES ----------------
 
@@ -487,7 +345,7 @@ export const googleLogin = async (req, res) => {
 
     // ---------------- REDIRECT ----------------
 
-     console.log("GoogleLogin 13")
+    console.log("GoogleLogin 13")
 
     res.redirect(`${process.env.FRONTEND_URL}/`);
 
@@ -543,53 +401,59 @@ export const logout = async (req, res) => {
 export const refreshAccessToken = async (req, res) => {
   try {
 
-    // console.log("refreshAccessToken: 1")
+    const now = new Date();
+
+    const time = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+    console.log("Request comes for refreshAccesToken 🚫 at: ",time);
+
+    console.log("refreshAccessToken: 1")
 
     const refreshToken = req.cookies.refreshToken;
 
     const accessToken = req.cookies.accessToken;
 
 
-    // console.log("The refreshtoken is: ",refreshToken)
-    // console.log("The accessToken is: ",accessToken)
-  
+    // console.log("The refreshtoken from refreshAccessToken: ",refreshToken)
+    // console.log("The accessToken from refreshAccessToken:: ",accessToken)
+
 
     if (!refreshToken) {
       return res.status(401).json({ message: "Invalid email or Password" });
     }
 
-    // console.log("refreshAccessToken: 2")
+    console.log("refreshAccessToken: 2")
 
 
     const hashedToken = hashToken(refreshToken);
 
-    // console.log("refreshAccessToken: 3")
+    console.log("refreshAccessToken: 3")
 
     const storedToken = await RefreshToken.findOne({
       token: hashedToken,
     });
 
-    // console.log("refreshAccessToken: 4")
+    console.log("refreshAccessToken: 4")
 
-    // console.log("The StoredToken is: ", storedToken)
+    console.log("The StoredToken is: ", storedToken)
 
     if (!storedToken) {
       return res.status(403).json({ message: "Invalid Email or Password" });
     }
 
-    // console.log("refreshAccessToken: 5")
+    console.log("refreshAccessToken: 5")
 
     const decoded = jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET
     );
 
-    // console.log("refreshAccessToken: 6")
+    console.log("refreshAccessToken: 6")
 
     const user = await User.findById(decoded.id);
 
 
-    // console.log("refreshAccessToken: 7")
+    console.log("refreshAccessToken: 7")
 
     // console.log("user is: ", user)
 
@@ -597,15 +461,15 @@ export const refreshAccessToken = async (req, res) => {
       return res.status(403).json({ message: "User not found" });
     }
 
-    // console.log("refreshAccessToken: 8")
+    console.log("refreshAccessToken: 8")
 
     const newAccessToken = createAccessToken(user);
 
-    // console.log("refreshAccessToken: 9")
+    console.log("refreshAccessToken: 9")
 
     const newrefreshToken = createRefreshToken(user);
 
-    // console.log("refreshAccessToken: 10")
+    console.log("refreshAccessToken: 10")
 
 
     await RefreshToken.deleteMany({ userId: user._id });
@@ -614,25 +478,10 @@ export const refreshAccessToken = async (req, res) => {
       token: hashToken(newrefreshToken),
     });
 
-    // console.log("refreshAccessToken: 11")
 
-    // res.cookie("refreshToken", newrefreshToken, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: "None",
-    //   path: "/",
-    //   maxAge: 7 * 24 * 60 * 60 * 1000,
-    // });
+    console.log("refreshAccessToken: 11")
 
-    // console.log("refreshAccessToken: 12")
 
-    // res.cookie("accessToken", newAccessToken, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: "None",
-    //   path: "/",
-    //   maxAge: 15 * 60 * 1000, // 15 min
-    // });
 
     res.cookie("refreshToken", newrefreshToken, {
       httpOnly: true,
@@ -650,7 +499,7 @@ export const refreshAccessToken = async (req, res) => {
       maxAge: 15 * 60 * 1000,
     });
 
-    // console.log("refreshAccessToken: 13")
+    console.log("\n\n\n accessToken generated: ", newAccessToken)
 
 
     return res.status(200).json({
@@ -698,7 +547,7 @@ export const verifyOtp = async (req, res) => {
 
     let { email, otp, purpose } = req.body;
 
-     console.log("2 ✅")
+    console.log("2 ✅")
 
     if (!email || !otp || !purpose) {
       return res.status(400).json({
@@ -707,7 +556,7 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
-     console.log("3 ✅")
+    console.log("3 ✅")
 
     email = email.toLowerCase().trim();
     purpose = purpose.toUpperCase().trim(); // e.g. SIGNUP, RESET_PASSWORD
@@ -715,14 +564,14 @@ export const verifyOtp = async (req, res) => {
     const otpKey = `otp:${purpose}:${email}`;
     const attemptsKey = `otpAttempts:${purpose}:${email}`;
 
-     console.log("4 ✅")
+    console.log("4 ✅")
 
     // ✅ Get OTP from Redis (purpose-based)
-    console.log("The status of redisClient: ",redisClient.isOpen)
-    
+    console.log("The status of redisClient: ", redisClient.isOpen)
+
     const storedOtp = await redisClient.get(otpKey);
 
-     console.log("5 ✅")
+    console.log("5 ✅")
 
     if (!storedOtp) {
       return res.status(400).json({
@@ -731,19 +580,19 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
-     console.log("6 ✅")
+    console.log("6 ✅")
 
     // ✅ Attempts limiter (purpose-based)
     const attempts = await redisClient.incr(attemptsKey);
 
-     console.log("7 ✅")
+    console.log("7 ✅")
 
 
     if (attempts === 1) {
       await redisClient.expire(attemptsKey, 300); // 5 minutes
     }
 
-     console.log("8 ✅")
+    console.log("8 ✅")
 
     if (attempts > 5) {
       return res.status(429).json({
@@ -752,13 +601,13 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
-     console.log("9 ✅")
+    console.log("9 ✅")
 
     // ✅ Compare OTP
     const isMatch = await bcrypt.compare(otp.toString(), storedOtp);
 
 
-     console.log("10 ✅")
+    console.log("10 ✅")
 
     if (!isMatch) {
       return res.status(400).json({
@@ -767,13 +616,13 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
-     console.log("11 ✅")
+    console.log("11 ✅")
 
     // ✅ Success: delete OTP + attempts
     await redisClient.del(otpKey);
     await redisClient.del(attemptsKey);
 
-     console.log("12 ✅")
+    console.log("12 ✅")
 
     /**
      * ✅ IMPORTANT:
@@ -787,7 +636,7 @@ export const verifyOtp = async (req, res) => {
       { upsert: true }
     );
 
-     console.log("13 ✅")
+    console.log("13 ✅")
 
     return res.status(200).json({
       success: true,
@@ -809,6 +658,8 @@ export const verifyEmails = async (req, res) => {
   try {
 
     let { email } = req.body;
+
+    console.log("The email for Refresh secure: ", email)
 
     if (!email) {
       return res.status(400).json({

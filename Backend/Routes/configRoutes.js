@@ -9,11 +9,17 @@ import adminMiddleware from "../Middleware/adminMiddleware.js"
 const configRouter = express.Router();
 
 /* ================= AiEnable / UserLimit / AppLimit ================= */
-configRouter.get("/config-dashboard",getConfig);
+configRouter.get("/config-dashboard",(req,res,next)=>{
+    console.log("Request entered into /config-dashboard in configroutes🚀")
+    next()
+},getConfig);
 
 
 /* ================= Change Made by User._id ================= */
-configRouter.get('/getConfigHistory',getConfigHistory)
+configRouter.get('/getConfigHistory',(req,res,next)=>{
+    console.log("Request entered into /getconfighistory in configroutes 🚀")
+    next()
+},getConfigHistory)
 
 
 /* ================= updatConfig ================= */

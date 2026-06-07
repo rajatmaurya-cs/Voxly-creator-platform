@@ -8,15 +8,32 @@ import React, {
   useEffect,
 } from "react";
 
+import dynamic from "next/dynamic";
+
+import EditorLoader from '@/app/Animations/EditorLoader'
+
+import Loader from "@/app/Animations/Loader";
+
+import AIButton from "@/app/Animations/AIButton";
+
+
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import toast from "react-hot-toast";
-import { Editor } from "@tinymce/tinymce-react";
+
+
+
 
 import { blogCategories } from "@/app/assets/assets";
+
 import Image from "next/image";
 
 import BlogReport from "@/app/pop-up/blogreport/page";
+
 import { ImagePlus, X } from "lucide-react";
+
+import { apiFetch } from "@/lib/apiFetch";
 
 // ---------------- TYPES ----------------
 
@@ -31,7 +48,78 @@ type Analysis = {
 
 type ContentType = "ai" | "human";
 
-const Loader = lazy(() => import("@/app/Animations/Loader"));
+const Button = dynamic(() => import("@/app/Animations/AIButton"), {
+  ssr: false,
+});
+
+
+const editorConfig = {
+  height: 600,
+
+  menubar: false,
+  statusbar: false,
+  branding: false,
+
+  skin: "oxide-dark",
+  content_css: "dark",
+
+  plugins: [
+    "advlist",
+    "autolink",
+    "lists",
+    "link",
+    "charmap",
+    "preview",
+    "anchor",
+    "searchreplace",
+    "visualblocks",
+    "code",
+    "fullscreen",
+    "insertdatetime",
+    "table",
+    "help",
+    "wordcount",
+    "codesample",
+  ],
+
+  toolbar: `
+    undo redo |
+    blocks fontfamily fontsize |
+    bold italic underline strikethrough |
+    forecolor backcolor |
+    alignleft aligncenter alignright alignjustify |
+    bullist numlist outdent indent |
+    table blockquote codesample |
+    link charmap |
+    removeformat |
+    fullscreen preview code
+  `,
+
+  toolbar_mode: "wrap",
+
+  content_style: `
+    body {
+      background: #11141a;
+      color: #f3f4f6;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      padding: 1rem;
+    }
+  `,
+};
+
+const Editor = dynamic(
+  () => import("@tinymce/tinymce-react").then((mod) => mod.Editor),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-[600px] flex items-center justify-center rounded-xl border border-zinc-800">
+        <EditorLoader size={90} border={10} />
+      </div>
+    ),
+  }
+);
 
 const AddBlog = () => {
   const queryClient = useQueryClient();
@@ -104,14 +192,13 @@ const AddBlog = () => {
   // ---------------- REPORT ----------------
   const generateReportMutation = useMutation({
     mutationFn: async (htmlContent: string) => {
-      const res = await fetch(
+      const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/blog/Report`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
           body: JSON.stringify({ data: htmlContent }),
         }
       );
@@ -140,7 +227,7 @@ const AddBlog = () => {
   // ---------------- ADD BLOG ----------------
   const addBlogMutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      const res = await fetch(
+      const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/blog/addblog`,
         {
           method: "POST",
@@ -412,115 +499,14 @@ const AddBlog = () => {
 
               <div className="relative">
 
-                {mounted && (
+                {mounted ? (
                   <Editor
                     apiKey={process.env.NEXT_PUBLIC_TINYMCE_KEY || ""}
                     value={content}
-                    onEditorChange={(newValue) => setContent(newValue)}
-                    init={{
-                      height: 600,
-
-                      menubar: false,
-                      statusbar: false,
-                      branding: false,
-
-                      skin: "oxide-dark",
-                      content_css: "dark",
-
-                      plugins: [
-                        "advlist",
-                        "autolink",
-                        "lists",
-                        "link",
-                        "charmap",
-                        "preview",
-                        "anchor",
-                        "searchreplace",
-                        "visualblocks",
-                        "code",
-                        "fullscreen",
-                        "insertdatetime",
-                        "table",
-                        "help",
-                        "wordcount",
-                        "codesample",
-                      ],
-
-                      toolbar: `
-      undo redo |
-      blocks fontfamily fontsize |
-      bold italic underline strikethrough |
-      forecolor backcolor |
-      alignleft aligncenter alignright alignjustify |
-      bullist numlist outdent indent |
-      table blockquote codesample |
-      link charmap |
-      removeformat |
-      fullscreen preview code
-    `,
-
-                      // THIS makes toolbar wrap instead of hiding in 3 dots
-                      toolbar_mode: "wrap",
-
-                      content_style: `
-      body {
-        background: #11141a;
-        color: #f3f4f6;
-        font-family: 'Inter', sans-serif;
-        font-size: 16px;
-        line-height: 1.8;
-        padding: 1rem;
-      }
-
-      h1, h2, h3, h4, h5, h6 {
-        color: white;
-        font-weight: 700;
-        margin-top: 1.4rem;
-        margin-bottom: 0.8rem;
-      }
-
-      p {
-        margin-bottom: 1rem;
-      }
-
-      a {
-        color: #60a5fa;
-      }
-
-      blockquote {
-        border-left: 4px solid #374151;
-        margin: 1rem 0;
-        padding-left: 1rem;
-        color: #cbd5e1;
-      }
-
-      pre {
-        background: #0f172a;
-        padding: 1rem;
-        border-radius: 12px;
-        overflow-x: auto;
-      }
-
-      code {
-        background: #1e293b;
-        padding: 2px 6px;
-        border-radius: 6px;
-      }
-
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-
-      table td,
-      table th {
-        border: 1px solid #2a3040;
-        padding: 10px;
-      }
-    `,
-                    }}
+                    onEditorChange={setContent}
+                    init={editorConfig}
                   />
-                )}
+                ) : (<div className="h-[600px] rounded-xl bg-zinc-900 animate-pulse" />)}
 
                 {generateContentMutation.isPending && (
                   <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#0b0d11]/80 backdrop-blur-sm">
@@ -530,7 +516,7 @@ const AddBlog = () => {
                         <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#2b3140] border-t-[#d5d7de]" />
                       }
                     >
-                      <Loader />
+                      <Loader data = "Generating" />
                     </Suspense>
 
                   </div>
@@ -746,18 +732,18 @@ const AddBlog = () => {
               <button
                 type="button"
                 onClick={handleGenerateContent}
-                className="
-              flex h-12 w-full items-center justify-center
-              rounded-2xl
-              bg-[#1d2430]
-              text-sm font-medium text-white
-              transition-all
-              hover:bg-[#252d3a]
-            "
+            //     className="
+            //   flex h-12 w-full items-center justify-center
+            //   rounded-2xl
+            //   bg-[#1d2430]
+            //   text-sm font-medium text-white
+            //   transition-all
+            //   hover:bg-[#252d3a]
+            // "
               >
                 {generateContentMutation.isPending
                   ? "Generating..."
-                  : "AI Generate Content"}
+                  : <AIButton/>}
               </button>
 
               {!analysis ? (
@@ -800,17 +786,17 @@ const AddBlog = () => {
 
               <button
                 type="submit"
-                className="
-              mt-2
-              flex h-12 w-full items-center justify-center
-              rounded-2xl
-              bg-[#f3f4f6]
-              text-sm font-semibold text-[#0f1115]
-              transition-all
-              hover:bg-white
-            "
+                disabled={addBlogMutation.isPending}
+                className={`mt-2 flex h-12 w-full items-center justify-center rounded-2xl text-sm font-semibold text-white transition-all duration-200 ${addBlogMutation.isPending
+                    ? "bg-transparent cursor-not-allowed"
+                    : "bg-[#1d2430] hover:bg-[#252d3a]"
+                  }`}
               >
-                Submit Blog
+                {addBlogMutation.isPending ? (
+                  <EditorLoader size={40} border={3} />
+                ) : (
+                  "Submit Blog"
+                )}
               </button>
 
             </div>

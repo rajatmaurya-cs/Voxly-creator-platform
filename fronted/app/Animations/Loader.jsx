@@ -1,7 +1,6 @@
-
 "use client";
-const Loader = () => {
-  const text = "Summarising";
+const Loader = ({ data = "Summarising" }) => {
+  const text = data;
 
   return (
     <div className="loader-wrapper">
@@ -80,13 +79,13 @@ const Loader = () => {
             transform: translateY(0);
           }
 
-          20% {
+          25% {
             opacity: 1;
             transform: scale(1.15);
             color: #00E5FF; /* pulse to cyan accent */
           }
 
-          40% {
+          50% {
             opacity: 0.7;
             transform: translateY(0);
           }

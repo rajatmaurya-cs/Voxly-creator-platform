@@ -4,7 +4,9 @@ const nextConfig: NextConfig = {
   compiler: {
     styledComponents: true,
   },
-reactStrictMode: false,
+
+  reactStrictMode: false,
+
   images: {
     remotePatterns: [
       {
@@ -14,6 +16,10 @@ reactStrictMode: false,
       {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn-icons-png.flaticon.com",
       },
     ],
   },

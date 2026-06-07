@@ -5,6 +5,7 @@ import { useState, useMemo } from "react";
 import { useHomeBlogs } from "../../hooks/useHomeBlogs";
 import Link from "next/link";
 import { Search, CalendarDays } from "lucide-react";
+import Image from "next/image";
 
 type Blog = {
   _id: string;
@@ -72,21 +73,21 @@ export default function BlogClient({ initialData }: Props) {
 
 
 
- const { filteredBlogs, publishedBlogs } = useMemo(() => {
-  const searchWords = search.toLowerCase().trim().split(/\s+/).filter(Boolean);
-  
-  const filtered = (blogs || []).filter((blog) => {
-    
-    if (searchWords.length === 0) return true; // show all when search empty
-    
-    const title = blog.title.toLowerCase();
-    // Any word in search must exist in title
-    return searchWords.some(word => title.includes(word));
-  });
+  const { filteredBlogs, publishedBlogs } = useMemo(() => {
+    const searchWords = search.toLowerCase().trim().split(/\s+/).filter(Boolean);
 
-  const published = filtered.filter((blog) => blog.isPublished === true);
-  return { filteredBlogs: filtered, publishedBlogs: published };
-}, [blogs, search,activeCategory]);
+    const filtered = (blogs || []).filter((blog) => {
+
+      if (searchWords.length === 0) return true; // show all when search empty
+
+      const title = blog.title.toLowerCase();
+      // Any word in search must exist in title
+      return searchWords.some(word => title.includes(word));
+    });
+
+    const published = filtered.filter((blog) => blog.isPublished === true);
+    return { filteredBlogs: filtered, publishedBlogs: published };
+  }, [blogs, search, activeCategory]);
 
 
 
@@ -131,8 +132,8 @@ export default function BlogClient({ initialData }: Props) {
               key={cat}
               onClick={() => setActiveCategory(cat)}
               className={`rounded-full border px-5 py-2.5 text-sm font-normal transition-all duration-300 ${activeCategory === cat
-                  ? "border-white/20 bg-white text-black shadow-lg shadow-white/10"
-                  : "border-white/10 bg-white/[0.03] text-gray-300 hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
+                ? "border-white/20 bg-white text-black shadow-lg shadow-white/10"
+                : "border-white/10 bg-white/[0.03] text-gray-300 hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
                 }`}
             >
               {cat}
@@ -150,11 +151,15 @@ export default function BlogClient({ initialData }: Props) {
             >
               {/* IMAGE */}
               <div className="relative overflow-hidden">
-                <img
-                  src={blog.image}
-                  alt={blog.title}
-                  className="h-60 w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                <div className="relative h-60 w-full overflow-hidden">
+                  <Image
+                    src={blog?.image}
+                    alt={blog?.title}
+                    priority
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
@@ -171,16 +176,23 @@ export default function BlogClient({ initialData }: Props) {
 
                 {/* AUTHOR */}
                 <div className="flex items-center justify-between gap-3 border-t border-white/10 pt-4">
+
                   <div className="flex items-center gap-3">
-                    <img
-                      src={blog.createdBy.avatar}
-                      alt={blog.createdBy.fullName}
-                      className="h-11 w-11 rounded-full border border-white/10 object-cover"
-                    />
+
+                    <div className="rounded-full border-2 border-white p-1 shadow-lg">
+                      <Image
+                        src={blog?.createdBy?.avatar || "/man.png"}
+                        alt={blog?.createdBy?.fullName || "Unknown"}
+                        width={44}
+                        height={44}
+                        priority
+                        className="rounded-full object-cover"
+                      />
+                    </div>
 
                     <div>
                       <p className="text-sm font-normal text-gray-200">
-                        {blog.createdBy.fullName}
+                        {blog?.createdBy?.fullName || "Unknown"}
                       </p>
 
                       <div className="mt-1 flex items-center gap-1 text-xs font-normal text-gray-500">
@@ -213,7 +225,7 @@ export default function BlogClient({ initialData }: Props) {
               {isFetchingNextPage ? "Loading..." : "Load More"}
             </button>
           </div>
-          
+
         )}
       </div>
     </section>

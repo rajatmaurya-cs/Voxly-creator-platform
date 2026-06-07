@@ -1,5 +1,6 @@
 'use client'
 
+import { apiFetch } from '@/lib/apiFetch'
 import { useQuery } from '@tanstack/react-query'
 import {
   FileText,
@@ -13,7 +14,7 @@ export default function StatusClient() {
     queryKey: ['dashboard-data'],
 
     queryFn: async () => {
-      const res = await fetch(
+      const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/blog/BlogDashboard`,{
           credentials: "include"
         }

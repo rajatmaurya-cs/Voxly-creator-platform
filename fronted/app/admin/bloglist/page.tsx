@@ -16,6 +16,7 @@ import {
   ArrowDown,
   ChevronDown
 } from "lucide-react";
+import { apiFetch } from '@/lib/apiFetch';
 
 const Page = () => {
   const [deletingBlogId, setDeletingBlogId] = useState<string | null>(null);
@@ -45,7 +46,7 @@ const Page = () => {
 
   const toggleMutation = useMutation({
     mutationFn: async (blogId: string) => {
-      const res = await fetch(
+      const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/blog/toggle-blog`,
         {
           method: "POST",
@@ -84,7 +85,7 @@ const Page = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (blogId: string) => {
-      const res = await fetch(
+      const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/blog/delete-blog`,
         {
           method: "POST",
@@ -147,182 +148,280 @@ const Page = () => {
   }
 
   return (
-    <div className='min-h-screen bg-[#09090b] text-zinc-200 px-6 py-12 font-sans antialiased selection:bg-zinc-800 selection:text-zinc-100'>
-      <div className='max-w-5xl mx-auto'>
+  <div className="min-h-screen bg-[#0b0d11] text-[#f3f4f6] px-6 py-12 font-sans antialiased selection:bg-[#1d2430] selection:text-white">
+  <div className="max-w-5xl mx-auto">
 
-        {/* DASHBOARD HEADER */}
-        <div className='mb-10 flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-zinc-900 pb-8 gap-4'>
-          <div>
-            <div className='flex items-center gap-2.5 text-zinc-500 mb-1.5 text-xs font-semibold tracking-widest uppercase'>
-              <Layers className="w-3.5 h-3.5 stroke-[2.5]" />
-              <span>Admin Control Panel</span>
-            </div>
-            <h1 className='text-2xl font-semibold tracking-tight text-zinc-100 sm:text-3xl'>
-              Publications Hub
-            </h1>
-            <p className='mt-1.5 text-sm font-normal text-zinc-400 max-w-xl leading-relaxed'>
-              Review, moderate, status toggle, and manage live content deployments instantly.
-            </p>
-          </div>
-          <div className='flex items-center gap-2 bg-zinc-900/40 border border-zinc-800/60 px-3.5 py-1.5 rounded-lg text-xs font-medium text-zinc-400 self-start sm:self-center'>
-            <span className='w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse' />
-            <span>{blogs.length} Total Logs</span>
-          </div>
+    {/* DASHBOARD HEADER */}
+    <div className="mb-10 flex flex-col gap-4 border-b border-[#1b1f27] pb-8 sm:flex-row sm:items-center sm:justify-between">
+      
+      <div>
+        <div className="mb-2 flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8b90a0]">
+          <Layers className="h-3.5 w-3.5 stroke-[2.5]" />
+          <span>Admin Control Panel</span>
         </div>
 
-        {/* PUBLICATIONS LIST CONTAINER */}
-        <div className='space-y-4'>
-          {blogs.length === 0 ? (
-            <div className='text-center py-16 border border-dashed border-zinc-800 rounded-xl bg-zinc-900/10'>
-              <p className='text-sm text-zinc-500'>No available publications found in this directory.</p>
-            </div>
-          ) : (
-            blogs.map((blog) => {
-              const isToggling = togglingBlogId === blog._id;
-              const isDeleting = deletingBlogId === blog._id;
-              const isDisabled = isToggling || isDeleting;
+        <h1 className="text-2xl font-semibold tracking-[-0.03em] text-white sm:text-3xl">
+          Publications Hub
+        </h1>
 
-              return (
-                <div
-                  key={blog._id}
-                  className='group relative overflow-hidden rounded-xl border border-zinc-900 bg-zinc-900/20 p-5 transition-all duration-200 hover:bg-zinc-900/40 hover:border-zinc-800/80 flex flex-col md:flex-row md:items-start justify-between gap-6'
-                >
-                  {/* WORKSPACE METADATA & CONTENT ROW */}
-                  <div className='flex-1 space-y-3.5 min-w-0'>
+        <p className="mt-2 max-w-xl text-sm leading-7 text-[#8b90a0]">
+          Review, moderate, status toggle, and manage live content deployments instantly.
+        </p>
+      </div>
 
-                    {/* STATUS PILLS */}
-                    <div className='flex items-center gap-2'>
-                      <span
-                        className={`inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[10px] font-semibold tracking-wider uppercase border ${blog.isPublished
-                            ? "border-emerald-500/10 bg-emerald-500/5 text-emerald-400"
-                            : "border-zinc-800 bg-zinc-800/40 text-zinc-400"
-                          }`}
-                      >
-                        <span className={`h-1 w-1 rounded-full ${blog.isPublished ? "bg-emerald-400" : "bg-zinc-500"}`} />
-                        {blog.isPublished ? "Active" : "Draft Workspace"}
-                      </span>
-                    </div>
+      <div className="flex items-center gap-2 rounded-2xl border border-[#222733] bg-[#171b22] px-4 py-2 text-xs font-medium text-[#c2c8d3] shadow-inner self-start sm:self-center">
+        <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+        <span>{blogs.length} Total Logs</span>
+      </div>
+    </div>
 
-                    {/* TEXT LOGS */}
-                    <div className='space-y-1'>
-                      <h2 className='text-lg font-medium text-zinc-100 tracking-tight transition-colors duration-150 group-hover:text-white break-words'>
-                        {blog.title}
-                      </h2>
-                      {blog.subTitle && (
-                        <p className='text-sm font-normal text-zinc-400 max-w-3xl leading-relaxed truncate-3-lines'>
-                          {blog.subTitle}
-                        </p>
-                      )}
-                    </div>
+    {/* PUBLICATIONS LIST CONTAINER */}
+    <div className="space-y-4">
+      {blogs.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-[#222733] bg-[#11141a] py-16 text-center">
+          <p className="text-sm text-[#7c8393]">
+            No available publications found in this directory.
+          </p>
+        </div>
+      ) : (
+        blogs.map((blog) => {
+          const isToggling = togglingBlogId === blog._id;
+          const isDeleting = deletingBlogId === blog._id;
+          const isDisabled = isToggling || isDeleting;
 
-                    {/* METADATA PLATFORM BAR */}
-                    <div className='flex flex-wrap items-center gap-y-2 gap-x-4 pt-1 text-xs text-zinc-500 font-medium'>
+          return (
+            <div
+              key={blog._id}
+              className="
+                group
+                relative
+                overflow-hidden
+                rounded-xl
+                border
+                border-[#1b1f27]
+                bg-[#11141a]
+                p-5
+                transition-all
+                duration-300
+                hover:border-[#2b3442]
+                hover:bg-[#131821]
+                flex
+                flex-col
+                justify-between
+                gap-6
+                md:flex-row
+                md:items-start
+              "
+            >
 
-                      {/* TIMESTAMP */}
-                      <div className='flex items-center gap-1.5'>
-                        <CalendarDays className='h-3.5 w-3.5 text-zinc-600' />
-                        <span>
-                          {blog.createdAt
-                            ? new Date(blog.createdAt).toLocaleDateString("en-US", {
+              {/* subtle hover glow */}
+              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.03),transparent_60%)]" />
+
+              {/* WORKSPACE METADATA & CONTENT ROW */}
+              <div className="relative min-w-0 flex-1 space-y-3.5">
+
+                {/* STATUS PILLS */}
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] ${
+                      blog.isPublished
+                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
+                        : "border-[#2a313d] bg-[#171b22] text-[#8b90a0]"
+                    }`}
+                  >
+                    <span
+                      className={`h-1 w-1 rounded-full ${
+                        blog.isPublished
+                          ? "bg-emerald-400"
+                          : "bg-[#6b7280]"
+                      }`}
+                    />
+
+                    {blog.isPublished
+                      ? "Active"
+                      : "Draft Workspace"}
+                  </span>
+                </div>
+
+                {/* TEXT LOGS */}
+                <div className="space-y-1">
+                  <h2 className="break-words text-lg font-medium tracking-tight text-white transition-colors duration-200 group-hover:text-white">
+                    {blog.title}
+                  </h2>
+
+                  {blog.subTitle && (
+                    <p className="truncate-3-lines max-w-3xl text-sm leading-relaxed text-[#8b90a0]">
+                      {blog.subTitle}
+                    </p>
+                  )}
+                </div>
+
+                {/* METADATA PLATFORM BAR */}
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1 text-xs font-medium text-[#7c8393]">
+
+                  {/* TIMESTAMP */}
+                  <div className="flex items-center gap-1.5">
+                    <CalendarDays className="h-3.5 w-3.5 text-[#6b7280]" />
+
+                    <span>
+                      {blog.createdAt
+                        ? new Date(blog.createdAt).toLocaleDateString(
+                            "en-US",
+                            {
                               month: "short",
                               day: "numeric",
                               year: "numeric",
-                            })
-                            : "—"}
-                        </span>
-                      </div>
+                            }
+                          )
+                        : "—"}
+                    </span>
+                  </div>
 
-                      <span className='text-zinc-800 hidden sm:inline'>•</span>
+                  <span className="hidden text-[#2a313d] sm:inline">•</span>
 
-                      {/* MODERATOR TAG */}
-                      <div className='flex items-center gap-2'>
-                        <div className='flex h-5 w-5 items-center justify-center rounded-full bg-zinc-800 border border-zinc-700 text-[10px] font-bold text-zinc-300'>
-                          <UserRound className='h-2.5 w-2.5' />
-                        </div>
-                        <span className='text-zinc-400'>
-                          {blog.moderatedBy?.fullName || "System Engine"}
-                        </span>
-                        <ShieldCheck className='h-3.5 w-3.5 text-zinc-600' />
-                      </div>
+                  {/* MODERATOR TAG */}
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-5 w-5 items-center justify-center rounded-full border border-[#2a313d] bg-[#171b22] text-[#c2c8d3]">
+                      <UserRound className="h-2.5 w-2.5" />
                     </div>
-                  </div>
 
-                  {/* ACTION MODULE SYSTEM */}
-                  <div className='flex items-center gap-2 sm:self-end md:self-start lg:self-center shrink-0 border-t border-zinc-900/60 md:border-t-0 pt-4 md:pt-0'>
+                    <span className="text-[#8b90a0]">
+                      {blog.moderatedBy?.fullName || "System Engine"}
+                    </span>
 
-                    {/* TOGGLE WORKSPACE STATUS STATUS */}
-                    <button
-                      disabled={isDisabled}
-                      onClick={() => handletoggle(blog._id)}
-                      className={`h-9 inline-flex items-center justify-center gap-2 rounded-lg px-4 text-xs font-medium tracking-tight transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed border ${blog.isPublished
-                          ? "bg-zinc-900 border-zinc-800 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-200"
-                          : "bg-zinc-100 border-transparent text-zinc-950 hover:bg-zinc-200"
-                        }`}
-                    >
-                      {isToggling ? (
-                        <>
-                          <Loader2 className='h-3.5 w-3.5 animate-spin' />
-                          <span>Syncing...</span>
-                        </>
-                      ) : blog.isPublished ? (
-                        <>
-                          <EyeOff className='h-3.5 w-3.5 stroke-[2]' />
-                          <span>Unpublish</span>
-                        </>
-                      ) : (
-                        <>
-                          <Eye className='h-3.5 w-3.5 stroke-[2]' />
-                          <span>Publish Logs</span>
-                        </>
-                      )}
-                    </button>
-
-                    {/* DESTRUCTIVE DELETE TRASH */}
-                    <button
-                      onClick={() => handledelete(blog._id)}
-                      disabled={isDisabled}
-                      className='h-9 w-9 inline-flex items-center justify-center rounded-lg border border-zinc-900 bg-transparent text-zinc-500 transition-all duration-150 hover:border-red-950 hover:bg-red-950/20 hover:text-red-400 disabled:opacity-40 disabled:cursor-not-allowed'
-                      aria-label='Delete blog compilation'
-                    >
-                      {isDeleting ? (
-                        <Loader2 className='h-3.5 w-3.5 animate-spin' />
-                      ) : (
-                        <Trash2 className="h-3.5 w-3.5 stroke-[2]" />
-                      )}
-                    </button>
-
+                    <ShieldCheck className="h-3.5 w-3.5 text-[#6b7280]" />
                   </div>
                 </div>
-              )
-            })
+              </div>
+
+              {/* ACTION MODULE SYSTEM */}
+              <div className="flex shrink-0 items-center gap-2 border-t border-[#1b1f27] pt-4 md:border-t-0 md:pt-0 sm:self-end md:self-start lg:self-center">
+
+                {/* TOGGLE WORKSPACE STATUS */}
+                <button
+                  disabled={isDisabled}
+                  onClick={() => handletoggle(blog._id)}
+                  className={`h-9 inline-flex items-center justify-center gap-2 rounded-lg border px-4 text-xs font-medium tracking-tight transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-40 ${
+                    blog.isPublished
+                      ? `
+                        border-[#2a313d]
+                        bg-[#171b22]
+                        text-[#d1d5db]
+                        hover:border-[#364152]
+                        hover:bg-[#1d2430]
+                      `
+                      : `
+                        border-transparent
+                        bg-[#f3f4f6]
+                        text-[#0f1115]
+                        hover:bg-white
+                      `
+                  }`}
+                >
+                  {isToggling ? (
+                    <>
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      <span>Syncing...</span>
+                    </>
+                  ) : blog.isPublished ? (
+                    <>
+                      <EyeOff className="h-3.5 w-3.5 stroke-[2]" />
+                      <span>Unpublish</span>
+                    </>
+                  ) : (
+                    <>
+                      <Eye className="h-3.5 w-3.5 stroke-[2]" />
+                      <span>Publish Logs</span>
+                    </>
+                  )}
+                </button>
+
+                {/* DELETE BUTTON */}
+                <button
+                  onClick={() => handledelete(blog._id)}
+                  disabled={isDisabled}
+                  className="
+                    h-9
+                    w-9
+                    inline-flex
+                    items-center
+                    justify-center
+                    rounded-lg
+                    border
+                    border-[#222733]
+                    bg-[#171b22]
+                    text-[#7c8393]
+                    transition-all
+                    duration-200
+                    hover:border-red-500/20
+                    hover:bg-red-500/10
+                    hover:text-red-400
+                    disabled:cursor-not-allowed
+                    disabled:opacity-40
+                  "
+                  aria-label="Delete blog compilation"
+                >
+                  {isDeleting ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Trash2 className="h-3.5 w-3.5 stroke-[2]" />
+                  )}
+                </button>
+
+              </div>
+            </div>
+          );
+        })
+      )}
+    </div>
+
+    {/* PAGINATION MODULE BUTTON */}
+    {hasNextPage && (
+      <div className="mt-8 flex justify-center border-t border-[#1b1f27] pt-8">
+
+        <button
+          onClick={() => fetchNextPage()}
+          disabled={isFetchingNextPage}
+          className="
+            h-10
+            inline-flex
+            items-center
+            justify-center
+            gap-2
+            rounded-xl
+            border
+            border-[#222733]
+            bg-[#171b22]
+            px-5
+            text-xs
+            font-medium
+            tracking-tight
+            text-[#c2c8d3]
+            transition-all
+            duration-200
+            hover:border-[#364152]
+            hover:bg-[#1d2430]
+            disabled:opacity-40
+          "
+        >
+          {isFetchingNextPage ? (
+            <div className="flex items-center gap-2">
+              <Loader2 className="h-3 w-3 animate-spin" />
+              <span>Loading updates...</span>
+            </div>
+          ) : (
+            <>
+              <span>See More</span>
+              <ChevronDown className="h-4 w-4" />
+            </>
           )}
-        </div>
-
-        {/* PAGINATION MODULE BUTTON */}
-        {hasNextPage && (
-          <div className='mt-8 flex justify-center border-t border-zinc-900 pt-8'>
-            <button
-              onClick={() => fetchNextPage()}
-              disabled={isFetchingNextPage}
-              className="h-9 inline-flex items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-transparent px-5 text-xs font-medium tracking-tight text-zinc-400 transition-all duration-150 hover:bg-zinc-900 hover:text-zinc-200 disabled:opacity-40"
-            >
-              {isFetchingNextPage ? (
-                <div className="flex items-center gap-2">
-                  <Loader2 className="h-3 w-3 animate-spin" />
-                  <span>Loading updates...</span>
-                </div>
-              ) : (
-                <>
-                  <span>See More</span>
-                  <ChevronDown className="h-4 w-4" />
-                </>
-              )}
-            </button>
-          </div>
-        )}
+        </button>
 
       </div>
-    </div>
+    )}
+
+  </div>
+</div>
   )
 }
 

@@ -2,17 +2,13 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import "dotenv/config";
 import cors from "cors";
-
 import { connectRedis } from "./Config/redis.js";
 import connectDB from "./Config/DB.js";
-
 import authRoutes from "./Routes/authRoutes.js";
 import authMiddleware from "./Middleware/authMiddleware.js";
-
 import blogRouter from "./Routes/blogRoutes.js";
 import commentRouter from "./Routes/commentRoutes.js";
 import AiRouter from "./Routes/AIRoutes.js";
-
 import configRoutes from "./Routes/configRoutes.js";
 import adminMiddleware from "./Middleware/adminMiddleware.js";
 
@@ -78,7 +74,7 @@ app.use(cookieParser());
 /* ================= ROUTES ================= */
 app.use("/api/auth", (req,res,next)=>{
 
-  console.log("Request goes from index.js for auth")
+  console.log("Request goes from index.js for /api/auth")
   next()
   
 },authRoutes);
@@ -89,7 +85,7 @@ app.use("/api/auth", (req,res,next)=>{
 
 app.use("/api/blog",(req,res,next)=>{ 
 
-
+console.log("Entered in /api/blog from fronted")
   
   next()
   
@@ -103,16 +99,27 @@ app.use("/api/comment",(req,res,next)=>{
 },commentRouter);
 
 // app.use("/api/ai", authMiddleware, AiRouter);
+
+app.use("/api/ai/config", authMiddleware,(req,res,next)=>{
+  console.log("Request comes in index.js 🚀 /api/ai/config")
+  next()
+},configRoutes);
+
+
+
 app.use("/api/ai",(req,res , next)=>{
 
   
-  
+  // console.log("Request Goes for /api/ai from index.js ⛳️")
+  // if(req?.cookies?.accessToken) console.log("Access Token is presetn in /api/ai ⛳️")
+  // else console.log("Access Token is not 🔞presetn in /api/ai")
+    
 
   next()
 
 }, AiRouter);
 
-app.use("/api/ai/config", authMiddleware,configRoutes);
+
 
 
 const PORT = process.env.PORT || 2000;

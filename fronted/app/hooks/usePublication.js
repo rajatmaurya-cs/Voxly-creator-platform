@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-
+import { apiFetch } from "@/lib/apiFetch";
 export function usePublication({ category = "All", limit = 3, isAdmin = false, }) {
 
 
@@ -8,11 +8,9 @@ export function usePublication({ category = "All", limit = 3, isAdmin = false, }
 
     queryFn: async ({ pageParam = 1 }) => {
 
-      const res = await fetch(
+      const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/blog/admin/blogs?page=${pageParam}&limit=${limit}&category=${category}`,
-        {
-          credentials: "include", // important for cookies
-        }
+       
       );
 
       if (!res.ok) {

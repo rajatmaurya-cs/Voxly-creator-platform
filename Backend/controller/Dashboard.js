@@ -1,108 +1,134 @@
 import Blog from "../Models/Blog.js";
 import Comment from "../Models/Comments.js";
-
-import AILog from '../Models/AIlog.js'
-
+import AILog from "../Models/AIlog.js";
 
 export const getDashboardStats = async (req, res) => {
-    try {
+  try {
+    // console.log("1  🚫")
+    // console.log("Inside dashboard");
+    // console.log("User:", req.user);
 
-        const [
-            totalBlogs,
-            totalComments,
-            draftBlogs
-        ] = await Promise.all([
+    const { name, id } = req.user;
 
-            Blog.countDocuments(),
+    // console.log("1  🚫")
 
-            Comment.countDocuments(),
+    // console.log("User Name:", name);
+    // console.log("User ID:", id);
 
-            Blog.countDocuments({ isPublished: false })
+    // console.log("3  🚫")
 
-        ]);
+    // Find all blogs of current user
+    const blogs = await Blog.find({ createdBy: id });
 
-        res.json({
-            success: true,
-            stats: {
-                totalBlogs,
-                totalComments,
-                draftBlogs
-            }
-        });
+    // console.log("4  🚫")
 
-    } catch (err) {
-        res.status(500).json({
-            success: false,
-            message: "Failed to load dashboard"
-        });
-    }
-}
+    // Extract blog ids
+    const blogIds = blogs.map((blog) => blog._id);
+
+    // console.log("5  🚫")
+
+    // Find comments on user's blogs
+    const comments = await Comment.find({
+      blogId: { $in: blogIds },
+    });
+
+
+    // console.log("6  🚫")
+
+    // Count drafts
+    const draftBlogs = await Blog.countDocuments({
+      createdBy: id,
+      isPublished: false,
+    });
+
+    // console.log("6  🚫")
+
+    res.status(200).json({
+      success: true,
+      stats: {
+        totalBlogs: blogs.length,
+        totalComments: comments.length,
+        draftBlogs,
+      },
+    });
+
+    // console.log("7  🚫")
+
+  } catch (err) {
+
+    console.error("Dashboard Error:", err);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to load dashboard",
+    });
+  }
+};
 
 
 
 
 
 export const Aidashboard = async (req, res) => {
-    try {
+  try {
 
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
+    console.log("Entered in aidashbaord in controller")
 
-        const [
-            AIrequests,
-            AIrequestToday,
-            mostUsedAIData,
-            uniqueUsers,
-            logs
-        ] = await Promise.all([
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-            AILog.countDocuments(),
+    const [
+      AIrequests,
+      AIrequestToday,
+      mostUsedAIData,
+      uniqueUsers,
+      logs,
+    ] = await Promise.all([
 
-            AILog.countDocuments({
-                createdAt: { $gte: today }
-            }),
+      AILog.countDocuments(),
 
-            AILog.aggregate([
-                {
-                    $group: {
-                        _id: "$action",
-                        count: { $sum: 1 }
-                    }
-                },
-                { $sort: { count: -1 } },
-                { $limit: 1 }
-            ]),
+      AILog.countDocuments({
+        createdAt: { $gte: today },
+      }),
 
-            AILog.distinct("userId"),
+      AILog.aggregate([
+        {
+          $group: {
+            _id: "$action",
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { count: -1 } },
+        { $limit: 1 },
+      ]),
 
-            AILog.find()
-                .sort({ createdAt: -1 })
-                .limit(10)
-                .populate("userId", "fullName role")
-        ]);
+      AILog.distinct("userId"),
 
-        res.status(200).json({
-            success: true,
-            stats: {
-                totalRequests: AIrequests,
-                todayRequests: AIrequestToday,
-                mostUsedAI: mostUsedAIData[0]?._id || "No usage yet",
-                uniqueUsers: uniqueUsers.length,
-                logs
-            }
-        });
+      AILog.find()
+        .sort({ createdAt: -1 })
+        .limit(10)
+        .populate("userId", "fullName role"),
 
-    } catch (err) {
+    ]);
 
-        console.error("AI Dashboard Error:", err);
+    res.status(200).json({
+      success: true,
+      stats: {
+        totalRequests: AIrequests,
+        todayRequests: AIrequestToday,
+        mostUsedAI: mostUsedAIData[0]?._id || "No usage yet",
+        uniqueUsers: uniqueUsers.length,
+        logs,
+      },
+    });
 
-        res.status(500).json({
-            success: false,
-            message: "Failed to load AI dashboard"
-        });
-    }
-}
+  } catch (err) {
 
+    console.error("AI Dashboard Error:", err);
 
-
-
+    res.status(500).json({
+      success: false,
+      message: "Failed to load AI dashboard",
+    });
+  }
+};

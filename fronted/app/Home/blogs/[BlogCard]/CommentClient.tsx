@@ -1,5 +1,5 @@
 import Moment from "moment";
-
+import Image from "next/image";
 type CreatedBy = {
   _id: string;
   fullName: string;
@@ -67,25 +67,31 @@ const CommentClient = ({ comments }: Props) => {
               <div className="relative shrink-0">
                 <div className="absolute inset-0 rounded-full bg-cyan-500/20 blur-md" />
 
-                <img
-                  src={comment.createdBy.avatar}
-                  alt={comment.createdBy.fullName}
-                  className="relative w-12 h-12 rounded-full object-cover border-2 border-white/10"
-                />
+             
+
+<Image
+  src={
+    comment?.createdBy?.avatar || '/panda.png'
+  }
+  alt={comment?.createdBy?.avatar || "User Image"}
+  width={48}
+  height={48}
+  className="relative w-12 h-12 rounded-full object-cover border-2 border-white/10"
+/>
               </div>
 
               {/* Content */}
               <div className="flex-1 min-w-0">
                 <h3 className="text-white font-semibold text-[18px] leading-none">
-                  {comment.createdBy.fullName}
+                  {comment?.createdBy?.fullName || "User"}
                 </h3>
 
                 <p className="text-sm text-zinc-500 mt-1">
-                  {Moment(comment.createdAt).fromNow()}
+                  {Moment(comment?.createdAt).fromNow()}
                 </p>
 
                 <p className="mt-5 text-zinc-300 text-[15px] leading-7 break-words">
-                  {comment.content}
+                  {comment?.content}
                 </p>
               </div>
             </div>
@@ -97,3 +103,6 @@ const CommentClient = ({ comments }: Props) => {
 };
 
 export default CommentClient;
+
+
+

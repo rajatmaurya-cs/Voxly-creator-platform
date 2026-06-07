@@ -49,6 +49,8 @@ export const updateConfig = async (req, res) => {
 export const getConfig = async (req, res) => {
     try {
 
+        console.log("getconfig in controller 🚀")
+
         let config = await Config.findOne();
 
         if (!config) {
@@ -74,6 +76,7 @@ export const getConfig = async (req, res) => {
 export const getConfigHistory = async (req, res) => {
     try {
 
+          console.log("getconfigHistory in controller 🚀")
         const history = await ConfigHistory
             .find()
             .populate("changedBy", "fullName email")

@@ -33,17 +33,25 @@ import authMiddleware from "../Middleware/authMiddleware.js";
 
 const authRouter = express.Router();
 
-
-
-
 authRouter.get("/me", (req, res) => {
   try {
 
-    console.log("The request enter in /me")
+    // console.log("1")
+
+    const now = new Date();
+
+    const time = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+    console.log("Request comes for /me at: ",time);
 
     const token = req?.cookies?.accessToken;
+
+    //  console.log("2")
     
-    console.log("The token from /me is: ",token)
+    // console.log("The accesstoken from /me is: ",token)
+    // console.log("\n\nThe refreshToken form /me is:",req?.cookies?.refreshToken)
+
+    //  console.log("3")
 
     if (!token) {
       return res.status(401).json({
@@ -51,7 +59,11 @@ authRouter.get("/me", (req, res) => {
       });
     }
 
+    //  console.log("4")
+
     const user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    //  console.log("5")
 
   //   const user = {
   //    name : user.fullName,
@@ -62,15 +74,15 @@ authRouter.get("/me", (req, res) => {
   //  createdAt: user.createdAt,
   // };
 
-  console.log(user)
-
     res.json({
       success:true,
       user,
     });
 
   } catch (err) {
-    console.log(err)
+     console.log("6")
+    if (err.name === "TokenExpiredError") {console.log("Access token expired /me❌");}
+    else console.log("The Error in authMiddleware is: ",err)
     res.status(401).json({
       success:false,
     });
@@ -89,6 +101,7 @@ authRouter.post("/login", (req, res, next) => {
   next()
 }, login);
 
+/*----------------------------- Google Login -------------------------------------------- */
 
 authRouter.get("/google", (req, res, next) => {
 
@@ -119,7 +132,15 @@ next();
 /* --------------------------- Logout and Refresh Token --------------------------- */
 
 authRouter.post("/logout", authMiddleware, logout);
-authRouter.post("/refreshtoken", refreshAccessToken);
+
+
+authRouter.post("/refreshtoken",(req,res , next)=>{
+  
+  console.log("Request goes for refresToken");
+  
+  
+  next();
+}, refreshAccessToken);
 
 
 

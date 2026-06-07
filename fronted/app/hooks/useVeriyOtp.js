@@ -1,6 +1,7 @@
 
 
 
+import { apiFetch } from "@/lib/apiFetch";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -18,17 +19,13 @@ export default function useVerifyOtp(purpose) {
       //     purpose, 
       //   });
 
-      const res = await fetch(
+      const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/verifyotp`,
         {
           method: "POST",
-
-          credentials: "include",
-
           headers: {
             "Content-Type": "application/json",
           },
-
           body: JSON.stringify({
             email,
             otp,

@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "app/page.tsx", "app/hooks/useHomeBlogs.js", "app/hooks/useBlogCard.js", "app/admin/commentslist", "app/auth/forgotpassword/page.jsx"  ],
+, "app/page.tsx", "app/hooks/useHomeBlogs.js", "app/hooks/useBlogCard.js", "app/admin/commentslist", "app/auth/forgotpassword/page.jsx", "app/auth/createaccount/page.jsx"  ],
   "exclude": ["node_modules"]
 }

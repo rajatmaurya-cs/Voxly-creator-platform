@@ -14,7 +14,7 @@ const AiRouter = express.Router();
 /* ================= GenerateContent for Blog ================= */
 // AiRouter.post('/Generatecontent', checkAiLimit, adminMiddleware, generateContent)
 
-AiRouter.post('/Generatecontent', (req,res,next)=>{
+AiRouter.post('/Generatecontent',(req,res,next)=>{
     console.log("Requst goes from /GenerateContent from airoutes")
     next()
 },authMiddleware,generateContent)
@@ -29,7 +29,10 @@ AiRouter.post('/summarise', (req, res, next) => {
 
 
 /* ================= NoOfTodayreq , Totalreq , NoOfUniqueUsers ================= */
-AiRouter.get('/ai-dashboard', Aidashboard)
+AiRouter.get('/ai-dashboard',authMiddleware,(req,res,next)=>{
+    console.log("request comes in /ai-dashboard in airoutes")
+    next();
+}, Aidashboard)
 
 
 

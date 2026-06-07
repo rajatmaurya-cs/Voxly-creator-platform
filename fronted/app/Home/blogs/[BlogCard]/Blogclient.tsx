@@ -8,14 +8,17 @@ import { Report } from 'notiflix/build/notiflix-report-aio';
 
 import Image from "next/image";
 
+import { useRouter } from "next/navigation";
+
 import { Suspense } from "react";
 
 import toast from "react-hot-toast";
 
+const Loader = dynamic(()=> import("@/app/Animations/Loader"))
 
-const Loader = lazy(() => import("../../../Animations/Loader"));
+const SummariseButton = lazy(() => import("../../../Animations/AIButton"))
 
-const SummariseButton = lazy(() => import("../../../Animations/Summarise"))
+import { apiFetch } from "@/lib/apiFetch";
 
 import { AuthContext } from "@/app/ContextProvider/AuthProvider";
 import { useContext } from "react";
@@ -28,6 +31,7 @@ import {
   Clock3,
   FileText,
 } from "lucide-react";
+import dynamic from "next/dynamic";
 
 
 
@@ -62,6 +66,8 @@ type BlogClientProps = {
 
 const Blogclient = ({ blog }: BlogClientProps) => {
 
+  const router = useRouter()
+
   const { loggedIn, setLoggedIn } = useContext(AuthContext);
 
   const [comment, setComment] = useState("");
@@ -78,7 +84,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
 
   const addCommentMutation = useMutation({
     mutationFn: async () => {
-      const res = await fetch(
+      const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/comment/addcomment`,
         {
           method: "POST",
@@ -121,11 +127,14 @@ const Blogclient = ({ blog }: BlogClientProps) => {
 
   //  if(!loggedIn){
   //     toast.error("Login First")
+
+  // setTimeout(()=>{router.replace('/auth/login')},2000)
+  
   //     return;
   //   }
 
   //   mutationFn: async () => {
-  //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ai/summarise`, {
+  //     const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL}/ai/summarise`, {
   //       method: "POST",
   //       headers: {
   //         "Content-Type": "application/json",
@@ -173,6 +182,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
   const handlerajat = () => {
     if (!loggedIn) {
       toast.error("Login First")
+      setTimeout(()=>{router.replace('/auth/login')},3000)
       return;
     }
     setailoading(true)
@@ -263,10 +273,11 @@ const Blogclient = ({ blog }: BlogClientProps) => {
                   <div className="rounded-full overflow-hidden border border-white/10 bg-[#0B1120]">
 
                     <Image
-                      src={blog.createdBy?.avatar}
+                      src={blog?.createdBy?.avatar || '/man.png'}
                       alt="Author"
                       width={56}
                       height={56}
+                      priority
                       className="rounded-full object-cover"
                     />
 
@@ -330,6 +341,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
                 alt={blog.title}
                 fill
                 priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
               />
 
@@ -362,7 +374,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
               <div className="fixed inset-0 z-[100] flex items-center justify-center bg-gray-900/20 backdrop-blur-md transition-all">
 
                 <Suspense fallback={<div className="h-10 w-10 animate-spin rounded-full border-4 border-indigo-100 border-t-indigo-600" />}>
-                  <Loader />
+                  <Loader/>
                 </Suspense>
 
 
@@ -411,7 +423,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
                 onClick={() => handlerajat()}
 
               >
-                <SummariseButton />
+                < SummariseButton data = "Summarise with AI"/>
 
 
               </div>

@@ -1,58 +1,167 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { User, LayoutDashboard } from "lucide-react";
+
+import {
+  LayoutGrid,
+  User,
+  ShieldCheck,
+} from "lucide-react";
+
 import { AuthContext } from "../ContextProvider/AuthProvider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { apiFetch } from "@/lib/apiFetch";
+import toast from "react-hot-toast";
+import UserProfileModal from "./UserProfileModal";
+import { AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { MdAdminPanelSettings } from "react-icons/md";
+
+
 
 const Navbar = () => {
+  const { user, loggedIn, setLoggedIn, setUser } = useContext(AuthContext);
 
-  const {user,loggedIn} = useContext(AuthContext)
+  const [showProfile, setShowProfile] = useState(false);
+
+  const router = useRouter()
+
+
+  const logoutMutation = useMutation({
+    mutationFn: async () => {
+      const res = await apiFetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
+        {
+          method: "POST",
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to logout");
+      }
+
+      return data;
+    },
+
+    onSuccess: (data) => {
+      setUser(null);
+      setLoggedIn(false);
+      setShowProfile(false);
+
+      toast.success(data.message || "Logged out successfully");
+    },
+
+    onError: (error: Error) => {
+      toast.error(error.message || "Something went wrong");
+    },
+  });
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-900 bg-zinc-950/70 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-900 bg-zinc-950/70 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
-        {/* LOGO: Scaled precisely to fit clean layout geometry */}
-        <Link href="/" className="relative h-7 w-28 transition-opacity hover:opacity-90">
-          <Image
-            src="/LogoOfPostify.png"
-            alt="Postify Logo"
-            fill
-            className="object-contain object-left"
-            priority
-          />
-        </Link>
-
-      { loggedIn &&  <div className=" bg-white p-3 rounded-2xl">The User is: {user.name}</div>}
-
-        {/* ACTIONS: Minimalist, sharp, and tool-focused */}
-        <div className="flex items-center gap-5">
-
-          {/* Sign In: Low-profile text link */}
-          { !loggedIn && <Link 
-            href="auth/login" 
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-400 hover:text-zinc-200 transition-colors duration-200"
+          {/* Logo */}
+          <Link
+            href="/"
+            className="relative h-7 w-28 transition-opacity hover:opacity-90"
           >
-            <User size={15} className="text-zinc-500" />
-            <span>Sign In</span>
-          </Link>}
-
-          {/* Admin: Precision-engineered obsidian button */}
-          <Link href="/admin">
-            <button className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg 
-              bg-zinc-900/60 border border-zinc-800 text-sm font-medium text-zinc-300
-              hover:bg-zinc-900 hover:border-zinc-700 hover:text-zinc-100
-              transition-all duration-200 shadow-sm">
-              <LayoutDashboard size={15} className="text-indigo-400" />
-              <span>Admin</span>
-            </button>
+            <Image
+              src="/LogoOfPostify.png"
+              alt="Postify Logo"
+              fill
+              className="object-contain object-left"
+              priority
+            />
           </Link>
 
+          {loggedIn && (
+            <div className="bg-white text-black px-4 py-2 rounded-xl text-sm font-medium">
+              {user?.name}
+            </div>
+          )}
+
+          <div className="flex items-center gap-4">
+            {!loggedIn && (
+              <Link
+                href="/auth/login"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-400 hover:text-zinc-200 transition-colors"
+              >
+                <User size={22} className="text-zinc-500" />
+                <span>Sign In</span>
+              </Link>
+            )}
+
+            {loggedIn && (
+              <Link href="/admin">
+                <button
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg
+                  bg-zinc-900/60 border border-zinc-800 text-sm font-medium text-zinc-300
+                  hover:bg-zinc-900 hover:border-zinc-700 hover:text-zinc-100
+                  transition-all duration-200"
+                >
+                  <LayoutGrid
+                    size={22}
+                    className="text-indigo-400"
+                  />
+                  <span>Admin</span>
+                </button>
+              </Link>
+            )}
+
+            {loggedIn && (
+              <button
+                onClick={() => setShowProfile(true)}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg
+                bg-zinc-900/60 border border-zinc-800 text-sm font-medium text-zinc-300
+                hover:bg-zinc-900 hover:border-zinc-700 hover:text-zinc-100
+                transition-all duration-200"
+              >
+                <User size={22} 
+                className="text-indigo-400"
+                />
+                <span>Profile</span>
+              </button>
+            )}
+
+
+             {loggedIn && (
+              <button
+                onClick={()=>router.push('/superadmin')}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg
+                bg-zinc-900/60 border border-zinc-800 text-sm font-medium text-zinc-300
+                hover:bg-zinc-900 hover:border-zinc-700 hover:text-zinc-100
+                transition-all duration-200"
+              >
+              
+                <ShieldCheck size ={22}
+                className="text-green-400"
+                />
+                <span>Superadmin</span>
+              </button>
+            )}
+
+
+
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      <AnimatePresence>
+        {showProfile && (
+          <UserProfileModal
+            user={user}
+            onClose={() => setShowProfile(false)}
+            onLogout={() => logoutMutation.mutate()}
+            isLoggingOut={logoutMutation.isPending}
+          />
+        )}
+      </AnimatePresence>
+
+    </>
   );
 };
 

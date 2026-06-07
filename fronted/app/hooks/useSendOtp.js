@@ -1,4 +1,5 @@
 
+import { apiFetch } from "@/lib/apiFetch";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -11,7 +12,7 @@ export default function useSendOtp(purpose) {
 
         mutationFn: async ({ email }) => {
 
-            const res = await fetch("http://localhost:2000/api/auth/sendotp", {
+            const res = await apiFetch("http://localhost:2000/api/auth/sendotp", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

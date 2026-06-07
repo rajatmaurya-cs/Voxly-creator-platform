@@ -6,9 +6,11 @@ import {
   useContext,
   useCallback,
   useEffect,
+  useRef,
 } from "react";
+import { apiFetch } from "@/lib/apiFetch";
 
-// ---------------- TYPE ----------------
+// ---------------- TYPES ----------------
 
 type User = {
   id: string;
@@ -21,126 +23,83 @@ type User = {
 
 type AuthContextType = {
   loggedIn: boolean;
-  setLoggedIn: (value: boolean) => void;
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  refreshAccessToken: () => Promise<boolean>;
+  setLoggedIn: (v: boolean) => void;
+  loading: boolean;
 };
+
 // ---------------- CONTEXT ----------------
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-// let refreshPromiseRef: Promise<boolean> | null = null;
-
 // ---------------- PROVIDER ----------------
 
-export function AuthProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [loggedIn, setLoggedIn] = useState(false);
-
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
+  const initializedRef = useRef(false);
 
-useEffect(() => {
-  const getUser = async () => {
-    console.log("Page reload happend")
+  // ---------------- GET USER ----------------
+  const getUser = useCallback(async () => {
     try {
-      const res = await fetch("http://localhost:2000/api/auth/me", {
-        credentials: "include",
-      });
+      setLoading(true);
 
-      // if status code is not 2xx
+      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`);
+
       if (!res.ok) {
-        setLoggedIn(false);
         setUser(null);
+        setLoggedIn(false);
         return;
       }
 
       const data = await res.json();
 
-      if (data.success) {
+      if (data?.success) {
         setUser(data.user);
         setLoggedIn(true);
       } else {
         setUser(null);
         setLoggedIn(false);
       }
-
-    } catch (error) {
-
-      // fetch failed completely
-      console.error("Error fetching user:", error);
-
+    } catch (err) {
+      console.error("Auth check failed:", err);
       setUser(null);
       setLoggedIn(false);
+    } finally {
+      setLoading(false);
     }
-  };
+  }, []);
 
-  getUser();
-}, []);
+  // ---------------- INIT ----------------
+  useEffect(() => {
+    if (initializedRef.current) return;
+    initializedRef.current = true;
 
-//   const refreshAccessToken = useCallback(async (): Promise<boolean> => {
-//     if (refreshPromiseRef) return refreshPromiseRef;
-
-//     refreshPromiseRef = (async (): Promise<boolean> => {
-//       try {
-//         console.log("Refreshing access token");
-
-//         const res = await fetch(
-//           `${process.env.NEXT_PUBLIC_API_URL}/auth/refreshtoken`,
-//           {
-//             method: "POST",
-//             credentials: "include",
-//           }
-//         );
-
-//         const data: { user?: User } = await res.json();
-
-//         if (res.ok && data.user) {
-//           setUser(data.user);
-//           setLoggedIn(true);
-//           return true;
-//         }
-
-//         setUser(null);
-//         setLoggedIn(false);
-
-//         return false;
-//       } catch (error) {
-//         console.log(error);
-
-//         setUser(null);
-//         setLoggedIn(false);
-
-//         return false;
-//       } finally {
-//         refreshPromiseRef = null;
-//       }
-//     })();
-
-//     return refreshPromiseRef;
-//   }, []);
-
-//   // ✅ THIS FIXES PAGE RELOAD ISSUE
-//  useEffect(() => {
-//   if (!user) {
-//     refreshAccessToken();
-//   }
-// }, [user]);
+    getUser();
+  }, [getUser]);
 
   return (
     <AuthContext.Provider
       value={{
-        loggedIn,
-        setLoggedIn,
         user,
-        setUser
+        loggedIn,
+        setUser,
+        setLoggedIn,
+        loading,
       }}
     >
       {children}
     </AuthContext.Provider>
   );
 }
+
+// ---------------- HOOK ----------------
+
+export const useAuth = () => {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used inside AuthProvider");
+  return ctx;
+};

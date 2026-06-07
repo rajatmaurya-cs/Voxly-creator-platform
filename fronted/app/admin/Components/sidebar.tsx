@@ -194,7 +194,7 @@ const Sidebar = () => {
       {/* Text */}
       <div>
         <h3 className="text-sm font-semibold text-white">
-          {user?.fullName}
+          {user?.name}
         </h3>
         <p className="text-xs text-zinc-500">
           Manage your platform

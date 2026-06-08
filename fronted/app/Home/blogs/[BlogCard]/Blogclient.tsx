@@ -14,7 +14,7 @@ import { Suspense } from "react";
 
 import toast from "react-hot-toast";
 
-const Loader = dynamic(()=> import("@/app/Animations/Loader"))
+const Loader = dynamic(() => import("@/app/Animations/Loader"))
 
 const SummariseButton = lazy(() => import("../../../Animations/AIButton"))
 
@@ -30,7 +30,10 @@ import {
   SendHorizonal,
   Clock3,
   FileText,
+  FlaskConical
 } from "lucide-react";
+
+
 import dynamic from "next/dynamic";
 
 
@@ -123,90 +126,83 @@ const Blogclient = ({ blog }: BlogClientProps) => {
   });
 
 
-  // const summariseMutation = useMutation({
+  const summariseMutation = useMutation({
 
-  //  if(!loggedIn){
+
+    mutationFn: async () => {
+      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL}/ai/summarise`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: blog.content }),
+      });
+
+      const data = await res.json();
+      console.log(data.content)
+
+      if (!data?.success) {
+        throw new Error(data?.message || "Summarise failed");
+      }
+
+      return data.content;
+    },
+
+    onSuccess: (newContent) => {
+      setAicontent(newContent)
+      setShowContent("AI")
+    },
+
+    onError: (err) => {
+      const msg =
+        err?.message || "Something went wrong";
+
+      if (msg.toLowerCase().includes("limit")) {
+        Report.failure(
+          "Daily AI Limit Reached",
+          "Try again tomorrow",
+          "Okay"
+        );
+      } else {
+        toast.error(msg);
+      }
+    },
+  });
+
+
+  const ailoading = summariseMutation.isPending;
+
+
+  // const [ailoading, setailoading] = useState(false)
+
+  // const handlerajat = () => {
+  //   if (!loggedIn) {
   //     toast.error("Login First")
-
-  // setTimeout(()=>{router.replace('/auth/login')},2000)
-  
+  //     setTimeout(()=>{router.replace('/auth/login')},3000)
   //     return;
   //   }
+  //   setailoading(true)
 
-  //   mutationFn: async () => {
-  //     const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL}/ai/summarise`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ content: blog.content }),
-  //     });
+  //   setTimeout(() => {
+  //     setailoading(false)
+  //     setAicontent(`
+  //       <ul>
+  //   <li>Life is comprised of tiny moments that, when accumulated, form the fabric of our reality, significantly impacting our overall satisfaction and engagement.</li>
+  //   <li>By intentionally crafting small habits, individuals can transform their lives and create experiences that truly fulfill them.</li>
+  //   <li>Morning routines can set the tone for a more intentional life by establishing a sense of calm and clarity.</li>
+  //   <li>Engaging in morning practices like meditation, journaling, or stretching can help individuals tackle challenges with greater confidence and resilience.</li>
+  //   <li>Fostering connections with others through small habits like sharing meals or engaging in group activities can lead to a greater sense of joy and belonging.</li>
+  //   <li>Intentionally prioritizing time with loved ones can lead to a greater sense of fulfillment and happiness, even in the smallest interactions.</li>
+  //   <li>Engaging in creative activities can bring a sense of joy and flow into one's life.</li>
+  //   <li>Cultivating a growth mindset through small habits like reading books or taking online courses can foster a deeper love for learning and personal growth.</li>
+  //   <li>Practicing gratitude through small habits like keeping a gratitude journal or sharing thank-you notes can profoundly shift one's perspective and cultivate a more positive outlook on life.</li>
+  //   <li>Intentionally crafting small habits and incorporating them into daily life can transform experiences and create a life that truly fulfills.</li>
+  // </ul>
 
-  //     const data = await res.json();
-  //     console.log(data.content)
-
-  //     if (!data?.success) {
-  //       throw new Error(data?.message || "Summarise failed");
-  //     }
-
-  //     return data.content;
-  //   },
-
-  //   onSuccess: (newContent) => {
-  //     setAicontent(newContent)
-  //     setShowContent("AI")
-  //   },
-
-  //   onError: (err) => {
-  //     const msg =
-  //       err?.message || "Something went wrong";
-
-  //     if (msg.toLowerCase().includes("limit")) {
-  //       Report.failure(
-  //         "Daily AI Limit Reached",
-  //         "Try again tomorrow",
-  //         "Okay"
-  //       );
-  //     } else {
-  //       toast.error(msg);
-  //     }
-  //   },
-  // });
-
-
-  // const ailoading = summariseMutation.isPending;
-
-
-  const [ailoading, setailoading] = useState(false)
-
-  const handlerajat = () => {
-    if (!loggedIn) {
-      toast.error("Login First")
-      setTimeout(()=>{router.replace('/auth/login')},3000)
-      return;
-    }
-    setailoading(true)
-
-    setTimeout(() => {
-      setailoading(false)
-      setAicontent(`
-        <ul>
-    <li>Life is comprised of tiny moments that, when accumulated, form the fabric of our reality, significantly impacting our overall satisfaction and engagement.</li>
-    <li>By intentionally crafting small habits, individuals can transform their lives and create experiences that truly fulfill them.</li>
-    <li>Morning routines can set the tone for a more intentional life by establishing a sense of calm and clarity.</li>
-    <li>Engaging in morning practices like meditation, journaling, or stretching can help individuals tackle challenges with greater confidence and resilience.</li>
-    <li>Fostering connections with others through small habits like sharing meals or engaging in group activities can lead to a greater sense of joy and belonging.</li>
-    <li>Intentionally prioritizing time with loved ones can lead to a greater sense of fulfillment and happiness, even in the smallest interactions.</li>
-    <li>Engaging in creative activities can bring a sense of joy and flow into one's life.</li>
-    <li>Cultivating a growth mindset through small habits like reading books or taking online courses can foster a deeper love for learning and personal growth.</li>
-    <li>Practicing gratitude through small habits like keeping a gratitude journal or sharing thank-you notes can profoundly shift one's perspective and cultivate a more positive outlook on life.</li>
-    <li>Intentionally crafting small habits and incorporating them into daily life can transform experiences and create a life that truly fulfills.</li>
-  </ul>
-  
-          `)
-      setShowContent('AI')
-    }, 5000)
-  }
+  //         `)
+  //     setShowContent('AI')
+  //   }, 5000)
+  // }
 
   useEffect(() => {
     if (Aicontent && !ailoading) {
@@ -374,7 +370,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
               <div className="fixed inset-0 z-[100] flex items-center justify-center bg-gray-900/20 backdrop-blur-md transition-all">
 
                 <Suspense fallback={<div className="h-10 w-10 animate-spin rounded-full border-4 border-indigo-100 border-t-indigo-600" />}>
-                  <Loader/>
+                  <Loader />
                 </Suspense>
 
 
@@ -420,12 +416,17 @@ const Blogclient = ({ blog }: BlogClientProps) => {
 
             {!ailoading && !Aicontent && (
               <div
-                onClick={() => handlerajat()}
-
+                onClick={() => {
+                  console.log("The user is: ", loggedIn)
+                  if (!loggedIn) {
+                    toast.error("Login First");
+                    setTimeout(() => { router.replace('/auth/login') }, 2000);
+                    return;
+                  }
+                  summariseMutation.mutate();
+                }}
               >
-                < SummariseButton data = "Summarise with AI"/>
-
-
+                <SummariseButton data="Summarise with AI" />
               </div>
             )}
 
@@ -459,6 +460,45 @@ const Blogclient = ({ blog }: BlogClientProps) => {
                 </span>
               </button>
             )}
+
+            {!ailoading && Aicontent && showContent === "blog" &&
+
+              (<button
+                className="
+        group
+        relative
+        overflow-hidden
+        rounded-2xl
+        border border-white/10
+        bg-white/[0.05]
+        backdrop-blur-xl
+        px-7 py-3.5
+        text-sm md:text-base
+        font-semibold
+        text-gray-200
+        transition-all duration-300
+        hover:bg-white/[0.08]
+        hover:border-violet-500/30
+        hover:text-white
+        hover:scale-[1.03]
+        hover:shadow-2xl hover:shadow-violet-500/20
+        active:scale-[0.98]
+      "
+
+                onClick={() => setShowContent('AI')}>
+                  
+                  <span className="flex items-center gap-2">
+                    <FlaskConical size = {18} />
+                    Move to AI Content
+                    </span>
+
+                </button>)
+
+
+            }
+
+
+
 
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-2xl p-6 md:p-8 mb-10">

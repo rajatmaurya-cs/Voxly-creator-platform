@@ -18,6 +18,8 @@ import { redisClient } from "../Config/redis.js";
 import User from "../Models/User.js";
 import VerifiedEmail from "../Models/VerifiedEmail.js";
 import RefreshToken from "../Models/RefreshToken.js";
+import { Plan } from "../Models/Plans.js";
+import { AIUsage } from "../Models/AIUsage.js";
 
 
 /*-----------------------User Login / Signup / google-Login  -------------------------------- */
@@ -55,12 +57,23 @@ export const signup = async (req, res) => {
       });
     }
 
+    const freePlan = await Plan.findOne({
+      name: "free",
+    });
 
-    await User.create({
+
+
+    const user = await User.create({
       fullName,
       email,
       password,
       authProvider: "LOCAL",
+      plan: freePlan._id,
+    });
+
+
+    await AIUsage.create({
+      user: user._id,
     });
 
     return res.json({
@@ -248,6 +261,11 @@ export const googleLogin = async (req, res) => {
 
     if (!user) {
 
+      
+
+      const freePlan = await Plan.findOne({ name: "free" });
+
+
       user = await User.create({
 
         fullName: googleUser.name,
@@ -257,7 +275,17 @@ export const googleLogin = async (req, res) => {
         avatar: googleUser.picture,
 
         authProvider: ["GOOGLE"],
+        plan: freePlan._id,
       });
+
+      
+      await AIUsage.create({
+        user: user._id,
+      });
+
+      console.log("The User is New and AIUsage Created 🚨")
+
+
     }
 
 
@@ -272,14 +300,13 @@ export const googleLogin = async (req, res) => {
       }
 
       // add GOOGLE provider if not exists
-      if (
-        user.authProvider &&
-        !user.authProvider.includes("GOOGLE")
-      ) {
+      if (user.authProvider && !user.authProvider.includes("GOOGLE")) {
         user.authProvider.push("GOOGLE");
       }
 
       await user.save();
+
+       console.log("The User is Old and AIUsage does not created Created 🚨")
     }
 
     console.log("GoogleLogin 8")
@@ -340,7 +367,7 @@ export const googleLogin = async (req, res) => {
 
     // ---------------- REDIRECT ----------------
 
-    console.log("GoogleLogin 13")
+    console.log("GoogleLogin successFully ✅")
 
     res.redirect(`${process.env.FRONTEND_URL}/`);
 
@@ -402,7 +429,7 @@ export const refreshAccessToken = async (req, res) => {
 
     console.log("Request comes for refreshAccesToken 🚫 at: ", time);
 
-    console.log("refreshAccessToken: 1")
+    // console.log("refreshAccessToken: 1")
 
     const refreshToken = req.cookies.refreshToken;
 
@@ -417,38 +444,38 @@ export const refreshAccessToken = async (req, res) => {
       return res.status(401).json({ message: "Invalid email or Password" });
     }
 
-    console.log("refreshAccessToken: 2")
+    // console.log("refreshAccessToken: 2")
 
 
     const hashedToken = hashToken(refreshToken);
 
-    console.log("refreshAccessToken: 3")
+    // console.log("refreshAccessToken: 3")
 
     const storedToken = await RefreshToken.findOneAndDelete({
       token: hashedToken,
     });
 
-    console.log("refreshAccessToken: 4")
+    // console.log("refreshAccessToken: 4")
 
-    console.log("The StoredToken is: ", storedToken)
+    // console.log("The StoredToken is: ", storedToken)
 
     if (!storedToken) {
       return res.status(403).json({ message: "Invalid Email or Password" });
     }
 
-    console.log("refreshAccessToken: 5")
+    // console.log("refreshAccessToken: 5")
 
     const decoded = jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET
     );
 
-    console.log("refreshAccessToken: 6")
+    // console.log("refreshAccessToken: 6")
 
     const user = await User.findById(decoded.id);
 
 
-    console.log("refreshAccessToken: 7")
+    // console.log("refreshAccessToken: 7")
 
     // console.log("user is: ", user)
 
@@ -456,15 +483,15 @@ export const refreshAccessToken = async (req, res) => {
       return res.status(403).json({ message: "User not found" });
     }
 
-    console.log("refreshAccessToken: 8")
+    // console.log("refreshAccessToken: 8")
 
     const newAccessToken = createAccessToken(user);
 
-    console.log("refreshAccessToken: 9")
+    // console.log("refreshAccessToken: 9")
 
     const newrefreshToken = createRefreshToken(user);
 
-    console.log("refreshAccessToken: 10")
+    // console.log("refreshAccessToken: 10")
 
 
 
@@ -474,7 +501,7 @@ export const refreshAccessToken = async (req, res) => {
     });
 
 
-    console.log("refreshAccessToken: 11")
+    // console.log("refreshAccessToken: 11")
 
 
 

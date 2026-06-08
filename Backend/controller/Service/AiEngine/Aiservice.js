@@ -2,14 +2,14 @@
 import groq from "../../../Config/Gemini.js";
 import Config from "../../../Models/Config.js";
 import AILog from "../../../Models/AIlog.js";
+import { AIUsage } from "../../../Models/AIUsage.js";
 
-export const contentGenerationService = async ({ user, prompt , model}) => {
-
+export const contentGenerationService = async ({ user, prompt, model }) => {
 
   console.log("content Generation ai engine 1")
 
   if (!prompt || prompt.trim() === "") {
-    throw { status:400, message:"Prompt is required" };
+    throw { status: 400, message: "Prompt is required" };
   }
 
   console.log("content Generation ai engine 2")
@@ -18,17 +18,14 @@ export const contentGenerationService = async ({ user, prompt , model}) => {
 
   console.log("content Generation ai engine 3")
 
-  
 
   if (!config?.aiEnabled) {
-    throw { status:403, message:"AI feature disabled" };
+    throw { status: 403, message: "AI feature disabled" };
   }
 
   console.log("content Generation ai engine 4")
 
- 
-
-console.log("Just Going to Generate content using model: ",model)
+  console.log("Just Going to Generate content using model: ", model)
 
   const completion = await groq.chat.completions.create({
     model: model,
@@ -46,34 +43,36 @@ console.log("Just Going to Generate content using model: ",model)
     action: "AI Content Generator",
   });
 
-  console.log("content Generation ai engine 6")
+  await AIUsage.findOneAndUpdate(
+    { user: user.id },
+    {
+      $inc: {
+        aiGenerationUsed: 1,
+      },
+    },
+    {
+      upsert: true,
+      new: true,
+    }
+  );
+
+  console.log("content Generated SuccessFully by mode:  ✅",model)
 
   return completion.choices[0].message.content;
-  
+
 };
-
-
-
-
-
 
 export const articleSummariser = async ({ user, prompt }) => {
 
   if (!prompt || prompt.trim() === "") {
-    throw { status:400, message:"Prompt is required" };
+    throw { status: 400, message: "Prompt is required" };
   }
-
- 
 
   const config = await Config.findOne();
 
   if (!config?.aiEnabled) {
-    throw { status:403, message:"AI feature disabled" };
+    throw { status: 403, message: "AI feature disabled" };
   }
-
-  
- 
-
 
   const completion = await groq.chat.completions.create({
     model: config.aiModel,
@@ -83,13 +82,26 @@ export const articleSummariser = async ({ user, prompt }) => {
     ],
   });
 
-  // await AILog.create({
-  //   userId: user.id,
-  //   role: user.role,
-  //   action: "AI Summariser",
-  // });
+  await AILog.create({
+    userId: user.id,
+    role: user.role,
+    action: "AI Summariser",
+  });
 
-  
+  await AIUsage.findOneAndUpdate(
+    { user: user.id },
+    {
+      $inc: {
+        aiSummarizerUsed: 1,
+      },
+    },
+    {
+      upsert: true,
+      new: true,
+    }
+  );
+
+  console.log("Content Summarised successfully ✅")
 
   return completion.choices[0].message.content;
 };

@@ -18,15 +18,13 @@ const usageSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-
-    currentPeriodStart: {
-      type: Date,
-      default: Date.now,
-    },
     
-    currentPeriodEnd: {
-      type: Date,
-    }
+    lastResetAt: {
+    type: Date,
+    default: Date.now,
+  },
+
+  
   },
 
   {

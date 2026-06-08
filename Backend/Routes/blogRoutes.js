@@ -41,7 +41,7 @@ next()
 blogRouter.post('/delete-blog',deleteBlog)
 
 /* ================= Blog Report ================= */
-blogRouter.post('/Report', authMiddleware ,adminMiddleware, GenerateReport)
+blogRouter.post('/Report', authMiddleware, GenerateReport)
 
 
 /* ================= Blog Dashboard =================  */

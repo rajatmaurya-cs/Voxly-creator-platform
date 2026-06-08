@@ -4,26 +4,13 @@ import { validateAccessToken } from "../Service/Authentication.js";
 
 const authMiddleware = async (req, res, next) => {
   try {
-    
-   
-
     // console.log("1")
-    
-    // const bearerToken = req.headers.authorization?.startsWith("Bearer ")
-    //   ? req.headers.authorization.split(" ")[1]
-    //   : null;
 
-
-      // console.log("2")
-      
     const token = req.cookies?.accessToken;
 
-    
     // if(token) console.log("AccessToken is Present in auth middleware 🦹🏼‍♂️")
 
     // console.log("3")
-
-
 
     if (!token) {
       console.log("401 Response is going NO access Token")
@@ -33,7 +20,6 @@ const authMiddleware = async (req, res, next) => {
 // console.log("4")
 
     const isBlocked = await redisClient.get(`bl_${token}`);
-
 
     // console.log("5")
 
@@ -48,7 +34,6 @@ const authMiddleware = async (req, res, next) => {
 
     // console.log("6")
 
-
     const decoded = validateAccessToken(token);
 
     // console.log("7")
@@ -62,7 +47,6 @@ const authMiddleware = async (req, res, next) => {
   //  createdAt: user.createdAt,
   // };
 
-    
     req.user = decoded;
 
     console.log("authMiddleware 🏃‍♂️")

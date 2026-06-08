@@ -12,6 +12,8 @@ import dynamic from "next/dynamic";
 
 import EditorLoader from '@/app/Animations/EditorLoader'
 
+
+
 import Loader from "@/app/Animations/Loader";
 
 import AIButton from "@/app/Animations/AIButton";
@@ -112,7 +114,7 @@ const editorConfig = {
 const models = [
   { id: 'llama-3.1-8b-instant', name: 'Meta 3.2', desc: 'Fast' },
   { id: 'groq/compound', name: 'Claude', desc: 'Advanced code & Debugging' },
-  { id: 'qwen/qwen3-32b', name: 'Copilot', desc: 'Advanced Math Problems' },
+  { id: 'llama-3.3-70b-versatile', name: 'Copilot', desc: 'Advanced Math Problems' },
   { id: 'openai/gpt-oss-120b', name: 'ChatGPT 5.1', desc: 'Tough Reasoning' },
 ]
 
@@ -750,10 +752,10 @@ const AddBlog = () => {
                 <div className="flex items-center gap-3">
                   {/* Selected Model Logo */}
                   <div className="flex-shrink-0 h-12 w-12 rounded-2xl border border-[#222733] bg-[#171b22] flex items-center justify-center p-2">
-                    {model === 'qwen/qwen3-32b' && <img src="/copilot.png" className="h-full w-full object-contain" alt="Copilot" />}
-                    {model === 'llama-3.1-8b-instant' && <img src="/meta.png" className="h-full w-full object-contain" alt="Meta" />}
-                    {model === 'groq/compound' && <img src="/claude.png" className="h-full w-full object-contain" alt="Claude" />}
-                    {model === 'openai/gpt-oss-120b' && <img src="/chatgpt.png" className="h-full w-full object-contain" alt="ChatGPT" />}
+                    {model === 'llama-3.3-70b-versatile' && <Image src="/copilot.png" className="object-contain" width={32} height={32} alt="Copilot" />}
+                    {model === 'llama-3.1-8b-instant' && <Image src="/meta.png" className="object-contain" width={32} height={32} alt="Meta" />}
+                    {model === 'groq/compound' && <Image src="/claude.png" className="object-contain" width={32} height={32} alt="Claude" />}
+                    {model === 'openai/gpt-oss-120b' && <Image src="/chatgpt.png" className="object-contain" width={32} height={32} alt="ChatGPT" />}
                   </div>
 
                   {/* Listbox Dropdown */}

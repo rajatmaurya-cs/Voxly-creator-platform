@@ -21,3 +21,17 @@ yarn-error.log*
 
 # OS files
 .DS_Store
+
+
+
+
+const freePlan = await Plan.findOne({
+  name: "free",
+});
+
+const user = await User.create({
+  fullName,
+  email,
+  password,
+  plan: freePlan._id,
+});

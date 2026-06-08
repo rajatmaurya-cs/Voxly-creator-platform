@@ -107,7 +107,7 @@ app.use("/api/ai/config", authMiddleware,(req,res,next)=>{
 
 
 
-app.use("/api/ai",(req,res , next)=>{
+app.use("/api/ai",authMiddleware,(req,res , next)=>{
 
   
   // console.log("Request Goes for /api/ai from index.js ⛳️")

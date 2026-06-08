@@ -7,8 +7,6 @@ import checkAiLimit from '../Middleware/aiLimitMiddleware.js'
 import adminMiddleware from '../Middleware/adminMiddleware.js'
 import authMiddleware from '../Middleware/authMiddleware.js'
 
-
-
 const AiRouter = express.Router();
 
 /* ================= GenerateContent for Blog ================= */
@@ -21,15 +19,15 @@ AiRouter.post('/Generatecontent',(req,res,next)=>{
     console.log("The model that want 🙏🏼: ",model)
 
     next()
-},authMiddleware,generateContent)
+},authMiddleware,checkAiLimit,generateContent)
 
 
 /* ================= Ai Summariser For Users ================= */
 // AiRouter.post('/summarise', checkAiLimit ,summariseArticle)
 AiRouter.post('/summarise', (req, res, next) => {
-    console.log("Entered in summarise")
+    console.log("Entered in summariser airoutes")
     next()
-}, summariseArticle)
+}, checkAiLimit,summariseArticle)
 
 
 /* ================= NoOfTodayreq , Totalreq , NoOfUniqueUsers ================= */

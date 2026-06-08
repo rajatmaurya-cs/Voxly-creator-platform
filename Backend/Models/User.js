@@ -48,7 +48,11 @@ const userSchema = new Schema(
    plan:{
     type:mongoose.Schema.Types.ObjectId,
       ref:"Plan"
-   }
+   },
+    planExpiresAt: {
+        type: Date,
+        default: null
+      }
   },
   { timestamps: true }
 );

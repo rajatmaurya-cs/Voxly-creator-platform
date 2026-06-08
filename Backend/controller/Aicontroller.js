@@ -64,9 +64,9 @@ export const generateContent = async (req, res) => {
 export const summariseArticle = async (req, res) => {
   try {
      
-    // if (!req.user) {
-    //   return res.status(401).json({ success:false, message:"Login required" });
-    // }
+    if (!req.user) {
+      return res.status(401).json({ success:false, message:"Login required" });
+    }
 
     const {content} = req.body;
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { X, Mail, Calendar, Shield, LogOut, CheckCircle2 } from "lucide-react";
+import { X, Mail, Calendar, Shield, LogOut, CheckCircle2, CreditCard } from "lucide-react";
 import { motion } from "framer-motion";
 import EditorLoader from "../Animations/EditorLoader";
 
@@ -13,6 +13,10 @@ type UserProfileModalProps = {
         avatar: string;
         role: string;
         createdAt: string;
+        plan?: {
+            name: string;
+        } | null;
+        planExpiresAt?: string | null;
     } | null;
     onClose: () => void;
     onLogout: () => void;
@@ -110,7 +114,7 @@ const UserProfileModal = ({
                             
                             <div className="relative h-28 w-28 rounded-full overflow-hidden border-2 border-zinc-900 bg-zinc-950">
                                 <Image
-                                    src={user?.avatar || "/default-avatar.png"}
+                                    src={user?.avatar || "/man.png"}
                                     alt={user?.name || "User"}
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -174,6 +178,42 @@ const UserProfileModal = ({
                                 <div className="flex flex-col">
                                     <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Status</span>
                                     <span className="text-sm text-zinc-300 font-medium">Active Account</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Plan Row */}
+                        <div className="group flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-zinc-400 group-hover:text-indigo-400 transition-colors">
+                                    <CreditCard size={16} />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Current Plan</span>
+                                    <span className="text-sm text-zinc-300 font-medium capitalize">
+                                        {user?.plan?.name || "Free"}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Expiry Date Row */}
+                        <div className="group flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-zinc-400 group-hover:text-indigo-400 transition-colors">
+                                    <Calendar size={16} />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Plan Expires At</span>
+                                    <span className="text-sm text-zinc-300 font-medium">
+                                        {user?.planExpiresAt
+                                            ? new Date(user.planExpiresAt).toLocaleDateString("en-US", {
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                              })
+                                            : "Null"}
+                                    </span>
                                 </div>
                             </div>
                         </div>

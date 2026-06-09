@@ -47,7 +47,9 @@ function extractCookieValue(setCookieHeaderStr: string, name: string): string | 
 }
 
 export async function middleware(request: NextRequest) {
+
   const accessToken = request.cookies.get("accessToken")?.value;
+
   const refreshToken = request.cookies.get("refreshToken")?.value;
 
   const isAccessExpired = isTokenExpired(accessToken);
@@ -150,9 +152,11 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    
     "/superadmin",
     "/superadmin/:path*",
     "/admin",
     "/admin/:path*",
+    
   ],
 };

@@ -128,6 +128,13 @@ export const login = async (req, res) => {
       });
     }
 
+    if (!user.authProvider.includes("LOCAL")) {
+      return res.status(400).json({
+        success: false,
+        message: "This account is registered with Google. Please continue with Google login.",
+      });
+    }
+
     console.log("Local Login 5")
 
 
@@ -261,7 +268,7 @@ export const googleLogin = async (req, res) => {
 
     if (!user) {
 
-      
+
 
       const freePlan = await Plan.findOne({ name: "free" });
 
@@ -270,7 +277,7 @@ export const googleLogin = async (req, res) => {
 
         fullName: googleUser.name,
 
-        email: googleUser.email,
+        email: googleUser.email.toLowerCase().trim(),
 
         avatar: googleUser.picture,
 
@@ -278,7 +285,7 @@ export const googleLogin = async (req, res) => {
         plan: freePlan._id,
       });
 
-      
+
       await AIUsage.create({
         user: user._id,
       });
@@ -306,7 +313,7 @@ export const googleLogin = async (req, res) => {
 
       await user.save();
 
-       console.log("The User is Old and AIUsage does not created Created 🚨")
+      console.log("The User is Old and AIUsage does not created Created 🚨")
     }
 
     console.log("GoogleLogin 8")

@@ -6,6 +6,7 @@ import { Aidashboard } from '../controller/Dashboard.js'
 import checkAiLimit from '../Middleware/aiLimitMiddleware.js'
 import adminMiddleware from '../Middleware/adminMiddleware.js'
 import authMiddleware from '../Middleware/authMiddleware.js'
+import checkSubscriptionMiddleware from '../Middleware/checkSubscriptionMiddleware.js'
 
 const AiRouter = express.Router();
 
@@ -19,15 +20,15 @@ AiRouter.post('/Generatecontent',(req,res,next)=>{
     console.log("The model that want 🙏🏼: ",model)
 
     next()
-},authMiddleware,checkAiLimit,generateContent)
+},authMiddleware,checkSubscriptionMiddleware,checkAiLimit('generation'),generateContent)
 
 
 /* ================= Ai Summariser For Users ================= */
-// AiRouter.post('/summarise', checkAiLimit ,summariseArticle)
+
 AiRouter.post('/summarise', (req, res, next) => {
     console.log("Entered in summariser airoutes")
     next()
-}, checkAiLimit,summariseArticle)
+},authMiddleware ,checkSubscriptionMiddleware,checkAiLimit('summarizer'),summariseArticle)
 
 
 /* ================= NoOfTodayreq , Totalreq , NoOfUniqueUsers ================= */

@@ -9,6 +9,7 @@ function createAccessToken(user) {
      name : user.fullName,
      id: user._id,
      role: user.role,
+     plan:user.plan,
      email : user.email,
      avatar : user.avatar,
    createdAt: user.createdAt,

@@ -180,7 +180,7 @@ const AddBlog = () => {
             "Content-Type": "application/json",
           },
 
-          body: JSON.stringify({ title, subTitle , model}),
+          body: JSON.stringify({ title, subTitle , model , }),
         }
       );
 
@@ -370,28 +370,6 @@ const AddBlog = () => {
               <p className="mt-2 text-sm sm:text-[15px] text-[#8b90a0] max-w-xl leading-relaxed">
                 Draft, review and publish articles with AI-powered assistance.
               </p>
-            </div>
-
-            <div
-              className="
-            hidden md:flex
-            items-center gap-2
-            rounded-2xl
-            border border-[#232834]
-            bg-[#171b22]
-            px-4 py-2
-          "
-            >
-              <div
-                className={`
-              h-2.5 w-2.5 rounded-full
-              ${isPublished ? "bg-green-400" : "bg-[#6b7280]"}
-            `}
-              />
-
-              <span className="text-sm text-[#c8ccd4]">
-                {isPublished ? "Published" : "Draft"}
-              </span>
             </div>
 
           </div>
@@ -695,38 +673,54 @@ const AddBlog = () => {
                 {/* PUBLISH */}
                 <div
                   className="
-                flex items-center justify-between
                 rounded-2xl
                 border border-[#222733]
                 bg-[#171b22]
-                px-4 py-4
+                p-4
+                space-y-3
               "
                 >
-                  <div>
-                    <p className="text-sm font-medium text-white">
-                      Publish instantly
-                    </p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-white">
+                        Publish instantly
+                      </p>
 
-                    <p className="mt-1 text-xs text-[#7b8190]">
-                      Make blog public after upload
-                    </p>
+                      <p className="mt-1 text-xs text-[#7b8190]">
+                        Make blog public after upload
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setIsPublished((prev) => !prev)}
+                      className={`
+                    relative h-7 w-14 rounded-full transition-all
+                    ${isPublished ? "bg-[#314056]" : "bg-[#2a2f3b]"}
+                  `}
+                    >
+                      <span
+                        className={`
+                      absolute top-1 h-5 w-5 rounded-full bg-white transition-all
+                      ${isPublished ? "left-8" : "left-1"}
+                    `}
+                      />
+                    </button>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => setIsPublished((prev) => !prev)}
-                    className={`
-                  relative h-7 w-14 rounded-full transition-all
-                  ${isPublished ? "bg-[#314056]" : "bg-[#2a2f3b]"}
-                `}
-                  >
-                    <span
+                  {/* Status Indicator Bar */}
+                  <div className="flex items-center gap-2 rounded-xl bg-[#0b0d11] border border-[#222733]/60 px-3 py-2 text-xs">
+                    <div
                       className={`
-                    absolute top-1 h-5 w-5 rounded-full bg-white transition-all
-                    ${isPublished ? "left-8" : "left-1"}
+                    h-2 w-2 rounded-full
+                    ${isPublished ? "bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.5)] animate-pulse" : "bg-zinc-500"}
                   `}
                     />
-                  </button>
+                    <span className="text-[#8b90a0] font-medium">Status:</span>
+                    <span className={`font-semibold ${isPublished ? "text-green-400" : "text-zinc-400"}`}>
+                      {isPublished ? "Published" : "Draft"}
+                    </span>
+                  </div>
                 </div>
 
               </div>

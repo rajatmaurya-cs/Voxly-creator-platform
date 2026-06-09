@@ -8,9 +8,10 @@ import authRoutes from "./Routes/authRoutes.js";
 import authMiddleware from "./Middleware/authMiddleware.js";
 import blogRouter from "./Routes/blogRoutes.js";
 import commentRouter from "./Routes/commentRoutes.js";
-import AiRouter from "./Routes/AIRoutes.js";
-import configRoutes from "./Routes/configRoutes.js";
+import AiRouter from "./Routes/ai.routes.js";
+import configRoutes from "./Routes/config.routes.js";
 import adminMiddleware from "./Middleware/adminMiddleware.js";
+import paymentroutes from "./Routes/payment.routes.js";
 
 
 const app = express();
@@ -118,6 +119,13 @@ app.use("/api/ai",authMiddleware,(req,res , next)=>{
   next()
 
 }, AiRouter);
+
+
+app.use('/api/payment',(req,res,next)=>{
+
+  console.log("Rquest of paymetns in inde.js")
+  next();
+},authMiddleware,paymentroutes);
 
 
 

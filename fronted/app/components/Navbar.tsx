@@ -6,6 +6,7 @@ import {
   LayoutGrid,
   User,
   ShieldCheck,
+  IndianRupee
 } from "lucide-react";
 
 import { AuthContext } from "../ContextProvider/AuthProvider";
@@ -21,6 +22,7 @@ import { useRouter } from "next/navigation";
 
 
 const Navbar = () => {
+
   const { user, loggedIn, setLoggedIn, setUser } = useContext(AuthContext);
 
   const [showProfile, setShowProfile] = useState(false);
@@ -59,6 +61,32 @@ const Navbar = () => {
     },
   });
 
+
+  const handleAdmin  = ()=>{
+
+
+    if(!loggedIn){
+      toast.error("Login First")
+      setTimeout(()=>{
+        router.push('/auth/login')
+      },2000)
+      return ;
+    }
+
+    // if(user.role != 'ADMIN'){
+    //   toast.error("Oops, Plan Not purchased ");
+    //   setTimeout(()=>{
+    //     router.push('plans')
+    //   },2000)
+
+    //   return ;
+    // }
+
+    router.push('/admin')
+
+
+  }
+
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-900 bg-zinc-950/70 backdrop-blur-md">
@@ -78,11 +106,15 @@ const Navbar = () => {
             />
           </Link>
 
-          {loggedIn && (
+          {/* {loggedIn &&  (
             <div className="bg-white text-black px-4 py-2 rounded-xl text-sm font-medium">
-              {user?.name}
+              <span className="space-x-3 flex">
+                <div>name is: {user?.name}</div>
+                <div>plan is: {user?.plan?.name}</div>
+                <div>expired at: {user?.planExpiresAt ? user.planExpiresAt : "Null" }</div>
+              </span>
             </div>
-          )}
+          )} */}
 
           <div className="flex items-center gap-4">
             {!loggedIn && (
@@ -95,9 +127,9 @@ const Navbar = () => {
               </Link>
             )}
 
-            {loggedIn && (
-              <Link href="/admin">
-                <button
+      
+             
+                <button onClick={()=> handleAdmin()}
                   className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg
                   bg-zinc-900/60 border border-zinc-800 text-sm font-medium text-zinc-300
                   hover:bg-zinc-900 hover:border-zinc-700 hover:text-zinc-100
@@ -109,10 +141,24 @@ const Navbar = () => {
                   />
                   <span>Admin</span>
                 </button>
-              </Link>
-            )}
+            
+          
 
-            {loggedIn && (
+          
+              <button
+                onClick={()=>router.push('/plans')}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg
+                bg-zinc-900/60 border border-zinc-800 text-sm font-medium text-zinc-300
+                hover:bg-zinc-900 hover:border-zinc-700 hover:text-zinc-100
+                transition-all duration-200"
+              >
+              
+                <IndianRupee size={22} className="text-indigo-400" />
+                <span>Price</span>
+              </button>
+           
+
+            {loggedIn &&  (
               <button
                 onClick={() => setShowProfile(true)}
                 className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg
@@ -141,6 +187,7 @@ const Navbar = () => {
                 className="text-green-400"
                 />
                 <span>Superadmin</span>
+
               </button>
             )}
 

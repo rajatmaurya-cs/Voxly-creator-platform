@@ -1,5 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
+import User from "../Models/User.js";
 import {
 
   /*====signup & Login =====*/
@@ -33,25 +34,9 @@ import authMiddleware from "../Middleware/authMiddleware.js";
 
 const authRouter = express.Router();
 
-authRouter.get("/me", (req, res) => {
+authRouter.get("/me", async (req, res) => { // 👈 Make this async
   try {
-
-    // console.log("1")
-
-    const now = new Date();
-
-    const time = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
-
-    console.log("Request comes for /me at: ",time);
-
     const token = req?.cookies?.accessToken;
-
-    //  console.log("2")
-    
-    // console.log("The accesstoken from /me is: ",token)
-    // console.log("\n\nThe refreshToken form /me is:",req?.cookies?.refreshToken)
-
-    //  console.log("3")
 
     if (!token) {
       return res.status(401).json({
@@ -59,32 +44,41 @@ authRouter.get("/me", (req, res) => {
       });
     }
 
-    //  console.log("4")
+    // 1. Verify and decode the JWT token to get the user ID
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
-    const user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    // 2. Fetch the user from the DB and populate the plan details
+    const userFromDb = await User.findById(decoded.id).populate("plan");
 
-    //  console.log("5")
+    if (!userFromDb) {
+      return res.status(401).json({
+        loggedIn: false,
+      });
+    }
 
-  //   const user = {
-  //    name : user.fullName,
-  //    id: user._id,
-  //    role: user.role,
-  //    email : user.email,
-  //    avatar : user.avatar,
-  //  createdAt: user.createdAt,
-  // };
-
+    // 3. Return the user info with the populated plan object
     res.json({
-      success:true,
-      user,
+      success: true,
+      user: {
+        id: userFromDb._id,
+        name: userFromDb.fullName,
+        email: userFromDb.email,
+        role: userFromDb.role,
+        avatar: userFromDb.avatar,
+        plan: userFromDb.plan, // 👈 Populated plan object containing name, price, etc.
+        createdAt: userFromDb.createdAt,
+        planExpiresAt:userFromDb.planExpiresAt
+      },
     });
 
   } catch (err) {
-     console.log("6")
-    if (err.name === "TokenExpiredError") {console.log("Access token expired /me❌");}
-    else console.log("The Error in authMiddleware is: ",err)
+    if (err.name === "TokenExpiredError") {
+      console.log("Access token expired /me❌");
+    } else {
+      console.log("The Error in /me is: ", err);
+    }
     res.status(401).json({
-      success:false,
+      success: false,
     });
   }
 });

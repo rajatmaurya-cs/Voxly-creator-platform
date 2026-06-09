@@ -1,163 +1,209 @@
-
-
 import User from "../Models/User.js";
 import { AIUsage } from "../Models/AIUsage.js";
 import { redisClient } from "../Config/redis.js";
 import getConfigCached from "../utils/getConfigCached.js";
 
-const checkAiGenerationLimit = async (req, res, next) => {
-  try {
-    const config = await getConfigCached();
+const checkAiLimit = (type) => {
+  return async (req, res, next) => {
+    try {
+      const config = await getConfigCached();
 
-    if (!config?.aiEnabled) {
-      return res.status(403).json({
-        success: false,
-        message: "AI is currently disabled",
-      });
-    }
+      if (!config?.aiEnabled) {
+        return res.status(403).json({
+          success: false,
+          message: "AI is currently disabled",
+        });
+      }
 
-    const userId = req.user?.id;
+      const userId = req.user?.id;
+      const role = req.user?.role;
 
-    const role = req.user?.role;
+      if (!userId) {
+        return res.status(401).json({
+          success: false,
+          message: "Unauthorized",
+        });
+      }
 
-    if (!userId) {
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized",
-      });
-    }
+      // ----------------------------
+      // Per-minute rate limit
+      // ----------------------------
 
-    // ---------------------------------
-    // Per-minute rate limit
-    // ---------------------------------
-
-    const perMinute = Number(config.aiPerMinuteLimit);
-
-    const rateKey = `AI:rate:${userId}`;
-
-    const rate = await redisClient.incr(rateKey);
-
-    if (rate === 1) {
-      await redisClient.expire(rateKey, 60);
-    }
-
-    if (rate > perMinute) {
-      return res.status(429).json({
-        success: false,
-        message: "Too many requests. Try again in a minute.",
-      });
-    }
-
-    // ---------------------------------
-    // Global daily limit
-    // ---------------------------------
-
-    const dailyAppLimit = Number(config.dailyappLimit);
-
-    const now = new Date();
-
-    const dateKey = now.toISOString().slice(0, 10);
-
-    const appDailyKey = `AI:appDaily:${dateKey}`;
-
-    const appCount = await redisClient.incr(appDailyKey);
-
-    if (appCount === 1) {
-      const nextMidnightUTC = new Date();
-      nextMidnightUTC.setUTCHours(24, 0, 0, 0);
-
-      const ttl = Math.floor(
-        (nextMidnightUTC.getTime() - now.getTime()) / 1000
+      const perMinute = Number(
+        config.aiPerMinuteLimit
       );
 
-      await redisClient.expire(appDailyKey, ttl);
-    }
+      const rateKey = `AI:rate:${userId}`;
 
-    if (appCount > dailyAppLimit) {
-      return res.status(429).json({
+      const rate = await redisClient.incr(
+        rateKey
+      );
+
+      if (rate === 1) {
+        await redisClient.expire(rateKey, 60);
+      }
+
+      if (rate > perMinute) {
+        return res.status(429).json({
+          success: false,
+          message:
+            "Too many requests. Try again in a minute.",
+        });
+      }
+
+      // ----------------------------
+      // Global daily limit
+      // ----------------------------
+
+      const dailyAppLimit = Number(
+        config.dailyappLimit
+      );
+
+      const now = new Date();
+
+      const dateKey = now
+        .toISOString()
+        .slice(0, 10);
+
+      const appDailyKey = `AI:appDaily:${dateKey}`;
+
+      const appCount = await redisClient.incr(
+        appDailyKey
+      );
+
+      if (appCount === 1) {
+        const nextMidnightUTC = new Date();
+
+        nextMidnightUTC.setUTCHours(
+          24,
+          0,
+          0,
+          0
+        );
+
+        const ttl = Math.floor(
+          (nextMidnightUTC.getTime() -
+            now.getTime()) /
+            1000
+        );
+
+        await redisClient.expire(
+          appDailyKey,
+          ttl
+        );
+      }
+
+      if (appCount > dailyAppLimit) {
+        return res.status(429).json({
+          success: false,
+          message:
+            "Daily AI app limit reached.",
+        });
+      }
+
+      // ----------------------------
+      // Admin bypass
+      // ----------------------------
+
+      if (role === "ADMIN") {
+        return next();
+      }
+
+      // ----------------------------
+      // User + Plan
+      // ----------------------------
+
+      const user = await User.findById(userId)
+        .populate("plan");
+
+      if (!user || !user.plan) {
+        return res.status(404).json({
+          success: false,
+          message: "Plan not found",
+        });
+      }
+
+      const usage = await AIUsage.findOne({
+        user: userId,
+      });
+
+      if (!usage) {
+        return res.status(404).json({
+          success: false,
+          message: "Usage record not found",
+        });
+      }
+
+      // ----------------------------
+      // Reset Usage Every 12 Hours
+      // ----------------------------
+
+      const twelveHours =
+        12 * 60 * 60 * 1000;
+
+      if (
+        new Date() - usage.lastResetAt >=
+        twelveHours
+      ) {
+        usage.aiGenerationUsed = 0;
+        usage.aiSummarizerUsed = 0;
+        usage.lastResetAt = new Date();
+
+        await usage.save();
+      }
+
+      // ----------------------------
+      // Generation Limit
+      // ----------------------------
+
+      if (type === "generation") {
+        const limit =
+          user.plan.limits.aiGeneration;
+
+        if (
+          usage.aiGenerationUsed >= limit
+        ) {
+          return res.status(429).json({
+            success: false,
+            message:
+              "AI generation limit reached for your plan",
+          });
+        }
+      }
+
+      // ----------------------------
+      // Summarizer Limit
+      // ----------------------------
+
+      if (type === "summarizer") {
+        const limit =
+          user.plan.limits.aiSummarizer;
+
+        if (
+          usage.aiSummarizerUsed >= limit
+        ) {
+          return res.status(429).json({
+            success: false,
+            message:
+              "AI summarization limit reached for your plan",
+          });
+        }
+      }
+
+      next();
+      
+    } catch (error) {
+      console.error(
+        "AI Limit Middleware Error:",
+        error
+      );
+
+      return res.status(500).json({
         success: false,
-        message: "Daily AI app limit reached.",
+        message: "AI limit check failed",
       });
     }
-
-    // ---------------------------------
-    // Admin bypass
-    // ---------------------------------
-
-    if (role === "ADMIN") {
-      return next();
-    }
-
-    // ---------------------------------
-    // User + Plan
-    // ---------------------------------
-
-    const user = await User.findById(userId)
-      .populate("plan")
-      .lean();
-
-    if (!user || !user.plan) {
-      return res.status(404).json({
-        success: false,
-        message: "Plan not found",
-      });
-    }
-
-    const usage = await AIUsage.findOne({ user: userId });
-
-
-    if (!usage) {
-      return res.status(404).json({
-        success: false,
-        message: "Usage record not found",
-      });
-    }
-
-    const today = new Date();
-
-    const twelveHours = 12 * 60 * 60 * 1000;
-
-    if (today - usage.lastResetAt >= twelveHours) {
-      usage.aiGenerationUsed = 0;
-      usage.aiSummarizerUsed = 0;
-      usage.lastResetAt = now;
-
-      await usage.save();
-    }
-
-    const planLimitforGeneratoin = user.plan.limits.aiGeneration;
-
-    console.log("The planLimitforGeneration 💕: ",planLimitforGeneratoin)
-
-    console.log("\n\nThe user used Generation ai is 💕: ",usage.aiGenerationUsed)
-
-
-    if (usage.aiGenerationUsed >= planLimitforGeneratoin) {
-      return res.status(429).json({
-        success: false,
-        message: "AI generation limit reached for your plan",
-      });
-    }
-
-    const planLimitforSummarisation = user.plan.limits.aiSummarizer;
-    if (usage.aiSummarizerUsed >= planLimitforSummarisation) {
-
-      return res.status(429).json({
-        success: false,
-        message: "AI Summarisation limit reached for your plan",
-      });
-
-    }
-
-    next();
-
-  } catch (error) {
-    console.error("AI Limit Middleware Error:", error);
-    return res.status(500).json({
-      success: false,
-      message: "AI limit check failed",
-    });
-  }
+  };
 };
 
-export default checkAiGenerationLimit;
+export default checkAiLimit;

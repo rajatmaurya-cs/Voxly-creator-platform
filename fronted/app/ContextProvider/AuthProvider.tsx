@@ -4,10 +4,12 @@ import {
   createContext,
   useState,
   useContext,
-  useCallback,
   useEffect,
-  useRef,
+  Dispatch,
+  SetStateAction,
 } from "react";
+
+import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/apiFetch";
 
 // ---------------- TYPES ----------------
@@ -24,9 +26,10 @@ type User = {
 type AuthContextType = {
   loggedIn: boolean;
   user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  setUser: Dispatch<SetStateAction<User | null>>;
   setLoggedIn: (v: boolean) => void;
   loading: boolean;
+  refetchUser: () => void;
 };
 
 // ---------------- CONTEXT ----------------
@@ -38,48 +41,35 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
 
-  const initializedRef = useRef(false);
+  // ---------------- QUERY ----------------
+  const { data, isLoading, refetch, isError } = useQuery<User>({
+    queryKey: ["auth-user"],
+    queryFn: async () => {
+      const res = await apiFetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/me`
+      );
 
-  // ---------------- GET USER ----------------
-  const getUser = useCallback(async () => {
-    try {
-      setLoading(true);
+      if (!res.ok) throw new Error("Not authenticated");
 
-      const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`);
+      const result = await res.json();
+      return result.user;
+    },
+    retry: false,
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
+  });
 
-      if (!res.ok) {
-        setUser(null);
-        setLoggedIn(false);
-        return;
-      }
-
-      const data = await res.json();
-
-      if (data?.success) {
-        setUser(data.user);
-        setLoggedIn(true);
-      } else {
-        setUser(null);
-        setLoggedIn(false);
-      }
-    } catch (err) {
-      console.error("Auth check failed:", err);
+  // ---------------- SYNC STATE ----------------
+  useEffect(() => {
+    if (data) {
+      setUser(data);
+      setLoggedIn(true);
+    } else if (isError) {
       setUser(null);
       setLoggedIn(false);
-    } finally {
-      setLoading(false);
     }
-  }, []);
-
-  // ---------------- INIT ----------------
-  useEffect(() => {
-    if (initializedRef.current) return;
-    initializedRef.current = true;
-
-    getUser();
-  }, [getUser]);
+  }, [data, isError]);
 
   return (
     <AuthContext.Provider
@@ -88,7 +78,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         loggedIn,
         setUser,
         setLoggedIn,
-        loading,
+        loading: isLoading,
+        refetchUser: refetch,
       }}
     >
       {children}
@@ -98,8 +89,3 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 // ---------------- HOOK ----------------
 
-export const useAuth = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used inside AuthProvider");
-  return ctx;
-};

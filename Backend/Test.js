@@ -4,7 +4,15 @@ import { Plan } from "./Models/Plans.js";
 
 await mongoose.connect(process.env.MONGODB_URL);
 
-await Plan.create([
+const plans = [
+  {
+    name: "free",
+    price: 0,
+    limits: {
+      aiGeneration: 5,
+      aiSummarizer: 5,
+    },
+  },
   {
     name: "pro",
     price: 199,
@@ -21,8 +29,16 @@ await Plan.create([
       aiSummarizer: 500,
     },
   },
-]);
+];
 
-console.log("Plans inserted ✅");
+for (const planData of plans) {
+  await Plan.findOneAndUpdate(
+    { name: planData.name },
+    planData,
+    { upsert: true, new: true }
+  );
+}
 
+console.log("Plans inserted/updated ✅");
+await mongoose.disconnect();
 console.log("Operation Executed ✅");

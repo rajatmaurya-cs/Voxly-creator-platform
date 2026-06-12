@@ -91,7 +91,7 @@ const UserProfileModal = ({
                 </div>
 
                 {/* Card Content Container */}
-                <div className="relative z-10 w-full rounded-[23px] bg-zinc-950/95 p-8 overflow-hidden">
+                <div className="relative z-10 w-full rounded-[23px] bg-zinc-950 p-8 overflow-hidden">
                     {/* Decorative Background Glows */}
                     <div className="absolute -top-20 -left-20 w-48 h-48 bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none" />
                     <div className="absolute -bottom-20 -right-20 w-48 h-48 bg-rose-500/10 rounded-full blur-[80px] pointer-events-none" />

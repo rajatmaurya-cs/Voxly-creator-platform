@@ -1,4 +1,5 @@
 import express from "express";
+import superAdminMiddleware from "../Middleware/superAdminMiddleware.js";
 
 import {getConfig , updateConfig , getConfigHistory}    from '../controller/configController.js'
 
@@ -23,6 +24,6 @@ configRouter.get('/getConfigHistory',(req,res,next)=>{
 
 
 /* ================= updatConfig ================= */
-configRouter.put("/updateConfig", adminMiddleware,updateConfig);
+configRouter.put("/updateConfig", superAdminMiddleware,updateConfig);
 
 export default configRouter;

@@ -76,6 +76,7 @@ app.use(cookieParser());
 app.use("/api/auth", (req,res,next)=>{
 
   console.log("Request goes from index.js for /api/auth")
+  
   next()
   
 },authRoutes);
@@ -110,7 +111,7 @@ app.use("/api/ai/config", authMiddleware,(req,res,next)=>{
 
 app.use("/api/ai",authMiddleware,(req,res , next)=>{
 
-  
+  console.log("Request comes in /api/ai in index.js")
   // console.log("Request Goes for /api/ai from index.js ⛳️")
   // if(req?.cookies?.accessToken) console.log("Access Token is presetn in /api/ai ⛳️")
   // else console.log("Access Token is not 🔞presetn in /api/ai")
@@ -126,6 +127,8 @@ app.use('/api/payment',(req,res,next)=>{
   console.log("Rquest of paymetns in inde.js")
   next();
 },authMiddleware,paymentroutes);
+
+// app.use('/api/plan',)
 
 
 

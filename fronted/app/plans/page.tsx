@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useContext } from "react";
 import Script from "next/script";
 import { apiFetch } from "@/lib/apiFetch";
@@ -24,8 +23,8 @@ declare global {
 }
 
 import { AuthContext } from "../ContextProvider/AuthProvider";
-
 import { useQueryClient } from "@tanstack/react-query";
+import PriceCards from "../Animations/PriceCards";
 
 
 
@@ -59,7 +58,7 @@ const Page = () => {
 
       if (!data.success) {
         
-        toast.error(data.message)
+        toast.error(data.message , {id:"payment-toast"})
         return ;
       }
 
@@ -191,23 +190,28 @@ const Page = () => {
         strategy="lazyOnload"
       />
 
-      <div className="min-h-screen  text-white py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden flex flex-col justify-center items-center">
-        {/* Ambient Glows */}
-        {/* <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full bg-blue-600/10 blur-[130px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-purple-600/10 blur-[130px] pointer-events-none" /> */}
-
+      <div className="min-h-screen text-white pt-24 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden flex flex-col items-center">
+       
         <div className="max-w-7xl w-full mx-auto relative z-10">
-          {/* Header */}
-          <div className="text-center mb-16">
-            <span className="px-3 py-1 text-xs font-semibold tracking-wider text-cyan-400 bg-cyan-950/50 border border-cyan-800/50 rounded-full uppercase">
-              Pricing Plans
-            </span>
-            <h1 className="mt-4 text-4xl sm:text-5xl  tracking-tight text-white bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
-              Choose your perfect plan
-            </h1>
-            <p className="mt-4 text-lg text-neutral-400 max-w-2xl mx-auto">
-              Supercharge your social presence and content workflow with Postify's advanced AI toolset.
-            </p>
+          {/* Header Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16 max-w-6xl mx-auto">
+            {/* Header Text */}
+            <div className="text-center lg:text-left">
+              <span className="px-3 py-1 text-xs font-semibold tracking-wider text-cyan-400 bg-cyan-950/50 border border-cyan-800/50 rounded-full uppercase">
+                Pricing Plans
+              </span>
+              <h1 className="mt-4 text-4xl sm:text-5xl font-extrabold tracking-tight text-white bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
+                Choose your perfect plan
+              </h1>
+              <p className="mt-4 text-lg text-neutral-400 max-w-2xl lg:mx-0 mx-auto">
+                Supercharge your social presence and content workflow with Postify's advanced AI toolset.
+              </p>
+            </div>
+
+            {/* Wallet Graphic */}
+            <div className="flex justify-center items-center overflow-visible mt-2.5">
+              <PriceCards />
+            </div>
           </div>
 
           {/* Cards Grid */}
@@ -218,7 +222,7 @@ const Page = () => {
               return (
                 <div
                   key={plan.id}
-                  className={`flex flex-col justify-between p-8 sm:p-10 rounded-[32px] bg-[#0c0d12] border transition-all duration-300 hover:scale-[1.02] hover:border-neutral-700/80 ${isPopular
+                  className={`flex flex-col justify-between p-8 sm:p-10 rounded-[32px] bg-[#212121] border transition-all duration-300 hover:scale-[1.02] hover:border-neutral-700/80 ${isPopular
                       ? "border-neutral-700 shadow-[0_0_40px_rgba(139,92,246,0.05)] ring-1 ring-neutral-700"
                       : "border-neutral-800/80"
                     }`}
@@ -226,7 +230,7 @@ const Page = () => {
                   <div>
                     {/* Header */}
                     <div className="flex justify-between items-start">
-                      <h3 className="text-4xl font-semibold text-white tracking-tight">
+                      <h3 className="text-4xl  text-white tracking-tight">
                         {plan.name}
                       </h3>
                       {isCurrentPlan ? (
@@ -247,7 +251,7 @@ const Page = () => {
                       )}
                       <div className="flex items-start gap-1">
                         <span className="text-2xl font-semibold text-white mt-1">₹</span>
-                        <span className="text-6xl font-bold text-white tracking-tight leading-none">
+                        <span className="text-6xl  text-white tracking-tight leading-none">
                           {plan.price.toLocaleString()}
                         </span>
                         <div className="flex flex-col text-[12px] text-zinc-400 font-normal ml-2 mt-4 leading-tight">

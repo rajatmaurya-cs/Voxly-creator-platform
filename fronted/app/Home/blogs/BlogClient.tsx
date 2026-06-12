@@ -6,6 +6,7 @@ import { useHomeBlogs } from "../../hooks/useHomeBlogs";
 import Link from "next/link";
 import { Search, CalendarDays } from "lucide-react";
 import Image from "next/image";
+import { BlogGridSkeleton } from "./loading-skeleton";
 
 type Blog = {
   _id: string;
@@ -63,6 +64,7 @@ export default function BlogClient({ initialData }: Props) {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading,
   } = useHomeBlogs({
     category: activeCategory,
     limit: 3,
@@ -143,76 +145,80 @@ export default function BlogClient({ initialData }: Props) {
         </div>
 
         {/* BLOG GRID */}
-        <div className="grid gap-7 sm:grid-cols-2 xl:grid-cols-3">
-          {filteredBlogs.map((blog) => (
-            <Link
-              href={`/Home/blogs/${blog._id}`}
-              key={blog._id}
-              className="group overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-white/20 hover:bg-white/[0.05] hover:shadow-2xl hover:shadow-black/40"
-            >
-              {/* IMAGE */}
-              <div className="relative overflow-hidden">
-                <div className="relative h-60 w-full overflow-hidden">
-                  <Image
-                    src={blog?.image}
-                    alt={blog?.title}
-                    priority
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
+        {isLoading ? (
+          <BlogGridSkeleton />
+        ) : (
+          <div className="grid gap-7 sm:grid-cols-2 xl:grid-cols-3">
+            {filteredBlogs.map((blog) => (
+              <Link
+                href={`/Home/blogs/${blog._id}`}
+                key={blog._id}
+                className="group overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-white/20 hover:bg-white/[0.05] hover:shadow-2xl hover:shadow-black/40"
+              >
+                {/* IMAGE */}
+                <div className="relative overflow-hidden">
+                  <div className="relative h-60 w-full overflow-hidden">
+                    <Image
+                      src={blog?.image}
+                      alt={blog?.title}
+                      priority
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </div>
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+                  <span className="absolute left-4 top-4 rounded-full border border-white/10 bg-black/40 px-3 py-1 text-xs font-normal text-white backdrop-blur-md">
+                    {blog.category}
+                  </span>
                 </div>
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                {/* CONTENT */}
+                <div className="space-y-5 p-5">
+                  <h2 className="line-clamp-2 text-xl font-medium leading-relaxed text-white transition-colors group-hover:text-gray-200">
+                    {blog.title}
+                  </h2>
 
-                <span className="absolute left-4 top-4 rounded-full border border-white/10 bg-black/40 px-3 py-1 text-xs font-normal text-white backdrop-blur-md">
-                  {blog.category}
-                </span>
-              </div>
+                  {/* AUTHOR */}
+                  <div className="flex items-center justify-between gap-3 border-t border-white/10 pt-4">
 
-              {/* CONTENT */}
-              <div className="space-y-5 p-5">
-                <h2 className="line-clamp-2 text-xl font-medium leading-relaxed text-white transition-colors group-hover:text-gray-200">
-                  {blog.title}
-                </h2>
+                    <div className="flex items-center gap-3">
 
-                {/* AUTHOR */}
-                <div className="flex items-center justify-between gap-3 border-t border-white/10 pt-4">
+                      <div className="rounded-full border-2 border-white p-1 shadow-lg">
+                        <Image
+                          src={blog?.createdBy?.avatar || "/man.png"}
+                          alt={blog?.createdBy?.fullName || "Unknown"}
+                          width={44}
+                          height={44}
+                          priority
+                          className="rounded-full object-cover"
+                        />
+                      </div>
 
-                  <div className="flex items-center gap-3">
+                      <div>
+                        <p className="text-sm font-normal text-gray-200">
+                          {blog?.createdBy?.fullName || "Unknown"}
+                        </p>
 
-                    <div className="rounded-full border-2 border-white p-1 shadow-lg">
-                      <Image
-                        src={blog?.createdBy?.avatar || "/man.png"}
-                        alt={blog?.createdBy?.fullName || "Unknown"}
-                        width={44}
-                        height={44}
-                        priority
-                        className="rounded-full object-cover"
-                      />
-                    </div>
-
-                    <div>
-                      <p className="text-sm font-normal text-gray-200">
-                        {blog?.createdBy?.fullName || "Unknown"}
-                      </p>
-
-                      <div className="mt-1 flex items-center gap-1 text-xs font-normal text-gray-500">
-                        <CalendarDays size={13} />
-                        <span>
-                          {new Date(blog.createdAt).toDateString()}
-                        </span>
+                        <div className="mt-1 flex items-center gap-1 text-xs font-normal text-gray-500">
+                          <CalendarDays size={13} />
+                          <span>
+                            {new Date(blog.createdAt).toDateString()}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-normal text-gray-400">
-                    Read
+                    <div className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-normal text-gray-400">
+                      Read
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+              </Link>
+            ))}
+          </div>
+        )}
 
         {/* LOAD MORE */}
         {hasNextPage && (

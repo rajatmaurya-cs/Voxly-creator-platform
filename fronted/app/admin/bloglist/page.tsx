@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { usePublication } from '../../hooks/usePublication'
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { BlogPublicationsSkeleton } from './blog-loading';
 import {
   CalendarDays,
   ShieldCheck,
@@ -125,14 +126,7 @@ const Page = () => {
   }
 
   if (isLoading) {
-    return (
-      <div className='min-h-screen bg-[#09090b] flex items-center justify-center font-sans antialiased selection:bg-zinc-800'>
-        <div className='flex items-center gap-3 px-6 py-4 rounded-xl border border-zinc-800/80 bg-zinc-900/20 backdrop-blur-md'>
-          <Loader2 className='h-4 w-4 animate-spin text-zinc-400' />
-          <span className='text-sm font-medium text-zinc-400 tracking-tight'>Retrieving workspace publications...</span>
-        </div>
-      </div>
-    )
+    return <BlogPublicationsSkeleton />;
   }
 
   if (isError) {

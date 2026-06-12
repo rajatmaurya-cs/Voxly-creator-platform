@@ -44,7 +44,7 @@ export const contentGenerationService = async ({ user, prompt, model }) => {
   });
 
   await AIUsage.findOneAndUpdate(
-    { user: user.id },
+    { userId: user.id },
     {
       $inc: {
         aiGenerationUsed: 1,
@@ -89,7 +89,7 @@ export const articleSummariser = async ({ user, prompt }) => {
   });
 
   await AIUsage.findOneAndUpdate(
-    { user: user.id },
+    { userId: user.id },
     {
       $inc: {
         aiSummarizerUsed: 1,

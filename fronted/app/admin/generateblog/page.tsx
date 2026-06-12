@@ -839,7 +839,7 @@ const AddBlog = () => {
                   }`}
               >
                 {addBlogMutation.isPending ? (
-                  <EditorLoader size={40} border={3} />
+                  <EditorLoader size={40} border={8} />
                 ) : (
                   "Submit Blog"
                 )}

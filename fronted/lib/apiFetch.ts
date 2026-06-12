@@ -35,11 +35,19 @@ export async function apiFetch(
           }
         );
 
+        if (res.ok) {
+          // Keep the resolved promise for a 3s grace period to absorb concurrent 401s
+          setTimeout(() => {
+            refreshPromise = null;
+          }, 3000);
+        } else {
+          refreshPromise = null;
+        }
+
         return res.ok;
       } catch (err) {
-        return false;
-      } finally {
         refreshPromise = null;
+        return false;
       }
     })();
   }
@@ -62,5 +70,7 @@ export async function apiFetch(
 
   // 🔁 retry original request ONCE
   response = await makeRequest();
+
   return response;
+  
 }

@@ -38,7 +38,7 @@ const authMiddleware = async (req, res, next) => {
 
     // console.log("7")
 
-  //    const payload = {
+  //    const decoded = {
   //    name : user.fullName,
   //    id: user._id,
   //    role: user.role,

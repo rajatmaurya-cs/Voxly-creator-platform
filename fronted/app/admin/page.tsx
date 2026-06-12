@@ -1,19 +1,20 @@
 import React from 'react'
 import { Suspense } from 'react'
 
-import StatusServer from '../admin/dashboard/StatusServer'
+import StatusServer from './dashboard/status/StatusServer'
+import BlogServer from './dashboard/blog/BlogServer'
+import { StatusSkeleton, BlogListSkeleton } from './dashboard/loading'
 
-import BlogServer from '../admin/dashboard/BlogServer'
 
 const Page = () => {
   return (
-    <div>
+    <div className="space-y-6">
 
-       <Suspense fallback={<p>Loading Status...</p>}>
+       <Suspense fallback={<StatusSkeleton />}>
         <StatusServer />
       </Suspense>
 
-       <Suspense fallback={<p>Loading Blogs...</p>}>
+       <Suspense fallback={<BlogListSkeleton />}>
          <BlogServer />
        </Suspense>
 

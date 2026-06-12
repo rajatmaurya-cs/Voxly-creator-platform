@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { CommentModerationSkeleton } from "./comment-loading";
 import Moment from "moment";
 import { 
   MessageSquare, 
@@ -148,6 +149,10 @@ const Page = () => {
     toggleMutation.mutate(commentId);
   };
 
+  if (!isLoading) {
+    return <CommentModerationSkeleton />;
+  }
+
   return (
     <div className="flex-1 w-full min-w-0 bg-[#0b0d11] text-[#f3f4f6] px-6 py-10 font-sans antialiased selection:bg-[#1d2430] selection:text-white flex flex-col h-full">
 
@@ -253,44 +258,7 @@ const Page = () => {
 
         <tbody className="divide-y divide-[#1b1f27]">
 
-          {isLoading ? (
-            [...Array(4)].map((_, i) => (
-              <tr key={i} className="animate-pulse align-middle">
-
-                <td className="px-5 py-5">
-                  <div className="h-3 w-4 rounded bg-[#171b22]" />
-                </td>
-
-                <td className="px-5 py-5">
-                  <div className="h-3 w-20 rounded bg-[#171b22]" />
-                </td>
-
-                <td className="px-5 py-5">
-                  <div className="space-y-2">
-                    <div className="h-3 w-full rounded bg-[#171b22]" />
-                    <div className="h-3 w-2/3 rounded bg-[#171b22]" />
-                  </div>
-                </td>
-
-                <td className="px-5 py-5">
-                  <div className="h-3 w-16 rounded bg-[#171b22]" />
-                </td>
-
-                <td className="px-5 py-5">
-                  <div className="h-5 w-16 rounded-md bg-[#171b22]" />
-                </td>
-
-                <td className="px-5 py-5">
-                  <div className="mx-auto h-7 w-20 rounded-lg bg-[#171b22]" />
-                </td>
-
-                <td className="px-5 py-5">
-                  <div className="mx-auto h-7 w-7 rounded-lg bg-[#171b22]" />
-                </td>
-
-              </tr>
-            ))
-          ) : comments.length === 0 ? (
+          {comments.length === 0 ? (
 
             <tr>
               <td colSpan={7} className="px-5 py-24 text-center">

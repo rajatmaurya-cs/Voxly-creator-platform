@@ -301,7 +301,7 @@ const AIConfigDashboard = () => {
         </div>
 
         {/* Individual Daily Limit */}
-        <div className="bg-[#0b0f19]/40 backdrop-blur-md rounded-[2rem] border border-white/10 p-8">
+        {/* <div className="bg-[#0b0f19]/40 backdrop-blur-md rounded-[2rem] border border-white/10 p-8">
           <div className="flex justify-between items-start mb-6">
             <div className="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -327,7 +327,7 @@ const AIConfigDashboard = () => {
             onChange={(e) => setEditedConfig((prev) => ({ ...prev, dailyAiLimit: Number(e.target.value) }))}
             className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500/30"
           />
-        </div>
+        </div> */}
 
         {/* Per-Minute Limit */}
         <div className="bg-[#0b0f19]/40 backdrop-blur-md rounded-[2rem] border border-white/10 p-8">

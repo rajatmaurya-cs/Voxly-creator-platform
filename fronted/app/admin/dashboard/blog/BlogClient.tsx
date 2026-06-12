@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useDashboardblogs } from "../../hooks/useDashboardblogs";
+import { useDashboardblogs } from "../../../hooks/useDashboardblogs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+
 
 import {
   CalendarDays,
@@ -15,6 +16,7 @@ import {
   FileText,
   Layers,
 } from "lucide-react";
+import { BlogListSkeleton } from "../loading";
 import { apiFetch } from "@/lib/apiFetch";
 
 type ModeratedBy = {
@@ -79,6 +81,11 @@ const BlogClient = () => {
     },
 
     onSuccess: (data) => {
+      
+      queryClient.invalidateQueries({
+        queryKey: ["dashboard-data"],
+      });
+
       toast.success(data.message || "Status updated", {
         id: "toggle",
       });
@@ -110,16 +117,7 @@ const BlogClient = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex h-[75vh] items-center justify-center bg-zinc-950 font-sans antialiased">
-        <div className="flex items-center gap-3 rounded-xl border border-zinc-800/60 bg-zinc-900/30 px-5 py-3.5 backdrop-blur-md">
-          <Loader2 className="h-4 w-4 animate-spin text-zinc-400" />
-          <span className="text-sm font-medium text-zinc-400 tracking-tight">
-            Syncing registry...
-          </span>
-        </div>
-      </div>
-    );
+    return <BlogListSkeleton />;
   }
 
   if (isError) {

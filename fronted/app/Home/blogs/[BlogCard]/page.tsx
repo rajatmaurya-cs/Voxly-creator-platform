@@ -2,7 +2,7 @@
 import { Suspense } from "react";
 import Blogserver from "./Blogserver";
 import Commentserver from "./CommentServer";
-import BlogSkeleton from "./Loading";
+import BlogSkeleton from "./loading";
 
 type BlogCardProps = {
   params: Promise<{

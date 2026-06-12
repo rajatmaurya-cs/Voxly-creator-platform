@@ -3,7 +3,6 @@ import Blogserver from './BlogServer'
 const page = () => {
   return (
     <div>
-      
       <Blogserver/>
     </div>
   )

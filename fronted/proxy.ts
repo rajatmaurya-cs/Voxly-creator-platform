@@ -46,7 +46,7 @@ function extractCookieValue(setCookieHeaderStr: string, name: string): string | 
   return value;
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
 
   const accessToken = request.cookies.get("accessToken")?.value;
 

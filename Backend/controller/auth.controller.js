@@ -117,7 +117,7 @@ export const login = async (req, res) => {
     console.log("Local Login 3")
 
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate("plan");
 
     console.log("Local Login 4")
 
@@ -189,13 +189,15 @@ export const login = async (req, res) => {
     return res.status(200).json({
       success: true,
 
-      user: {
+       user: {
         id: user._id,
         name: user.fullName,
         email: user.email,
-        avatar: user.avatar,
         role: user.role,
+        avatar: user.avatar,
+        plan: user.plan, // 👈 Populated plan object containing name, price, etc.
         createdAt: user.createdAt,
+        planExpiresAt:user.planExpiresAt
       },
     });
 
@@ -266,6 +268,10 @@ export const googleLogin = async (req, res) => {
 
     // ---------------- CREATE USER ----------------
 
+
+
+
+
     if (!user) {
 
 
@@ -313,7 +319,7 @@ export const googleLogin = async (req, res) => {
 
       await user.save();
 
-      console.log("The User is Old and AIUsage does not created Created 🚨")
+      console.log("The User is Old and AIUsage does not created 🚨")
     }
 
     console.log("GoogleLogin 8")
@@ -436,69 +442,69 @@ export const refreshAccessToken = async (req, res) => {
 
     console.log("Request comes for refreshAccesToken 🚫 at: ", time);
 
-    // console.log("refreshAccessToken: 1")
+    console.log("refreshAccessToken: 1")
 
     const refreshToken = req.cookies.refreshToken;
 
     const accessToken = req.cookies.accessToken;
 
 
-    // console.log("The refreshtoken from refreshAccessToken: ",refreshToken)
-    // console.log("The accessToken from refreshAccessToken:: ",accessToken)
+    console.log("The refreshtoken from Browser is: ",refreshToken)
+    
 
 
     if (!refreshToken) {
       return res.status(401).json({ message: "Invalid email or Password" });
     }
 
-    // console.log("refreshAccessToken: 2")
+    console.log("refreshAccessToken: 2")
 
 
     const hashedToken = hashToken(refreshToken);
 
-    // console.log("refreshAccessToken: 3")
+    console.log("refreshAccessToken: 3")
 
     const storedToken = await RefreshToken.findOneAndDelete({
       token: hashedToken,
     });
 
-    // console.log("refreshAccessToken: 4")
+    console.log("refreshAccessToken: 4")
 
-    // console.log("The StoredToken is: ", storedToken)
+    console.log("The StoredToken is: ", storedToken)
 
     if (!storedToken) {
       return res.status(403).json({ message: "Invalid Email or Password" });
     }
 
-    // console.log("refreshAccessToken: 5")
+    console.log("refreshAccessToken: 5")
 
     const decoded = jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET
     );
 
-    // console.log("refreshAccessToken: 6")
+    console.log("refreshAccessToken: 6")
 
     const user = await User.findById(decoded.id);
 
 
-    // console.log("refreshAccessToken: 7")
+    console.log("refreshAccessToken: 7")
 
-    // console.log("user is: ", user)
+    console.log("user is: ", user)
 
     if (!user) {
       return res.status(403).json({ message: "User not found" });
     }
 
-    // console.log("refreshAccessToken: 8")
+    console.log("refreshAccessToken: 8")
 
     const newAccessToken = createAccessToken(user);
 
-    // console.log("refreshAccessToken: 9")
+    console.log("refreshAccessToken: 9")
 
     const newrefreshToken = createRefreshToken(user);
 
-    // console.log("refreshAccessToken: 10")
+    console.log("refreshAccessToken: 10")
 
 
 
@@ -508,7 +514,7 @@ export const refreshAccessToken = async (req, res) => {
     });
 
 
-    // console.log("refreshAccessToken: 11")
+    console.log("refreshAccessToken: 11")
 
 
 

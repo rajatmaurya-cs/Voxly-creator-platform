@@ -124,7 +124,7 @@ const checkAiLimit = (type) => {
       }
 
       const usage = await AIUsage.findOne({
-        user: userId,
+        userId: userId,
       });
 
       if (!usage) {

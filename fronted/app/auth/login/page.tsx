@@ -74,6 +74,7 @@ export default function LoginPage() {
 
     onSuccess: (data) => {
 
+      
       setLoggedIn(true);
 
       setUser(data.user);

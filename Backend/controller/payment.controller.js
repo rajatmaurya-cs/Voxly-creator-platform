@@ -8,18 +8,14 @@ export const generateOrderId = async (req, res) => {
   try {
     const { plan } = req.body;
 
-    console.log("Order generates for plan: ",plan)
-
     if (!plan) {
       return res.status(400).json({
         success: false,
-        message: "Plan name is required",
+        message: "Plan is required",
       });
     }
 
     const selectedPlan = await Plan.findOne({ name: plan });
-
-    if(selectedPlan.price)console.log("Price of selectedPlan",selectedPlan.price)
 
     if (!selectedPlan) {
       return res.status(404).json({
@@ -28,8 +24,42 @@ export const generateOrderId = async (req, res) => {
       });
     }
 
+    const user = await User.findById(req.user.id).populate("plan");
+
+   
+
+    const planRank = {
+      free: 0,
+      pro: 1,
+      plus: 2,
+    };
+
+    const currentRank = planRank[user.plan?.name || "free"];
+    const newRank = planRank[selectedPlan.name];
+
+    console.log(`The currentRank is ${currentRank} & the rank is: ${user.plan?.name}`)
+    console.log("\nThe newRank is: ",newRank)
+
+    // 🔒 BLOCK upgrade/downgrade or same plan
+    if (currentRank >= newRank) {
+      console.log("Blocked to buy this Plan")
+      return res.status(400).json({
+        success: false,
+        message: "You already have this plan or higher plan",
+      });
+    }
+
+    console.log("Order generated for plan:", plan);
+    console.log("Price:", selectedPlan.price);
+
+
+    // return res.status(200).json({
+    //   success:true,
+    //   message:"Request moved forward"
+    // })
+
     const order = await razorpay.orders.create({
-      amount: selectedPlan.price * 100, // convert to paise
+      amount: selectedPlan.price * 100,
       currency: "INR",
       receipt: `receipt_${Date.now()}`,
     });
@@ -48,6 +78,7 @@ export const generateOrderId = async (req, res) => {
       amount: selectedPlan.price,
       currency: "INR",
     });
+
   } catch (error) {
     console.error(error);
 

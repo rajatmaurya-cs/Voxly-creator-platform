@@ -1,5 +1,4 @@
 'use client'
-
 import { apiFetch } from '@/lib/apiFetch'
 import { useQuery } from '@tanstack/react-query'
 import {
@@ -8,12 +7,16 @@ import {
   FileClock,
   AlertCircle,
 } from 'lucide-react'
+import { StatusSkeleton } from '../loading'
 
 export default function StatusClient() {
+
+
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['dashboard-data'],
 
     queryFn: async () => {
+      
       const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/blog/BlogDashboard`,{
           credentials: "include"
@@ -47,27 +50,7 @@ export default function StatusClient() {
   const wrapper = 'w-full max-w-2xl mx-auto'
 
   if (isLoading) {
-    return (
-      <div className={wrapper}>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="rounded-3xl border border-zinc-800/60 bg-zinc-950/40 p-5 backdrop-blur-xl"
-            >
-              <div className="flex items-start justify-between">
-                <div className="space-y-3">
-                  <div className="h-3 w-20 animate-pulse rounded-full bg-zinc-800" />
-                  <div className="h-8 w-14 animate-pulse rounded-xl bg-zinc-800" />
-                </div>
-
-                <div className="h-11 w-11 animate-pulse rounded-2xl bg-zinc-800" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    )
+    return <StatusSkeleton />
   }
 
   if (isError) {

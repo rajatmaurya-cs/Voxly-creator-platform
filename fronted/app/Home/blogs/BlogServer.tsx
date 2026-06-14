@@ -8,8 +8,7 @@ type BlogSectionProps = {
 };
 
 async function fetchBlogs({ category = "All", search = "", page = 1, limit = 3, }: BlogSectionProps) {
-
-
+  
   // const endpoint =
   //   "https://postifybackend-six.vercel.app/api/blog/allblog" ;
 
@@ -41,4 +40,5 @@ export default async function BlogSection() {
   });
 
   return <BlogClient initialData={initialData} />;
+  
 }

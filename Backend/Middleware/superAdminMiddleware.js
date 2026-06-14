@@ -1,15 +1,12 @@
 
-const superAdminMiddleware = (req,res,next)=>{
-
-    const {user} = req.user;
-    
-    if(user.role === 'superadmin') next();
-
-    return res.status(403).json({
-        success:false,
-        message:"Admin Access Required"
-    })
-
-}
+const superAdminMiddleware = (req, res, next) => {
+    if (req.user?.role !== "SUPERADMIN") {
+        return res.status(403).json({
+            success: false,
+            message: "Superadmin access required"
+        });
+    }
+    next();
+};
 
 export default superAdminMiddleware;

@@ -2,19 +2,19 @@
 
 import React from "react";
 import Moment from "react-moment";
+import Image from "next/image";
 
 import {
   HiOutlineCpuChip,
   HiOutlineUsers,
   HiOutlineChartBar,
-  HiOutlineBolt,
   HiOutlineClock,
 } from "react-icons/hi2";
 
 import {
   FiActivity,
-  FiUser,
   FiShield,
+  FiBox,
 } from "react-icons/fi";
 
 import {
@@ -43,35 +43,35 @@ const Client = ({ data }: ClientProps) => {
     {
       title: "Total Requests",
       value: stats.totalRequests.toLocaleString(),
-      icon:  <HiOutlineCpuChip size={20} />,
+      icon: <HiOutlineCpuChip size={22} />,
     },
     {
       title: "Today's Requests",
       value: stats.todayRequests.toLocaleString(),
-      icon: <HiOutlineUsers size={20} />,
+      icon: <HiOutlineUsers size={22} />,
     },
     {
       title: "Most Used AI",
       value: stats.mostUsedAI,
-      icon: <FiActivity size={20} />,
+      icon: <FiActivity size={22} />,
     },
     {
       title: "Unique Users",
       value: stats.uniqueUsers.toLocaleString(),
-      icon: <HiOutlineChartBar size={20} />,
+      icon: <HiOutlineChartBar size={22} />,
     },
   ];
 
+
   return (
-    <div className="w-full max-w-7xl px-4 md:px-6 py-8">
+    <div className="w-full max-w-5xl py-4 animate-in fade-in duration-500">
       {/* Header */}
       <div className="mb-10">
-        <h1 className="text-3xl font-black text-white tracking-tight">
+        <div className="text-2xl font-bold tracking-tight text-black">
           AI Usage Dashboard
-        </h1>
-
-        <p className="mt-2 text-sm text-slate-400">
-          Monitor AI requests, user engagement, and platform-wide activity.
+        </div>
+        <p className="mt-1.5 text-xs text-zinc-650 font-bold tracking-wide">
+          Track AI generation, user activity and platform usage insights across Postify.
         </p>
       </div>
 
@@ -80,244 +80,121 @@ const Client = ({ data }: ClientProps) => {
         {cards.map((card) => (
           <div
             key={card.title}
-            className="
-              relative
-              overflow-hidden
-              rounded-[2rem]
-              border
-              border-white/10
-              bg-[#0b0f19]/40
-              backdrop-blur-md
-              p-6
-              transition-all
-              duration-300
-              hover:border-indigo-500/30
-              hover:shadow-[0_8px_30px_rgba(99,102,241,0.05)]
-              hover:-translate-y-0.5
-            "
+            className="group relative flex flex-col justify-between overflow-hidden rounded-xl border bg-zinc-50 p-6 transition-all duration-300 hover:border-zinc-400"
+            style={{ borderColor: "#e4e4e7" }}
           >
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold tracking-wide text-slate-400">
-                {card.title}
-              </p>
-
-              <div
-                className="
-                  flex
-                  h-10
-                  w-10
-                  items-center
-                  justify-center
-                  rounded-xl
-                  border
-                  border-indigo-500/20
-                  bg-indigo-500/10
-                  text-indigo-400
-                "
+              <p className="text-[11px] font-bold tracking-wide text-zinc-700">{card.title}</p>
+              <div 
+                className="flex h-9 w-9 items-center justify-center rounded-lg border bg-white text-zinc-850 transition-colors duration-300 group-hover:text-black group-hover:border-zinc-400"
+                style={{ borderColor: "#e4e4e7" }}
               >
                 {card.icon}
               </div>
             </div>
-
-            <h2 className="mt-5 text-3xl font-black text-white tracking-tight truncate">
+            <div className="mt-6 text-3xl font-bold text-black tracking-tight truncate">
               {card.value}
-            </h2>
+            </div>
           </div>
         ))}
       </div>
 
       {/* Recent Activity */}
-      <div
-        className="
-          mt-10
-          rounded-[2rem]
-          border
-          border-white/10
-          bg-[#0b0f19]/40
-          backdrop-blur-md
-          p-6 md:p-8
-        "
+      <div 
+        className="mt-8 overflow-hidden rounded-xl border bg-white"
+        style={{ borderColor: "#e4e4e7" }}
       >
-        <div className="mb-6">
-          <h2 className="text-2xl font-black tracking-tight text-white">
-            Recent AI Activity
-          </h2>
-
-          <p className="mt-1 text-sm text-slate-400">
-            View the latest AI actions performed across the platform.
-          </p>
+        <div 
+          className="flex items-center justify-between border-b p-6"
+          style={{ borderColor: "#e4e4e7" }}
+        >
+          <div>
+            <div className="text-sm font-bold tracking-tight text-black">
+              Recent Activity
+            </div>
+            <p className="mt-1 text-xs font-semibold text-zinc-500">
+              Latest AI actions performed by users.
+            </p>
+          </div>
+          <FiActivity className="text-black" size={18} />
         </div>
 
         {stats.logs.length === 0 ? (
-          <div
-            className="
-              rounded-[2rem]
-              border
-              border-dashed
-              border-white/10
-              bg-white/[0.01]
-              py-20
-              text-center
-            "
-          >
-            <div
-              className="
-                mx-auto
-                mb-5
-                flex
-                h-14
-                w-14
-                items-center
-                justify-center
-                rounded-xl
-                border
-                border-white/10
-                bg-[#0b0f19]/40
-                text-slate-400
-              "
+          <div className="flex flex-col items-center justify-center py-20 text-center bg-zinc-50">
+            <div 
+              className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border bg-white text-zinc-400"
+              style={{ borderColor: "#e4e4e7" }}
             >
-              <HiOutlineClock size={28} />
+              <HiOutlineClock size={20} />
             </div>
-
-            <h3 className="text-lg font-bold text-white">
-              No AI Activity Yet
-            </h3>
-
-            <p className="mt-2 text-sm text-slate-500">
-              Activity logs will appear here once users start using AI features.
+            <div className="text-xs font-bold tracking-wide text-zinc-800">No Activity Yet</div>
+            <p className="mt-2 text-xs text-zinc-500 font-semibold max-w-xs tracking-wide">
+              User AI activity will appear here.
             </p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="flex flex-col">
             {stats.logs.map((log, index) => (
               <div
-                key={log._id}
-                className="
-                  flex
-                  flex-col
-                  gap-4
-                  rounded-2xl
-                  border
-                  border-white/5
-                  bg-white/[0.02]
-                  p-5
-                  transition-all
-                  duration-200
-                  hover:bg-white/[0.04]
-                  hover:border-white/10
-                  md:flex-row
-                  md:items-center
-                  md:justify-between
-                "
+                key={log._id || index}
+                className="group flex flex-col gap-5 border-b p-6 transition hover:bg-zinc-50 md:flex-row md:items-center md:justify-between last:border-none"
+                style={{ borderColor: "#e4e4e7" }}
               >
-                {/* Left */}
+                {/* Left - User Info */}
                 <div className="flex items-center gap-4">
-                  <div
-                    className="
-                      flex
-                      h-11
-                      w-11
-                      items-center
-                      justify-center
-                      rounded-full
-                      border
-                      border-indigo-500/25
-                      bg-indigo-500/15
-                      text-indigo-300
-                      font-bold
-                    "
+                  <div 
+                    className="relative flex h-10 w-10 overflow-hidden rounded-lg border bg-zinc-50"
+                    style={{ borderColor: "#e4e4e7" }}
                   >
-                    {log.userId?.fullName ? (
-                      log.userId.fullName.charAt(0).toUpperCase()
-                    ) : (
-                      <FiUser size={16} />
-                    )}
+                    <Image
+                      src="/user.png"
+                      fill
+                      alt=""
+                      className="object-cover grayscale"
+                    />
                   </div>
-
                   <div>
-                    <h3 className="font-bold text-slate-200">
+                    <div className="text-xs font-bold text-black tracking-tight">
                       {log.userId?.fullName || "Unknown User"}
-                    </h3>
-
-                    <p className="text-xs text-slate-500">
-                      Activity #{String(index + 1).padStart(3, "0")}
-                    </p>
+                    </div>
+                    <div className="mt-0.5 text-[9px] font-bold text-zinc-450 tracking-wide">
+                      Activity #{index + 1}
+                    </div>
                   </div>
                 </div>
 
-                {/* Center */}
-                <div className="flex flex-wrap items-center gap-3">
+                {/* Center - Badges */}
+                <div className="flex flex-wrap gap-3">
                   {log.role === "admin" ? (
-                    <span
-                      className="
-                        inline-flex
-                        items-center
-                        gap-1.5
-                        rounded-lg
-                        border
-                        border-amber-500/20
-                        bg-amber-500/10
-                        px-3
-                        py-1.5
-                        text-xs
-                        font-semibold
-                        text-amber-300
-                      "
+                    <span 
+                      className="flex items-center gap-1.5 rounded border bg-black px-2.5 py-1.5 text-[10px] font-bold tracking-wide text-white uppercase"
+                      style={{ borderColor: "#000000" }}
                     >
-                      <FiShield size={12} />
-                      Admin
+                      <FiShield size={10} /> {log.role}
                     </span>
                   ) : (
-                    <span
-                      className="
-                        inline-flex
-                        items-center
-                        rounded-lg
-                        border
-                        border-white/5
-                        bg-white/[0.03]
-                        px-3
-                        py-1.5
-                        text-xs
-                        font-semibold
-                        text-slate-300
-                      "
+                    <span 
+                      className="flex items-center gap-1.5 rounded border bg-zinc-100 px-2.5 py-1.5 text-[10px] font-bold tracking-wide text-zinc-850"
+                      style={{ borderColor: "#e4e4e7" }}
                     >
-                      User
+                      <FiBox size={10} /> {log.role}
                     </span>
                   )}
 
-                  <span
-                    className="
-                      inline-flex
-                      items-center
-                      gap-1.5
-                      rounded-lg
-                      border
-                      border-indigo-500/20
-                      bg-indigo-500/10
-                      px-3
-                      py-1.5
-                      text-xs
-                      font-semibold
-                      text-indigo-300
-                    "
+                  <span 
+                    className="flex items-center gap-1.5 rounded border bg-zinc-100 px-2.5 py-1.5 text-[10px] font-bold tracking-wide text-zinc-850"
+                    style={{ borderColor: "#e4e4e7" }}
                   >
-                    <HiOutlineCpuChip size={12} />
-                    {log.action}
+                    <HiOutlineCpuChip size={10} /> {log.action}
                   </span>
                 </div>
 
-                {/* Right */}
-                <div className="flex items-center gap-2 text-sm text-slate-400 md:text-right font-medium">
-                  <FiActivity size={14} className="text-slate-500" />
-
-                  {log.createdAt ? (
-                    <Moment format="MMM D, YYYY">
+                {/* Right - Timestamp */}
+                <div className="text-[10px] text-zinc-600 font-bold tracking-wide">
+                  {log.createdAt && (
+                    <Moment format="MMM DD, YYYY">
                       {log.createdAt}
                     </Moment>
-                  ) : (
-                    "—"
                   )}
                 </div>
               </div>
@@ -327,54 +204,34 @@ const Client = ({ data }: ClientProps) => {
       </div>
 
       {/* Analytics Section */}
-      <div
-        className="
-          mt-10
-          rounded-[2rem]
-          border
-          border-white/10
-          bg-[#0b0f19]/40
-          backdrop-blur-md
-          p-8
-        "
+      <div 
+        className="mt-8 overflow-hidden rounded-xl border bg-white p-6 mb-10"
+        style={{ borderColor: "#e4e4e7" }}
       >
-        <div className="flex items-center gap-3">
-          <MdOutlineAnalytics
-            size={24}
-            className="text-indigo-400"
-          />
-
-          <h2 className="text-2xl font-black tracking-tight text-white">
-            AI Analytics
-          </h2>
+        <div className="flex gap-4 items-center">
+          <div 
+            className="flex h-9 w-9 items-center justify-center rounded-lg border bg-zinc-50 text-zinc-850"
+            style={{ borderColor: "#e4e4e7" }}
+          >
+            <MdOutlineAnalytics size={16} />
+          </div>
+          <div>
+            <div className="text-sm font-bold tracking-tight text-black">
+              Analytics Overview
+            </div>
+            <p className="mt-0.5 text-xs font-semibold text-zinc-500">
+              AI growth and usage trends.
+            </p>
+          </div>
         </div>
 
-        <p className="mt-2 text-sm text-slate-400">
-          Daily trends, user-wise activity, model usage statistics, growth metrics, and AI insights can be displayed here.
-        </p>
-
-        <div
-          className="
-            mt-8
-            flex
-            h-64
-            flex-col
-            items-center
-            justify-center
-            rounded-2xl
-            border
-            border-dashed
-            border-white/10
-            bg-white/[0.01]
-          "
+        <div 
+          className="mt-6 flex h-48 flex-col items-center justify-center rounded-lg border border-dashed bg-zinc-50/50"
+          style={{ borderColor: "#d4d4d8" }}
         >
-          <MdOutlineAnalytics
-            size={42}
-            className="text-slate-600 animate-pulse"
-          />
-
-          <p className="mt-4 text-sm font-bold text-slate-500 tracking-wide">
-            Charts and analytics modules coming soon.
+          <MdOutlineAnalytics size={24} className="text-zinc-400" />
+          <p className="mt-3 text-xs font-bold tracking-wide text-zinc-550">
+            Charts coming soon
           </p>
         </div>
       </div>

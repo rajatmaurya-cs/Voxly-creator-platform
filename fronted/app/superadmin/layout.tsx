@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useContext, useState } from "react";
-import { Shield, BarChart3, Sliders, ArrowLeft, Menu, X } from "lucide-react";
+import { Shield, BarChart3, Sliders, ArrowLeft, Menu, X, ChevronDown, CreditCard } from "lucide-react";
 import { AuthContext } from "../ContextProvider/AuthProvider";
 import Image from "next/image";
 
@@ -15,6 +15,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   // Helper to check active state
   const isStatsActive = pathname === "/superadmin" || pathname.startsWith("/superadmin/aiusagestats");
   const isConfigActive = pathname.startsWith("/superadmin/aiconfig");
+  const isPlansActive = pathname.startsWith("/superadmin/plansconfig");
 
   // Close sidebar on navigation change on mobile
   React.useEffect(() => {
@@ -22,16 +23,20 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   }, [pathname]);
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen w-screen overflow-hidden bg-[#050816] text-white">
+    <div className="flex h-screen w-screen flex-col overflow-hidden bg-white text-zinc-900 lg:flex-row animate-fade-in">
       {/* MOBILE TOPBAR */}
-      <div className="sticky top-0 z-40 flex items-center justify-between border-b border-white/5 bg-[#090d16] px-4 py-3 lg:hidden shrink-0">
+      <div 
+        className="sticky top-0 z-40 flex shrink-0 items-center justify-between border-b bg-[#f8f9fa] px-4 py-3 lg:hidden"
+        style={{ borderColor: "#e4e4e7" }}
+      >
         <button
           onClick={() => setOpen(true)}
-          className="rounded-xl border border-white/10 bg-[#090d16] p-2 hover:bg-white/[0.05]"
+          className="rounded-lg border bg-white p-2 text-zinc-700 transition hover:bg-zinc-150 hover:text-black shadow-xs"
+          style={{ borderColor: "#e4e4e7" }}
         >
-          <Menu size={22} />
+          <Menu size={20} />
         </button>
-        <span className="text-sm font-semibold tracking-wide text-slate-200">
+        <span className="text-sm font-bold tracking-tight text-black">
           Super Admin
         </span>
         <div className="w-10 h-10" /> {/* Spacer */}
@@ -40,7 +45,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       {/* MOBILE OVERLAY */}
       {open && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-black/45 backdrop-blur-xs lg:hidden"
           onClick={() => setOpen(false)}
         />
       )}
@@ -58,96 +63,144 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="absolute right-4 top-4 z-50 lg:hidden">
           <button
             onClick={() => setOpen(false)}
-            className="rounded-xl border border-white/10 bg-[#090d16] p-2 hover:bg-white/[0.05]"
+            className="rounded-lg border bg-white p-2 text-zinc-700 transition hover:bg-zinc-150 hover:text-black shadow-xs"
+            style={{ borderColor: "#e4e4e7" }}
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
         {/* Sidebar */}
-        <aside className="w-64 h-full border-r border-white/5 bg-[#090d16] p-5 flex flex-col gap-6">
+        <aside 
+          className="flex h-full w-64 flex-col gap-6 border-r bg-[#f8f9fa] p-5 shadow-xs"
+          style={{ borderColor: "#e4e4e7" }}
+        >
           {/* Sidebar Header */}
-          <div className="flex items-center gap-3 px-3 py-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-400">
-              <Shield size={20} />
+          <div className="flex items-center justify-between px-1 py-2 mb-4">
+            <div className="flex items-center gap-2.5">
+              <div 
+                className="flex h-8 w-8 items-center justify-center rounded-lg border bg-white text-black shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
+                style={{ borderColor: "#e4e4e7" }}
+              >
+                <Shield size={16} strokeWidth={2.5} />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-bold tracking-tight text-black">
+                  Postify
+                </span>
+                <span className="text-[10px] tracking-wide text-zinc-500 font-bold -mt-0.5">
+                  Super Admin
+                </span>
+              </div>
             </div>
-            <span className="text-base font-black tracking-wide text-slate-200">
-              Super Admin
-            </span>
+            <div 
+              className="px-1.5 py-0.5 text-[9px] font-bold tracking-wide text-zinc-700 bg-zinc-200/60 rounded border"
+              style={{ borderColor: "#e4e4e7" }}
+            >
+              v1.0
+            </div>
           </div>
 
-          <nav className="flex flex-col gap-1.5">
-            {/* Stats Link */}
-            <Link
-              href="/superadmin"
-              className={`flex items-center gap-3 px-4 py-3 text-sm font-semibold tracking-wide transition-all duration-200 ${
-                isStatsActive
-                  ? "bg-indigo-500/10 text-indigo-400 border-l-2 border-indigo-500 rounded-r-2xl rounded-l-none pl-3.5"
-                  : "text-slate-400 hover:bg-white/[0.02] hover:text-white rounded-2xl"
-              }`}
-            >
-              <BarChart3 size={18} className={isStatsActive ? "text-indigo-400" : "text-slate-400"} />
-              <span>Stats</span>
-            </Link>
+          <nav className="flex flex-col gap-6">
+            <div>
+              <div className="text-[10px] font-bold tracking-wider text-zinc-400 uppercase mb-2.5 px-2">
+                Monitoring
+              </div>
+              <Link
+                href="/superadmin"
+                className={`relative flex items-center gap-3 rounded-md px-3 py-2 text-xs font-bold tracking-wide transition-all duration-200 ${
+                  isStatsActive
+                    ? "bg-white border text-black shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
+                    : "text-zinc-700 hover:bg-zinc-200/40 hover:text-black"
+                }`}
+                style={isStatsActive ? { borderColor: "#e4e4e7" } : undefined}
+              >
+                <BarChart3 size={14} strokeWidth={2.5} className={isStatsActive ? "text-black" : "text-zinc-600"} />
+                <span>Usage Statistics</span>
+              </Link>
+            </div>
 
-            {/* AI Config Link */}
-            <Link
-              href="/superadmin/aiconfig"
-              className={`flex items-center gap-3 px-4 py-3 text-sm font-semibold tracking-wide transition-all duration-200 ${
-                isConfigActive
-                  ? "bg-indigo-500/10 text-indigo-400 border-l-2 border-indigo-500 rounded-r-2xl rounded-l-none pl-3.5"
-                  : "text-slate-400 hover:bg-white/[0.02] hover:text-white rounded-2xl"
-              }`}
-            >
-              <Sliders size={18} className={isConfigActive ? "text-indigo-400" : "text-slate-400"} />
-              <span>AI Config</span>
-            </Link>
+            <div>
+              <div className="text-[10px] font-bold tracking-wider text-zinc-400 uppercase mb-2.5 px-2">
+                Infrastructure
+              </div>
+              <div className="flex flex-col gap-1">
+                <Link
+                  href="/superadmin/aiconfig"
+                  className={`relative flex items-center gap-3 rounded-md px-3 py-2 text-xs font-bold tracking-wide transition-all duration-200 ${
+                    isConfigActive
+                      ? "bg-white border text-black shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
+                      : "text-zinc-700 hover:bg-zinc-200/40 hover:text-black"
+                  }`}
+                  style={isConfigActive ? { borderColor: "#e4e4e7" } : undefined}
+                >
+                  <Sliders size={14} strokeWidth={2.5} className={isConfigActive ? "text-black" : "text-zinc-600"} />
+                  <span>AI Configuration</span>
+                </Link>
+                <Link
+                  href="/superadmin/plansconfig"
+                  className={`relative flex items-center gap-3 rounded-md px-3 py-2 text-xs font-bold tracking-wide transition-all duration-200 ${
+                    isPlansActive
+                      ? "bg-white border text-black shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
+                      : "text-zinc-700 hover:bg-zinc-200/40 hover:text-black"
+                  }`}
+                  style={isPlansActive ? { borderColor: "#e4e4e7" } : undefined}
+                >
+                  <CreditCard size={14} strokeWidth={2.5} className={isPlansActive ? "text-black" : "text-zinc-600"} />
+                  <span>Plans Configuration</span>
+                </Link>
+              </div>
+            </div>
 
-            {/* Divider */}
-            <div className="my-2 border-t border-white/5" />
-
-            {/* Go Back Link */}
-            <Link
-              href="/"
-              className="flex items-center gap-3 px-4 py-3 text-sm font-semibold tracking-wide text-slate-400 hover:bg-white/[0.02] hover:text-white rounded-2xl transition-all duration-200"
-            >
-              <ArrowLeft size={18} className="text-slate-400" />
-              <span>Back to Site</span>
-            </Link>
+            <div>
+              <div className="text-[10px] font-bold tracking-wider text-zinc-400 uppercase mb-2.5 px-2">
+                Exit
+              </div>
+              <Link
+                href="/"
+                className="flex items-center gap-3 rounded-md px-3 py-2 text-xs font-bold tracking-wide text-zinc-700 transition hover:bg-zinc-200/40 hover:text-black"
+              >
+                <ArrowLeft size={14} strokeWidth={2.5} className="text-zinc-600" />
+                <span>Back to Site</span>
+              </Link>
+            </div>
           </nav>
 
           {/* User Profile Footer */}
-          <div className="mt-auto flex items-center gap-3 pt-4 border-t border-white/5">
-            <div className="h-10 w-10 rounded-full p-[2px] bg-white/10 shrink-0">
-              {user?.avatar ? (
+          <div className="mt-auto">
+            <div 
+              className="flex items-center gap-3 rounded-xl border bg-white p-3 shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-all hover:bg-zinc-50 cursor-pointer"
+              style={{ borderColor: "#e4e4e7" }}
+            >
+              <div 
+                className="relative h-8 w-8 shrink-0 rounded-full border bg-zinc-50 p-[1px] overflow-hidden"
+                style={{ borderColor: "#e4e4e7" }}
+              >
                 <Image
-                  src={user.avatar}
+                  src={(user?.avatar && user.avatar !== "") ? user.avatar : "/user.png"}
                   alt="Profile"
-                  width={40}
-                  height={40}
-                  className="h-full w-full rounded-full object-cover"
+                  fill
+                  className="rounded-full"
                 />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center rounded-full bg-indigo-500/20 text-sm font-bold text-indigo-300">
-                  {user?.name?.charAt(0)}
+              </div>
+              
+              <div className="min-w-0 flex-1">
+                <div className="truncate text-xs font-bold tracking-tight text-black">
+                  {user?.name || "Super Admin"}
                 </div>
-              )}
-            </div>
-            
-            <div className="min-w-0 flex-1">
-              <h3 className="text-sm font-bold text-slate-200 truncate">
-                {user?.name || "Super Admin"}
-              </h3>
-              <p className="text-xs text-slate-500 truncate">
-                Manage platform
-              </p>
+                <div className="truncate text-[9px] tracking-wide text-zinc-500 font-bold mt-0.5">
+                  Manage Platform
+                </div>
+              </div>
+
+              <ChevronDown size={14} className="text-zinc-600 shrink-0" />
             </div>
           </div>
         </aside>
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 p-4 md:p-8 overflow-y-auto w-full">
+      <main className="w-full flex-1 overflow-y-auto bg-white px-6 py-8 md:px-10 lg:px-12">
         {children}
       </main>
     </div>

@@ -38,7 +38,7 @@ export default async function Page() {
   const data = await getAIStats();
 
   return (
-    <div className="flex min-h-screen min-w-full justify-center items-center">
+    <div className="min-h-full w-full">
       <Client data={data} />
     </div>
   );

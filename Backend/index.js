@@ -12,6 +12,8 @@ import AiRouter from "./Routes/ai.routes.js";
 import configRoutes from "./Routes/config.routes.js";
 import adminMiddleware from "./Middleware/adminMiddleware.js";
 import paymentroutes from "./Routes/payment.routes.js";
+import {Plan} from "./Models/Plans.js"
+import planrouter from "./Routes/plan.route.js";
 
 
 const app = express();
@@ -42,7 +44,14 @@ async function init() {
   }
 }
 
-await init();
+app.use(async (req, res, next) => {
+  try {
+    await init();
+    next();
+  } catch (err) {
+    res.status(500).json({ error: "Database initialization failed" });
+  }
+});
 
 
 
@@ -75,7 +84,7 @@ app.use(cookieParser());
 /* ================= ROUTES ================= */
 app.use("/api/auth", (req,res,next)=>{
 
-  console.log("Request goes from index.js for /api/auth")
+  console.log("indes.js /api/auth ✅")
   
   next()
   
@@ -87,7 +96,7 @@ app.use("/api/auth", (req,res,next)=>{
 
 app.use("/api/blog",(req,res,next)=>{ 
 
-console.log("Entered in /api/blog from fronted")
+console.log("index.js/api/blog  ✅")
   
   next()
   
@@ -95,7 +104,7 @@ console.log("Entered in /api/blog from fronted")
 
 app.use("/api/comment",(req,res,next)=>{
 
- 
+ console.log("index.js /api/comment ✅")
   next();
 
 },commentRouter);
@@ -103,7 +112,7 @@ app.use("/api/comment",(req,res,next)=>{
 // app.use("/api/ai", authMiddleware, AiRouter);
 
 app.use("/api/ai/config", authMiddleware,(req,res,next)=>{
-  console.log("Request comes in index.js 🚀 /api/ai/config")
+  console.log("/api/ai/config ✅")
   next()
 },configRoutes);
 
@@ -111,10 +120,9 @@ app.use("/api/ai/config", authMiddleware,(req,res,next)=>{
 
 app.use("/api/ai",authMiddleware,(req,res , next)=>{
 
-  console.log("Request comes in /api/ai in index.js")
-  // console.log("Request Goes for /api/ai from index.js ⛳️")
-  // if(req?.cookies?.accessToken) console.log("Access Token is presetn in /api/ai ⛳️")
-  // else console.log("Access Token is not 🔞presetn in /api/ai")
+  console.log("index.js /api/ai ✅")
+
+ 
     
 
   next()
@@ -124,21 +132,27 @@ app.use("/api/ai",authMiddleware,(req,res , next)=>{
 
 app.use('/api/payment',(req,res,next)=>{
 
-  console.log("Rquest of paymetns in inde.js")
+  console.log(" index.js /api/payments")
+
   next();
+
 },authMiddleware,paymentroutes);
 
-// app.use('/api/plan',)
+app.use('/api/plan',(req,res,next)=>{
+  console.log("index.js /api/plans");
+  next();
+},planrouter)
 
 
 
 
 const PORT = process.env.PORT || 2000;
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
-
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+}
 
 app.get("/", (req, res) => {
   res.json({

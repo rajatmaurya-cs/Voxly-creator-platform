@@ -22,6 +22,17 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 
+const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+};
+
+app.use(cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
+
+
 
 
 
@@ -100,20 +111,7 @@ app.use(async (req, res, next) => {
 
 
 
-/* ================= MIDDLEWARE ================= */
 
-
-const corsOptions = {
-  origin: process.env.FRONTEND_URL,
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type"],
-};
-
-app.use(cors(corsOptions));
-
-
-app.options(/.*/, cors(corsOptions));
 
 
 

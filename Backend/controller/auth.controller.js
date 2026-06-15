@@ -225,7 +225,7 @@ export const login = async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       path: "/",
-      maxAge:60 * 1000
+      maxAge: 60 * 1000
     });
 
 
@@ -480,11 +480,12 @@ export const logout = async (req, res) => {
 export const refreshAccessToken = async (req, res) => {
   try {
 
-    const now = new Date();
+    const currentTime = new Date().toLocaleTimeString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      hour12: false,
+    });
 
-    const time = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
-
-    console.log("Request comes for refreshAccesToken 🚫 at: ", time);
+    console.log("Request comes for Generate New AccessTime at ✅ :", currentTime);
 
     // console.log("refreshAccessToken: 1")
 
@@ -578,11 +579,12 @@ export const refreshAccessToken = async (req, res) => {
       maxAge: 60 * 1000
     });
 
-    const now2 = new Date();
+    const currentTimeIST = new Date().toLocaleTimeString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      hour12: false,
+    });
 
-    const time2 = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
-
-    console.log("\n\n\n accessToken generated at ✅ : ", time2)
+    console.log("AccessToken Generated at ✅ :", currentTimeIST);
 
 
     return res.status(200).json({

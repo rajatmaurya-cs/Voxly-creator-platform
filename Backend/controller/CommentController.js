@@ -104,9 +104,7 @@ export const addComment = async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      message: isApproved
-        ? "Comment published successfully"
-        : "Comment added and sent for moderation",
+      message: isApproved,
       riskLevel,
       comment,
     });

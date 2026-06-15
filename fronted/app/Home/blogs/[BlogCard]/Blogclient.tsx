@@ -208,10 +208,9 @@ const Blogclient = ({ blog }: BlogClientProps) => {
     },
 
     onSuccess: (data) => {
-      toast.success(data.message || "Comment added");
-
+      if (data.message) toast.success(data.message || "Comment added");
+      else if (!data.message) toast.error("Your comment violated our community guidelines and has been sent for moderation");
       setComment("");
-
       queryClient.invalidateQueries({
         queryKey: ["comments", blogId],
       });
@@ -401,8 +400,8 @@ const Blogclient = ({ blog }: BlogClientProps) => {
                 <button
                   onClick={handleLike}
                   className={`group flex items-center gap-2 px-4 py-2.5 rounded-full border transition-all duration-200 ${localHasLiked
-                      ? "bg-rose-500 text-white border-rose-500 shadow-lg shadow-rose-500/20"
-                      : "bg-white/5 border-white/10 text-gray-300 hover:border-rose-500/40 hover:bg-rose-500/10"
+                    ? "bg-rose-500 text-white border-rose-500 shadow-lg shadow-rose-500/20"
+                    : "bg-white/5 border-white/10 text-gray-300 hover:border-rose-500/40 hover:bg-rose-500/10"
                     }`}
                 >
                   <Heart
@@ -413,12 +412,12 @@ const Blogclient = ({ blog }: BlogClientProps) => {
                   <span className="font-medium">{localLikesCount}</span>
                 </button>
 
-               { blog?.createdBy?._id && <button
+                {blog?.createdBy?._id && <button
                   onClick={handleFollow}
                   disabled={followMutation.isPending}
                   className={`px-5 py-2.5 rounded-full font-medium transition-all duration-200 ${localIsFollowing
-                      ? "bg-white/10 text-white border border-white/10"
-                      : "bg-blue-500 hover:bg-blue-400 text-white shadow-lg shadow-blue-500/25"
+                    ? "bg-white/10 text-white border border-white/10"
+                    : "bg-blue-500 hover:bg-blue-400 text-white shadow-lg shadow-blue-500/25"
                     }`}
                 >
                   {localIsFollowing ? "Following" : "Follow"}

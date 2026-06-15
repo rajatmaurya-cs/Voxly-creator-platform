@@ -225,7 +225,7 @@ export const login = async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       path: "/",
-      maxAge: 15 * 60 * 1000
+      maxAge:60 * 1000
     });
 
 

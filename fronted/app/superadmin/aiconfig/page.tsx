@@ -191,14 +191,6 @@ const AIConfigDashboard = () => {
   };
 
   /* =========================
-     LOADING STATE
-  ========================= */
-
-  if (configLoading || !editedConfig) {
-    return <LoadingAiConfig />;
-  }
-
-  /* =========================
      ERROR STATE
   ========================= */
 
@@ -208,6 +200,14 @@ const AIConfigDashboard = () => {
         {(configErrObj as Error)?.message || "Failed to load config"}
       </div>
     );
+  }
+
+  /* =========================
+     LOADING STATE
+  ========================= */
+
+  if (configLoading || !editedConfig) {
+    return <LoadingAiConfig />;
   }
 
   /* =========================

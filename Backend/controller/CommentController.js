@@ -13,32 +13,33 @@ import Config from "../Models/Config.js";
 export const addComment = async (req, res) => {
   try {
 
-    // console.log("Entered in addComment Backend ⛳️");
+    console.log("Entered in addComment Backend ⛳️");
 
-    // if (!req.user) {
-    //   return res.status(401).json({
-    //     success: false,
-    //     message: "Please login to post a comment",
-    //   });
-    // }
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Please login to post a comment",
+      });
+    }
 
-    // const userId = req.user.id;
+    const userId = req.user.id;
 
     /* ---------------- COMMENT RATE LIMIT ---------------- */
-    // const key = `CommentAttempts:${userId}`;
+
+    const key = `CommentAttempts:${userId}`;
     
-    // const attempts = await redisClient.incr(key);
+    const attempts = await redisClient.incr(key);
 
-    // if (attempts === 1) {
-    //   await redisClient.expire(key, 60); // 1 minute window
-    // }
+    if (attempts === 1) {
+      await redisClient.expire(key, 60); // 1 minute window
+    }
 
-    // if (attempts > 1) {
-    //   return res.status(429).json({
-    //     success: false,
-    //     message: "Too many comments. Please wait a moment.",
-    //   });
-    // }
+    if (attempts > 1) {
+      return res.status(429).json({
+        success: false,
+        message: "Too many comments. Please wait a moment.",
+      });
+    }
 
     /* ---------------- INPUT VALIDATION ---------------- */
     const { content, blogId } = req.body;
@@ -50,46 +51,47 @@ export const addComment = async (req, res) => {
       });
     }
 
-    // const blog = await Blog.findById(blogId);
-    // if (!blog) {
-    //   return res.status(404).json({
-    //     success: false,
-    //     message: "Blog not found",
-    //   });
-    // }
+    const blog = await Blog.findById(blogId);
+    if (!blog) {
+      return res.status(404).json({
+        success: false,
+        message: "Blog not found",
+      });
+    }
 
     /* ---------------- SPAM / AI MODERATION ---------------- */
-    // let riskLevel = spamFilter(content);
 
-    // if (riskLevel !== "HIGH_RISK") {
-    //   const config = await Config.findOne();
+    let riskLevel = spamFilter(content);
 
-    //   if (config?.aiEnabled) {
-    //     try {
-    //       const aiRisk = await aimoderation(content);
+    if (riskLevel !== "HIGH_RISK") {
+      const config = await Config.findOne();
 
-    //       const priority = {
-    //         SAFE: 1,
-    //         REVIEW: 2,
-    //         HIGH_RISK: 3,
-    //       };
+      if (config?.aiEnabled) {
+        try {
+          const aiRisk = await aimoderation(content);
 
-    //       if (priority[aiRisk] > priority[riskLevel]) {
-    //         riskLevel = aiRisk;
-    //       }
-    //     } catch (aiError) {
-    //       console.error("AI moderation failed:", aiError);
-    //       riskLevel = "REVIEW";
-    //     }
-    //   } else {
-    //     if (riskLevel === "SAFE") {
-    //       riskLevel = "REVIEW";
-    //     }
-    //   }
-    // }
+          const priority = {
+            SAFE: 1,
+            REVIEW: 2,
+            HIGH_RISK: 3,
+          };
+
+          if (priority[aiRisk] > priority[riskLevel]) {
+            riskLevel = aiRisk;
+          }
+        } catch (aiError) {
+          console.error("AI moderation failed:", aiError);
+          riskLevel = "REVIEW";
+        }
+      } else {
+        if (riskLevel === "SAFE") {
+          riskLevel = "REVIEW";
+        }
+      }
+    }
 
     /* ---------------- SAVE COMMENT ---------------- */
-    // const isApproved = riskLevel === "SAFE";
+    const isApproved = riskLevel === "SAFE";
 
      const isApproved = true
 

@@ -400,9 +400,9 @@ export const googleLogin = async (req, res) => {
 
       httpOnly: true,
 
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
 
-      sameSite: "lax",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 
       path: "/",
 
@@ -413,9 +413,9 @@ export const googleLogin = async (req, res) => {
 
       httpOnly: true,
 
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
 
-      sameSite: "lax",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 
       path: "/",
 
@@ -564,16 +564,16 @@ export const refreshAccessToken = async (req, res) => {
 
     res.cookie("refreshToken", newrefreshToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       path: "/",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.cookie("accessToken", newAccessToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       path: "/",
       maxAge: 60 * 1000
     });

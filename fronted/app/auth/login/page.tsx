@@ -80,6 +80,7 @@ export default function LoginPage() {
       setUser(data.user);
 
       toast.success("Login successful");
+      
       router.replace("/");
       
     },

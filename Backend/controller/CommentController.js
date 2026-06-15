@@ -93,7 +93,7 @@ export const addComment = async (req, res) => {
     /* ---------------- SAVE COMMENT ---------------- */
     const isApproved = riskLevel === "SAFE";
 
-     const isApproved = true
+     
 
      const riskLevel = 'SAFE'
 

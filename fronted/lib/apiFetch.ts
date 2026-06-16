@@ -23,34 +23,40 @@ export async function apiFetch(
     return response;
   }
 
-  // 🚨 Avoid multiple refresh calls
+  
   if (!refreshPromise) {
-    refreshPromise = (async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/auth/refreshtoken`,
-          {
-            method: "POST",
-            credentials: "include",
-          }
-        );
 
-        if (res.ok) {
-          // Keep the resolved promise for a 3s grace period to absorb concurrent 401s
-          setTimeout(() => {
-            refreshPromise = null;
-          }, 3000);
-        } else {
-          refreshPromise = null;
+  refreshPromise = (async () => {
+
+    try {
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/refreshtoken`,
+        {
+          method:"POST",
+          credentials:"include",
         }
+      );
 
-        return res.ok;
-      } catch (err) {
-        refreshPromise = null;
-        return false;
-      }
-    })();
-  }
+
+      return res.ok;
+
+
+    } catch(err) {
+
+      return false;
+
+    }
+
+    finally {
+
+      refreshPromise = null;
+
+    }
+
+  })();
+
+}
 
   const refreshed = await refreshPromise;
 

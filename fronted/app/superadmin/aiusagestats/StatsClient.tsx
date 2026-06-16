@@ -15,6 +15,7 @@ import {
   FiActivity,
   FiShield,
   FiBox,
+  FiAlertTriangle,
 } from "react-icons/fi";
 
 import {
@@ -65,6 +66,14 @@ const Client = ({ data }: ClientProps) => {
 
   return (
     <div className="w-full max-w-5xl py-4 animate-in fade-in duration-500">
+      {/* Warning Disclaimer Banner */}
+      <div className="mb-8 flex items-center gap-3 rounded-xl border border-amber-200 bg-amber-50/70 p-4 text-amber-800 backdrop-blur-sm">
+        <FiAlertTriangle className="h-5 w-5 shrink-0 text-amber-600" />
+        <div className="text-xs font-semibold tracking-wide">
+          Superadmin is only for demonstration. Any action is prohibited.
+        </div>
+      </div>
+
       {/* Header */}
       <div className="mb-10">
         <div className="text-2xl font-bold tracking-tight text-black">

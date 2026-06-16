@@ -23,7 +23,7 @@ type BlogReportProps = {
 
 const BlogReport = ({ type, analysis, onClose }: BlogReportProps) => {
 
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext) as any;
 
   const [mounted, setMounted] = useState(false);
 

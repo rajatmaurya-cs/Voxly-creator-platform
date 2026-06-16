@@ -8,7 +8,7 @@ import { AuthContext } from "../ContextProvider/AuthProvider";
 import Image from "next/image";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext) as any;
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 

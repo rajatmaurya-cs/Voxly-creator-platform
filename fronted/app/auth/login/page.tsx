@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import Link from "next/link";
-
 import { AuthContext } from "@/app/ContextProvider/AuthProvider";
 
 // ---------------- TYPES ----------------
@@ -29,7 +28,7 @@ type LoginResponse = {
 
 export default function LoginPage() {
 
-  const { setLoggedIn, setUser } = useContext(AuthContext);
+  const { setLoggedIn, setUser } = useContext(AuthContext) as any;
 
   const router = useRouter();
 

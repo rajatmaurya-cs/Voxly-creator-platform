@@ -242,7 +242,7 @@ const AIConfigDashboard = () => {
             <button
               disabled={disableAll}
               onClick={() =>
-                setEditedConfig((prev) => ({
+                setEditedConfig((prev: any) => ({
                   ...prev,
                   aiEnabled: !prev.aiEnabled,
                 }))
@@ -308,7 +308,7 @@ const AIConfigDashboard = () => {
             max="200"
             step="10"
             value={editedConfig.dailyappLimit ?? 10}
-            onChange={(e) => setEditedConfig((prev) => ({ ...prev, dailyappLimit: Number(e.target.value) }))}
+            onChange={(e) => setEditedConfig((prev: any) => ({ ...prev, dailyappLimit: Number(e.target.value) }))}
             className="w-full h-2 bg-zinc-200 rounded-lg appearance-none cursor-pointer accent-black focus:outline-none"
           />
         </div>
@@ -343,7 +343,7 @@ const AIConfigDashboard = () => {
             max="20"
             step="1"
             value={editedConfig.aiPerMinuteLimit ?? 1}
-            onChange={(e) => setEditedConfig((prev) => ({ ...prev, aiPerMinuteLimit: Number(e.target.value) }))}
+            onChange={(e) => setEditedConfig((prev: any) => ({ ...prev, aiPerMinuteLimit: Number(e.target.value) }))}
             className="w-full h-2 bg-zinc-200 rounded-lg appearance-none cursor-pointer accent-black focus:outline-none"
           />
         </div>

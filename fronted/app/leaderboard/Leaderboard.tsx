@@ -60,7 +60,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
               border border-zinc-800 
               bg-zinc-900/40 
               text-zinc-400 
-              text-xs 
+              text-5xl
               font-medium
               flex items-center justify-center gap-1.5
             ">
@@ -69,12 +69,10 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
           </div>
 
 
-          <h1 className="text-4xl font-bold text-zinc-100">
-            Leaderboard
-          </h1>
+         
 
 
-          <p className="mt-2 text-zinc-400 text-sm">
+          <p className="mt-2 text-zinc-400 text-4xl">
             Compete. Grow. Climb the ranks.
           </p>
 
@@ -109,7 +107,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
                 order-2 md:order-1
               ">
 
-                <span className="text-xl mb-3">
+                <span className="text-7xl mb-3">
                   🥈
                 </span>
 
@@ -134,12 +132,12 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
                 </h3>
 
 
-                <p className="text-xs text-zinc-400 mt-1">
+                <p className="text-xs text-green-400 mt-1">
                   {topThree[1].followersCount.toLocaleString()} followers
                 </p>
 
 
-                <span className="mt-4 text-2xl font-bold text-zinc-500">
+                <span className="mt-4 text-2xl font-bold text-indigo-500">
                   #2
                 </span>
 
@@ -164,9 +162,11 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
                 p-8
                 flex flex-col items-center
                 order-1 md:order-2
+                md:-translate-y-6
+                shadow-lg shadow-amber-500/5
               ">
 
-                <span className="text-xl mb-3">
+                <span className="text-7xl mb-3">
                   🥇
                 </span>
 
@@ -191,12 +191,12 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
                 </h2>
 
 
-                <p className="text-xs text-zinc-400 mt-1">
+                <p className="text-xs text-green-400 mt-1">
                   {topThree[0].followersCount.toLocaleString()} followers
                 </p>
 
 
-                <span className="mt-4 text-3xl font-bold text-amber-500">
+                <span className="mt-4 text-3xl font-bold text-yellow-300">
                   #1
                 </span>
 
@@ -221,10 +221,11 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
                 rounded-2xl
                 p-6
                 flex flex-col items-center
+                order-3 md:order-3
               ">
 
 
-                <span className="text-xl mb-3">
+                <span className="text-7xl mb-3">
                   🥉
                 </span>
 
@@ -249,12 +250,12 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
                 </h3>
 
 
-                <p className="text-xs text-zinc-400 mt-1">
+                <p className="text-xs text-green-400 mt-1">
                   {topThree[2].followersCount.toLocaleString()} followers
                 </p>
 
 
-                <span className="mt-4 text-2xl font-bold text-amber-700">
+                <span className="mt-4 text-2xl font-bold text-orange-400">
                   #3
                 </span>
 
@@ -281,7 +282,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
 
         {/* REMAINING USERS */}
 
-        <div className="divide-y divide-zinc-800/30">
+        <div className="flex flex-col gap-3">
 
 
           {remaining.map((user, index) => (
@@ -290,9 +291,13 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
               key={user._id}
               className="
                 flex items-center justify-between
-                py-3.5 px-1
-                hover:bg-zinc-800/10
-                rounded-lg
+                py-3.5 px-4
+                bg-[#2a2927]/10
+                border border-zinc-800/80
+                hover:bg-[#2a2927]/20
+                hover:border-zinc-700/60
+                transition-all duration-200
+                rounded-xl
               "
             >
 
@@ -342,7 +347,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
 
               <div className="text-right">
 
-                <p className="font-bold text-green-500">
+                <p className="font-bold text-green-400">
                   {user.followersCount.toLocaleString()}
                 </p>
 

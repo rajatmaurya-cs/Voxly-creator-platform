@@ -10,7 +10,7 @@ const EditorLoader = ({ size = 100, border = 10 }) => {
         style={{
           "--size": `${size}px`,
           "--border": `${border}px`,
-        }}
+        } as React.CSSProperties}
       />
 
       <style jsx>{`

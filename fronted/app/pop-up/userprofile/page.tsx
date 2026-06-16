@@ -6,7 +6,7 @@ import { AuthContext } from "@/app/ContextProvider/AuthProvider";
 
 const Page = () => {
   
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext) as any;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-zinc-950 to-zinc-900 px-4">

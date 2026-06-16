@@ -48,8 +48,8 @@ const Page = () => {
   });
 
   const comments = useMemo(() => {
-    if (filter === "approved") return allComments.filter((c) => c.isApproved);
-    if (filter === "pending") return allComments.filter((c) => !c.isApproved);
+    if (filter === "approved") return allComments.filter((c: any) => c.isApproved);
+    if (filter === "pending") return allComments.filter((c: any) => !c.isApproved);
     return allComments;
   }, [allComments, filter]);
 
@@ -279,7 +279,7 @@ const Page = () => {
             </tr>
 
           ) : (
-            comments.map((comment, index) => {
+            comments.map((comment: any, index: number) => {
               const isProcessing = togglingcomment === comment._id;
 
               return (

@@ -49,7 +49,7 @@ const navItems: NavItem[] = [
 
 const Sidebar = () => {
 
-  const {user} = useContext(AuthContext)
+  const {user} = useContext(AuthContext) as any
 
   
 

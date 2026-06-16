@@ -69,7 +69,7 @@ export default function BlogClient({ initialData }: Props) {
     category: activeCategory,
     limit: 3,
     initialData,
-  });
+  } as any);
 
   const blogs: Blog[] =
     data?.pages?.flatMap((page: Page) => page.blogs) ?? [];

@@ -87,7 +87,7 @@ if(authloading) {return <NavbarSkeleton/>}
           {/* Logo */}
           <Link
             href="/"
-            className="relative h-7 w-28 transition-opacity hover:opacity-90"
+            className="relative h-8 w-36 transition-opacity hover:opacity-90"
           >
             <Image
               src="/LogoOfPostify.png"

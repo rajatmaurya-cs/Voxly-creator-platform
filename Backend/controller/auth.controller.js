@@ -476,7 +476,6 @@ export const logout = async (req, res) => {
 
 
 
-
 export const refreshAccessToken = async (req, res) => {
   try {
 
@@ -485,106 +484,279 @@ export const refreshAccessToken = async (req, res) => {
       hour12: false,
     });
 
-    console.log("Request comes for Generate New AccessTime at ✅ :", currentTime);
+    console.log(
+      "Request comes for Generate New AccessTime at ✅ :",
+      currentTime
+    );
 
-    // console.log("refreshAccessToken: 1")
 
     const refreshToken = req.cookies.refreshToken;
 
-    const accessToken = req.cookies.accessToken;
-
-
-    // console.log("The refreshtoken from Browser is: ", refreshToken)
-
-
 
     if (!refreshToken) {
-      return res.status(401).json({ message: "Invalid email or Password" });
+      return res.status(401).json({
+        message: "No refresh token"
+      });
     }
-
-    // console.log("refreshAccessToken: 2")
 
 
     const hashedToken = hashToken(refreshToken);
 
-    // console.log("refreshAccessToken: 3")
 
-    const storedToken = await RefreshToken.findOneAndDelete({
+
+
+    // Do not delete immediately
+    const storedToken = await RefreshToken.findOne({
       token: hashedToken,
     });
 
-    // console.log("refreshAccessToken: 4")
 
-    // console.log("The StoredToken is: ", storedToken)
 
     if (!storedToken) {
-      return res.status(403).json({ message: "Invalid Email or Password" });
+      return res.status(403).json({
+        message: "Invalid refresh token"
+      });
     }
 
-    // console.log("refreshAccessToken: 5")
+
+
+
+
+    // ==============================
+    // TOKEN ALREADY USED CASE
+    // ==============================
+
+    if (storedToken.used) {
+
+
+      const timeDifference =
+        Date.now() - storedToken.usedAt.getTime();
+
+
+
+
+      if (timeDifference < 30000) {
+
+
+        console.log(
+          "♻️ Refresh token reused within grace period"
+        );
+
+
+        const decoded = jwt.verify(
+          refreshToken,
+          process.env.REFRESH_TOKEN_SECRET
+        );
+
+
+        const user = await User.findById(decoded.id);
+
+
+
+        if (!user) {
+          return res.status(403).json({
+            message: "User not found"
+          });
+        }
+
+
+
+        const newAccessToken =
+          createAccessToken(user);
+
+
+
+        const newRefreshToken =
+          createRefreshToken(user);
+
+
+
+
+        await RefreshToken.create({
+          userId: user._id,
+          token: hashToken(newRefreshToken),
+        });
+
+
+
+
+
+        res.cookie(
+          "refreshToken",
+          newRefreshToken,
+          {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite:
+              process.env.NODE_ENV === "production"
+                ? "none"
+                : "lax",
+            path: "/",
+            maxAge: 7 * 24 * 60 * 60 * 1000
+          }
+        );
+
+
+
+        res.cookie(
+          "accessToken",
+          newAccessToken,
+          {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite:
+              process.env.NODE_ENV === "production"
+                ? "none"
+                : "lax",
+            path: "/",
+            maxAge: 60 * 1000
+          }
+        );
+
+
+
+
+        return res.status(200).json({
+          success: true,
+          user
+        });
+
+      }
+
+      // ==============================
+      // POSSIBLE TOKEN THEFT
+      // ==============================
+
+
+      console.log(
+        "🚨 Refresh token reuse attack detected"
+      );
+
+
+      await RefreshToken.deleteMany({
+        userId: storedToken.userId
+      });
+
+
+
+      return res.status(403).json({
+        message: "Refresh token reuse detected"
+      });
+
+    }
+
+
+
+
+
+    // ==============================
+    // FIRST TIME TOKEN USE
+    // ==============================
+
+
+    storedToken.used = true;
+    
+    storedToken.usedAt = new Date();
+
+    await storedToken.save();
+
+
+
+
 
     const decoded = jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET
     );
 
-    // console.log("refreshAccessToken: 6")
+
 
     const user = await User.findById(decoded.id);
 
 
-    // console.log("refreshAccessToken: 7")
-
-    // console.log("user is: ", user)
 
     if (!user) {
-      return res.status(403).json({ message: "User not found" });
+      return res.status(403).json({
+        message: "User not found"
+      });
     }
 
-    // console.log("refreshAccessToken: 8")
 
-    const newAccessToken = createAccessToken(user);
 
-    // console.log("refreshAccessToken: 9")
 
-    const newrefreshToken = createRefreshToken(user);
+    const newAccessToken =
+      createAccessToken(user);
 
-    // console.log("refreshAccessToken: 10")
+
+
+    const newrefreshToken =
+      createRefreshToken(user);
+
+
 
 
 
     await RefreshToken.create({
+
       userId: user._id,
+
       token: hashToken(newrefreshToken),
+
     });
 
 
-    // console.log("refreshAccessToken: 11")
 
 
 
-    res.cookie("refreshToken", newrefreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      path: "/",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
 
-    res.cookie("accessToken", newAccessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      path: "/",
-      maxAge: 60 * 1000
-    });
+    res.cookie(
+      "refreshToken",
+      newrefreshToken,
+      {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite:
+          process.env.NODE_ENV === "production"
+            ? "none"
+            : "lax",
+        path: "/",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      }
+    );
 
-    const currentTimeIST = new Date().toLocaleTimeString("en-IN", {
-      timeZone: "Asia/Kolkata",
-      hour12: false,
-    });
 
-    console.log("AccessToken Generated at ✅ :", currentTimeIST);
+
+    res.cookie(
+      "accessToken",
+      newAccessToken,
+      {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite:
+          process.env.NODE_ENV === "production"
+            ? "none"
+            : "lax",
+        path: "/",
+        maxAge: 60 * 1000
+      }
+    );
+
+
+
+    const currentTimeIST = new Date().toLocaleTimeString(
+      "en-IN",
+      {
+        timeZone: "Asia/Kolkata",
+        hour12: false,
+      }
+    );
+
+
+    console.log(
+      "AccessToken Generated at ✅ :",
+      currentTimeIST
+    );
+
 
 
     return res.status(200).json({
@@ -592,16 +764,23 @@ export const refreshAccessToken = async (req, res) => {
       user,
     });
 
-  } catch (error) {
-    console.log("REFRESH ERROR:", error);
+
+
+  }
+  catch (error) {
+
+    console.log(
+      "REFRESH ERROR:",
+      error
+    );
+
+
     return res.status(403).json({
       message: "Expired or invalid refresh token",
     });
+
   }
 };
-
-
-
 
 /*------------------------------------------ OTP-----------------------------------------*/
 

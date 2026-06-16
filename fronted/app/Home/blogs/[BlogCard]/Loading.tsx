@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function BlogDetailSkeleton() {
+export default function BlogSkeleton() {
   return (
     <section className="min-h-screen bg-[#050816] text-white font-sans antialiased relative overflow-hidden">
       {/* Background blobs */}

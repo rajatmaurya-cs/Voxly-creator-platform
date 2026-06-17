@@ -107,7 +107,7 @@ export default function LoginPage() {
 
   const handleGoogleLogin = () => {
     console.log("handleGoogleLogin from Fronted")
-    window.location.href = "http://localhost:2000/api/auth/google";
+    window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google`;
   }
 
   // ---------------- UI ----------------
@@ -161,14 +161,14 @@ export default function LoginPage() {
               "
                 >
                   <span className="text-xl font-bold tracking-tight text-white">
-                    P
+                    🄥
                   </span>
                 </div>
 
                 <div>
 
                   <h1 className="text-3xl font-semibold tracking-[-0.03em] text-white">
-                    Postify
+                  Veyra
                   </h1>
 
                   <p className="mt-1 text-sm text-[#8b90a0]">

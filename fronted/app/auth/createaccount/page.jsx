@@ -526,7 +526,7 @@ return (
         type="button"
         onClick={() => {
           window.location.href =
-            "http://localhost:2000/api/auth/google";
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google`;
         }}
         className="
           w-full

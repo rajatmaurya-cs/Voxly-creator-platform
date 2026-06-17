@@ -236,21 +236,43 @@ const UserProfileModal = ({
                     </div>
 
                     {/* Logout Button */}
-                    <motion.button
-                        onClick={onLogout}
-                        disabled={isLoggingOut}
-                        whileHover={{ scale: isLoggingOut ? 1 : 1.01 }}
-                        whileTap={{ scale: isLoggingOut ? 1 : 0.99 }}
-                        className={`w-full mt-6 py-3.5 px-4 rounded-2xl border font-semibold transition-all duration-300 flex items-center justify-center gap-2 group cursor-pointer
-                                 ${isLoggingOut
-                                ? "bg-transparent border-red-500/10 text-red-300 cursor-wait"
-                                : "bg-gradient-to-r from-red-500/10 to-rose-600/10 border-red-500/20 hover:from-red-650 hover:to-rose-650 text-red-400 hover:text-white shadow-[0_0_20px_rgba(239,68,68,0.05)] hover:shadow-[0_0_25px_rgba(239,68,68,0.2)]"
-                            }
-                            `}
-                                 >
-                        {isLoggingOut ? (
+                    {isLoggingOut ? (
+                        <div className="w-full mt-8 flex items-center justify-center">
                             <EditorLoader size={40} border={3} />
-                        ) : (
+                        </div>
+                    ) : (
+                        <motion.button
+                            onClick={onLogout}
+                            whileHover={{ scale: 1.01 }}
+                            whileTap={{ scale: 0.99 }}
+                            className="
+      w-full
+      mt-6
+      py-3.5
+      px-4
+      rounded-2xl
+      border
+      border-red-500/20
+      font-semibold
+      transition-all
+      duration-300
+      flex
+      items-center
+      justify-center
+      gap-2
+      group
+      cursor-pointer
+      bg-gradient-to-r
+      from-red-500/10
+      to-rose-600/10
+      hover:from-red-650
+      hover:to-rose-650
+      text-red-400
+      hover:text-white
+      shadow-[0_0_20px_rgba(239,68,68,0.05)]
+      hover:shadow-[0_0_25px_rgba(239,68,68,0.2)]
+    "
+                        >
                             <div className="flex items-center gap-3">
                                 <span className="text-sm font-medium">Logout</span>
                                 <LogOut
@@ -258,8 +280,8 @@ const UserProfileModal = ({
                                     className="transition-transform duration-200 group-hover:translate-x-1"
                                 />
                             </div>
-                        )}
-                    </motion.button>
+                        </motion.button>
+                    )}
 
 
 

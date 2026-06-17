@@ -12,7 +12,7 @@ export default function useSendOtp(purpose) {
 
         mutationFn: async ({ email }) => {
 
-            const res = await apiFetch("http://localhost:2000/api/auth/sendotp", {
+            const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/sendotp`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -265,36 +265,6 @@ const Blogclient = ({ blog }: BlogClientProps) => {
   const ailoading = summariseMutation.isPending;
 
 
-  // const [ailoading, setailoading] = useState(false)
-
-  // const handlerajat = () => {
-  //   if (!loggedIn) {
-  //     toast.error("Login First")
-  //     setTimeout(()=>{router.replace('/auth/login')},3000)
-  //     return;
-  //   }
-  //   setailoading(true)
-
-  //   setTimeout(() => {
-  //     setailoading(false)
-  //     setAicontent(`
-  //       <ul>
-  //   <li>Life is comprised of tiny moments that, when accumulated, form the fabric of our reality, significantly impacting our overall satisfaction and engagement.</li>
-  //   <li>By intentionally crafting small habits, individuals can transform their lives and create experiences that truly fulfill them.</li>
-  //   <li>Morning routines can set the tone for a more intentional life by establishing a sense of calm and clarity.</li>
-  //   <li>Engaging in morning practices like meditation, journaling, or stretching can help individuals tackle challenges with greater confidence and resilience.</li>
-  //   <li>Fostering connections with others through small habits like sharing meals or engaging in group activities can lead to a greater sense of joy and belonging.</li>
-  //   <li>Intentionally prioritizing time with loved ones can lead to a greater sense of fulfillment and happiness, even in the smallest interactions.</li>
-  //   <li>Engaging in creative activities can bring a sense of joy and flow into one's life.</li>
-  //   <li>Cultivating a growth mindset through small habits like reading books or taking online courses can foster a deeper love for learning and personal growth.</li>
-  //   <li>Practicing gratitude through small habits like keeping a gratitude journal or sharing thank-you notes can profoundly shift one's perspective and cultivate a more positive outlook on life.</li>
-  //   <li>Intentionally crafting small habits and incorporating them into daily life can transform experiences and create a life that truly fulfills.</li>
-  // </ul>
-
-  //         `)
-  //     setShowContent('AI')
-  //   }, 5000)
-  // }
 
   useEffect(() => {
     if (Aicontent && !ailoading) {

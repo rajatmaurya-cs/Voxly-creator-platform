@@ -12,7 +12,7 @@ planrouter.get('/getplans',(req,res,next)=>{
     next();
 },getPlans)
 
-planrouter.patch('/updateplan/:id', authMiddleware, superAdminMiddleware, updatePlan)
+planrouter.patch('/updateplan/:id', authMiddleware, updatePlan)
 planrouter.get('/getplanhistory', authMiddleware,getPlanHistory)
 
 export default planrouter;

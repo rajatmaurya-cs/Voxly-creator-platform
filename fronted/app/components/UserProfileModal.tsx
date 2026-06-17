@@ -32,8 +32,8 @@ const UserProfileModal = ({
     isLoggingOut,
 }: UserProfileModalProps) => {
     const isAdmin = user?.role?.toLowerCase() === "admin";
-    const roleColor = isAdmin 
-        ? "text-indigo-400 border-indigo-500/30 bg-indigo-500/5 ring-indigo-500/20" 
+    const roleColor = isAdmin
+        ? "text-indigo-400 border-indigo-500/30 bg-indigo-500/5 ring-indigo-500/20"
         : "text-emerald-400 border-emerald-500/30 bg-emerald-500/5 ring-emerald-500/20";
 
     const backdropVariants = {
@@ -43,17 +43,17 @@ const UserProfileModal = ({
 
     const modalVariants = {
         hidden: { opacity: 0, scale: 0.95, y: 15 },
-        visible: { 
-            opacity: 1, 
-            scale: 1, 
+        visible: {
+            opacity: 1,
+            scale: 1,
             y: 0,
-            transition: { type: "spring" as const, duration: 0.4, bounce: 0.15 } 
+            transition: { type: "spring" as const, duration: 0.4, bounce: 0.15 }
         },
-        exit: { 
-            opacity: 0, 
-            scale: 0.95, 
+        exit: {
+            opacity: 0,
+            scale: 0.95,
             y: 10,
-            transition: { duration: 0.2 } 
+            transition: { duration: 0.2 }
         }
     };
 
@@ -113,7 +113,7 @@ const UserProfileModal = ({
                         <div className="relative group">
                             {/* Outer rotating/pulsing ring */}
                             <div className={`absolute -inset-1 rounded-full bg-gradient-to-tr ${isAdmin ? 'from-indigo-500 to-purple-500' : 'from-emerald-500 to-teal-500'} opacity-75 blur-sm group-hover:opacity-100 transition duration-1000 group-hover:duration-200`} />
-                            
+
                             <div className="relative h-28 w-28 rounded-full overflow-hidden border-2 border-zinc-900 bg-zinc-950">
                                 <Image
                                     src={user?.avatar || "/man.png"}
@@ -164,7 +164,7 @@ const UserProfileModal = ({
                                                 year: "numeric",
                                                 month: "long",
                                                 day: "numeric",
-                                              })
+                                            })
                                             : "-"}
                                     </span>
                                 </div>
@@ -227,7 +227,7 @@ const UserProfileModal = ({
                                                 year: "numeric",
                                                 month: "long",
                                                 day: "numeric",
-                                              })
+                                            })
                                             : "Null"}
                                     </span>
                                 </div>
@@ -239,18 +239,30 @@ const UserProfileModal = ({
                     <motion.button
                         onClick={onLogout}
                         disabled={isLoggingOut}
-                        whileHover={{ scale: 1.01 }}
-                        whileTap={{ scale: 0.99 }}
-                        className="w-full mt-6 py-3.5 px-4 rounded-2xl bg-gradient-to-r from-red-500/10 to-rose-600/10 border border-red-500/20 hover:from-red-650 hover:to-rose-650 text-red-400 hover:text-white font-semibold shadow-[0_0_20px_rgba(239,68,68,0.05)] hover:shadow-[0_0_25px_rgba(239,68,68,0.2)] transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-2 group cursor-pointer"
-                    >
+                        whileHover={{ scale: isLoggingOut ? 1 : 1.01 }}
+                        whileTap={{ scale: isLoggingOut ? 1 : 0.99 }}
+                        className={`w-full mt-6 py-3.5 px-4 rounded-2xl border font-semibold transition-all duration-300 flex items-center justify-center gap-2 group cursor-pointer
+                                 ${isLoggingOut
+                                ? "bg-transparent border-red-500/10 text-red-300 cursor-wait"
+                                : "bg-gradient-to-r from-red-500/10 to-rose-600/10 border-red-500/20 hover:from-red-650 hover:to-rose-650 text-red-400 hover:text-white shadow-[0_0_20px_rgba(239,68,68,0.05)] hover:shadow-[0_0_25px_rgba(239,68,68,0.2)]"
+                            }
+                            `}
+                                 >
                         {isLoggingOut ? (
-                            <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                            <EditorLoader size={40} border={3} />
                         ) : (
-                            <LogOut size={16} className="transition-transform group-hover:translate-x-1" />
+                            <div className="flex items-center gap-3">
+                                <span className="text-sm font-medium">Logout</span>
+                                <LogOut
+                                    size={18}
+                                    className="transition-transform duration-200 group-hover:translate-x-1"
+                                />
+                            </div>
                         )}
-
-                        <span>{isLoggingOut ? <EditorLoader size={40} border={3} /> : "Logout"  }</span>
                     </motion.button>
+
+
+
                 </div>
             </motion.div>
         </motion.div>

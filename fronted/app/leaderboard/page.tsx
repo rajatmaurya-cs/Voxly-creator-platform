@@ -5,6 +5,12 @@ import LeaderboardSkeleton from "./loading-skeleton";
 export const dynamic = 'force-dynamic';
 
 const LeaderboardData = async () => {
+
+  const sleep = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+
+  await sleep(5000);
+ 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL}/auth/topfollowers`,
     {
@@ -20,6 +26,7 @@ const LeaderboardData = async () => {
 };
 
 const page = () => {
+
   return (
     <Suspense fallback={<LeaderboardSkeleton />}>
       <LeaderboardData />

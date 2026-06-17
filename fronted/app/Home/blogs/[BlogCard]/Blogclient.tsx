@@ -1,6 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic"; // ✅ must be imported before use
+import dynamic from "next/dynamic"; 
 
 import React, { lazy, useState, useRef, useEffect, Suspense, useContext } from "react";
 

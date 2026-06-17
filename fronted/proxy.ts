@@ -59,7 +59,7 @@ export async function proxy(request: NextRequest) {
 
   const isAccessExpired = isTokenExpired(accessToken);
 
-  // 1. If not logged in at all, redirect to login
+
   if (isAccessExpired && !refreshToken) {
     const response = NextResponse.redirect(new URL("/auth/login", request.url));
     response.cookies.delete("accessToken");
@@ -67,7 +67,7 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
-  // 2. If accessToken is expired but we have a refreshToken, run the refresh flow
+ 
   if (isAccessExpired && refreshToken) {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/refreshtoken`, {
@@ -78,10 +78,10 @@ export async function proxy(request: NextRequest) {
       });
 
       if (res.ok) {
-        // Retrieve the Set-Cookie header string
+
         const setCookieHeader = res.headers.get("set-cookie") || "";
         
-        // Extract the new values using our safe extractor
+
         const newAccessToken = extractCookieValue(setCookieHeader, "accessToken");
         const newRefreshToken = extractCookieValue(setCookieHeader, "refreshToken");
 
@@ -91,10 +91,10 @@ export async function proxy(request: NextRequest) {
 
         console.log("\n\nNew Refresh Token 🎃 :", newRefreshToken ? "Found" : "Not Found");
 
-        // Clone incoming request headers
+
         const requestHeaders = new Headers(request.headers);
 
-        // Mutate the incoming request's cookies directly
+
         if (newAccessToken) {
           request.cookies.set("accessToken", newAccessToken);
         }
@@ -102,21 +102,21 @@ export async function proxy(request: NextRequest) {
           request.cookies.set("refreshToken", newRefreshToken);
         }
 
-        // Serialize the updated request cookies back into the request's Cookie header
+       
         const newCookieHeaderValue = request.cookies.getAll()
           .map((c) => `${c.name}=${c.value}`)
           .join("; ");
         
         requestHeaders.set("cookie", newCookieHeaderValue);
 
-        // Forward request with updated headers and cookies to Server Components
+       
         const response = NextResponse.next({
           request: {
             headers: requestHeaders,
           },
         });
 
-        // Set the cookies on the response so the browser updates them
+    
         if (newAccessToken) {
           response.cookies.set("accessToken", newAccessToken, {
             httpOnly: true,
@@ -138,7 +138,7 @@ export async function proxy(request: NextRequest) {
 
         return response;
       } else {
-        // Refresh failed (e.g. invalid/expired refreshToken) -> redirect to login
+  
         const response = NextResponse.redirect(new URL("/auth/login", request.url));
         response.cookies.delete("accessToken");
         response.cookies.delete("refreshToken");
@@ -151,7 +151,7 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // 3. If access token is still valid, continue normally
+
   return NextResponse.next();
 }
 

@@ -81,12 +81,12 @@ const Hero = () => {
         </div>
 
         {/* FEATURE GRID SECTION */}
-        <div className="mt-36 w-full text-center">
+        <div className="mt-25 w-full text-center">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-900/30 px-3.5 py-1.5 text-xs font-semibold tracking-wider text-indigo-400 uppercase">
             <Sparkles size={11} className="text-indigo-400" />
             <span>Platform Features</span>
           </div>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl lg:text-5xl">
+          <h2 className="mt-4 text-3xl tracking-tight text-zinc-100 sm:text-4xl lg:text-5xl">
             Everything you need to create & grow
           </h2>
         </div>

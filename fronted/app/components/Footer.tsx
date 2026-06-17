@@ -172,7 +172,7 @@ const Footer = () => {
         {/* Bottom Copyright & Credit Bar */}
         <div className="border-t border-zinc-900/80 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-zinc-500 font-semibold tracking-wide">
-            © {new Date().getFullYear()} Postify. All rights reserved.
+            © {new Date().getFullYear()} Veyra. All rights reserved.
           </p>
           <a
             href="https://portfolio-site-kappa-lilac.vercel.app"

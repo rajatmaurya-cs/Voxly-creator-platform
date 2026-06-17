@@ -67,7 +67,7 @@ const Card = () => {
             <div className={styles['card-bottom']}>
               <div className={styles['card-info']}>
                 <span className={styles.label}>UPI ID</span>
-                <span className={styles.value}>Hierance@upi</span>
+                <span className={styles.value}>Veyra@upi</span>
               </div>
               <div className={styles['card-number-wrapper']}>
                 <span className={styles['hidden-stars']}>**** 8810</span>

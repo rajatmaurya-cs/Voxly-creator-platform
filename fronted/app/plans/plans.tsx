@@ -13,7 +13,8 @@ import {
   Brain,
   FlaskConical,
   Code,
-  HelpCircle
+  HelpCircle,
+  ShieldCheck
 } from "lucide-react";
 
 declare global {
@@ -229,20 +230,33 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
           {/* Header Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16 max-w-6xl mx-auto">
             {/* Header Text */}
-            <div className="text-center lg:text-left">
+            <div className="text-center lg:text-left flex flex-col items-center lg:items-start">
               <span className="px-3 py-1 text-xs font-semibold tracking-wider text-cyan-400 bg-cyan-950/50 border border-cyan-800/50 rounded-full uppercase">
                 Pricing Plans
               </span>
-              <h1 className="mt-4 text-4xl sm:text-5xl font-extrabold tracking-tight text-white bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
+              <h1 className="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight text-white bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
                 Choose your perfect plan
               </h1>
               <p className="mt-4 text-lg text-neutral-400 max-w-2xl lg:mx-0 mx-auto">
-                Supercharge your social presence and content workflow with Postify's advanced AI toolset.
+                Supercharge your social presence and content workflow with Veyra.
               </p>
+
+              {/* Security Trust Banner */}
+              <div className="mt-8 max-w-full bg-neutral-900/40 border border-neutral-800/80 rounded-[20px] p-4 flex items-center gap-3.5 text-left backdrop-blur-sm shadow-md">
+                <div className="p-2 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-emerald-400 shrink-0">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-semibold text-neutral-200">Secure Checkout Guarantee</h4>
+                  <p className="mt-0.5 text-[15px] text-neutral-400 leading-relaxed">
+                    Veyra never stores your account ID, bank account details, or card credentials. We only record your payment ID & order ID to verify transactions.
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Wallet Graphic */}
-            <div className="flex justify-center items-center overflow-visible mt-2.5">
+            <div className="flex justify-center lg:justify-end items-center overflow-visible mt-2.5">
               <PriceCards />
             </div>
           </div>

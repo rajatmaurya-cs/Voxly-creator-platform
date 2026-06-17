@@ -277,26 +277,28 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="
-                  flex
-                  h-13
-                  w-full
-                  items-center
-                  justify-center
-                  rounded-2xl
-                  border
-                  border-transparent
-                  bg-[#f3f4f6]
-                  text-sm
-                  font-semibold
-                  text-[#0f1115]
-                  transition-all
-                  duration-200
-                  hover:bg-white
-                  active:scale-[0.99]
-                  disabled:cursor-not-allowed
-                  disabled:opacity-60
-                "
+                className={
+                  isLoading
+                    ? "flex h-13 w-full items-center justify-center bg-transparent border-none pointer-events-none"
+                    : `
+                      flex
+                      h-13
+                      w-full
+                      items-center
+                      justify-center
+                      rounded-2xl
+                      border
+                      border-transparent
+                      bg-[#f3f4f6]
+                      text-sm
+                      font-semibold
+                      text-[#0f1115]
+                      transition-all
+                      duration-200
+                      hover:bg-white
+                      active:scale-[0.99]
+                    `
+                }
               >
                 {isLoading ? <EditorLoader size={40} border={2} /> : "Sign In"}
               </button>

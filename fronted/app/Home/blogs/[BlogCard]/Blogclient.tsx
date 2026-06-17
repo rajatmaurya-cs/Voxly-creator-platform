@@ -1,6 +1,8 @@
 "use client";
 
-import React, { lazy, useState, useRef, useEffect } from "react";
+import dynamic from "next/dynamic"; // ✅ must be imported before use
+
+import React, { lazy, useState, useRef, useEffect, Suspense, useContext } from "react";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -10,18 +12,11 @@ import Image from "next/image";
 
 import { useRouter } from "next/navigation";
 
-import { Suspense } from "react";
-
 import toast from "react-hot-toast";
-
-const Loader = dynamic(() => import("@/app/Animations/Loader"))
-
-const SummariseButton = lazy(() => import("../../../Animations/AIButton"))
 
 import { apiFetch } from "@/lib/apiFetch";
 
 import { AuthContext } from "@/app/ContextProvider/AuthProvider";
-import { useContext } from "react";
 
 import {
   MessageSquare,
@@ -32,8 +27,9 @@ import {
   FileText
 } from "lucide-react";
 
+const Loader = dynamic(() => import("@/app/Animations/Loader"));
 
-import dynamic from "next/dynamic";
+const SummariseButton = lazy(() => import("../../../Animations/AIButton"));
 
 
 
@@ -681,6 +677,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
               onClick={() => addCommentMutation.mutate()}
               disabled={addCommentMutation.isPending}
               className="
+    relative
     mt-6
 
     flex items-center justify-center gap-2

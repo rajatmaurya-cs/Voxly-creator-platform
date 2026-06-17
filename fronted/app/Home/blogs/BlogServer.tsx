@@ -8,15 +8,12 @@ type BlogSectionProps = {
 };
 
 async function fetchBlogs({ category = "All", search = "", page = 1, limit = 3, }: BlogSectionProps) {
-  
-  // const endpoint =
-  //   "https://postifybackend-six.vercel.app/api/blog/allblog" ;
 
-    // ✅ Server components bypass the Next.js rewrite proxy.
-    // Must call the backend URL directly (server-to-server) to avoid infinite rewrite loop on Vercel.
-    const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/blog/allblog`
 
-    console.log("⛳️ The Homepage blog fetched using BACKEND_URL : ", process.env.NEXT_PUBLIC_BACKEND_URL)
+  // ✅ Server component: call backend directly, NOT through /api proxy
+  const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/blog/allblog`
+
+
 
   const url = `${endpoint}?page=${page}&limit=${limit}&category=${category}&search=${search}`;
 
@@ -24,7 +21,7 @@ async function fetchBlogs({ category = "All", search = "", page = 1, limit = 3, 
     next: { revalidate: 60 },
   });
 
-  console.log("The fetched wholeblog is:",res)
+  console.log("The fetched wholeblog is:", res)
 
   if (!res.ok) {
     throw new Error("Failed to fetch blogs");
@@ -42,5 +39,5 @@ export default async function BlogSection() {
   });
 
   return <BlogClient initialData={initialData} />;
-  
+
 }

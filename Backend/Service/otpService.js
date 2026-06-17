@@ -18,7 +18,7 @@ export const sendOtpService = async (email, purpose) => {
   const cooldown = await redisClient.get(cooldownKey);
   
   if (cooldown) {
-    throw new Error("Please wait 60 seconds before requesting another OTP");
+    throw new Error("Please wait 60 seconds before requesting another New OTP");
   }
 
 

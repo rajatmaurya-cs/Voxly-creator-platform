@@ -1,6 +1,4 @@
 import React from "react";
-
-// Reusable Blog Grid Skeleton for client-side search/filters
 export function BlogGridSkeleton() {
   return (
     <div className="grid gap-7 sm:grid-cols-2 xl:grid-cols-3 animate-pulse">
@@ -58,9 +56,6 @@ export function BlogGridSkeleton() {
               " />
 
             </div>
-
-
-
 
 
             {/* AUTHOR SKELETON */}

@@ -1,5 +1,5 @@
 import React from "react";
-import { BlogGridSkeleton } from "../loading-skeleton";
+import { BlogGridSkeleton } from "./loading-skeleton";
 
 // Default Full-Page Loader for Next.js Route Loading
 export default function Loading() {

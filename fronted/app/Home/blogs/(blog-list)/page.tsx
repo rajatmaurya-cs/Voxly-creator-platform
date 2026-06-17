@@ -1,5 +1,5 @@
 import React from 'react'
-import Blogserver from '../BlogServer'
+import Blogserver from './BlogServer'
 
 export const dynamic = 'force-dynamic';
 

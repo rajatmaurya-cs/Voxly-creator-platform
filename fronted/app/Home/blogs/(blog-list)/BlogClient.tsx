@@ -2,7 +2,7 @@
 
 import { blogCategories } from "@/app/assets/assets";
 import { useState, useMemo } from "react";
-import { useHomeBlogs } from "../../hooks/useHomeBlogs";
+import { useHomeBlogs } from "@/app/hooks/useHomeBlogs";
 import Link from "next/link";
 import { Search, CalendarDays } from "lucide-react";
 import Image from "next/image";

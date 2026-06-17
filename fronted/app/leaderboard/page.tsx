@@ -1,11 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Leaderboard from "./Leaderboard";
+import LeaderboardSkeleton from "./loading-skeleton";
 
 export const dynamic = 'force-dynamic';
 
-const page = async () => {
+const LeaderboardData = async () => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/topfollowers`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL}/auth/topfollowers`,
     {
       next: {
         revalidate: 300,
@@ -14,8 +15,16 @@ const page = async () => {
   );
 
   const data = await res.json();
-  console.log("The Top Followers are: ",data)
+
   return <Leaderboard data={data} />;
+};
+
+const page = () => {
+  return (
+    <Suspense fallback={<LeaderboardSkeleton />}>
+      <LeaderboardData />
+    </Suspense>
+  );
 };
 
 export default page;

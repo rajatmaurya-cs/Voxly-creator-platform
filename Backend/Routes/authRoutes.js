@@ -108,6 +108,10 @@ authRouter.get("/google", (req, res, next) => {
 
   console.log("Request goes from /google 1 ")
 
+  console.log(`The google GOOGLE_CLIENT_ID: ${process.env.GOOGLE_CLIENT_ID}`)
+
+  console.log(`The Google client secret is: ${process.env.GOOGLE_REDIRECT_URI}`)
+
   const url =
     `https://accounts.google.com/o/oauth2/v2/auth?` +
     `client_id=${process.env.GOOGLE_CLIENT_ID}` +
@@ -115,7 +119,7 @@ authRouter.get("/google", (req, res, next) => {
     `&response_type=code` +
     `&scope=openid%20email%20profile`;
 
-  console.log("Request goes from /google 2 ")
+  console.log("The Url is: ",url)
 
   res.redirect(url);
 

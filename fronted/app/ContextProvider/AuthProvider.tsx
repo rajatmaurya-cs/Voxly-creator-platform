@@ -47,6 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { data, isLoading, refetch, isError } = useQuery<User>({
     queryKey: ["auth-user"],
     queryFn: async () => {
+      console.log("Querying session state from URL:", `${process.env.NEXT_PUBLIC_API_URL}/auth/me`);
       const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/me`
       );

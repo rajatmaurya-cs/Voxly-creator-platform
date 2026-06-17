@@ -267,7 +267,7 @@ export const googleLogin = async (req, res) => {
 
     const code = req.query.code;
 
-    console.log("GoogleLogin 2 code:", code)
+    console.log("GoogleLogin 2 code: ", code)
 
     // ---------------- EXCHANGE CODE FOR TOKEN ----------------
 
@@ -291,6 +291,8 @@ export const googleLogin = async (req, res) => {
 
     console.log("GoogleLogin 4")
 
+    console.log("The data we get: ",data)
+
     // ---------------- GET GOOGLE USER ----------------
 
     const { data: googleUser } = await axios.get(
@@ -301,6 +303,7 @@ export const googleLogin = async (req, res) => {
         },
       }
     );
+    
     console.log("GoogleLogin 5")
     // ---------------- FIND USER ----------------
 
@@ -426,7 +429,7 @@ export const googleLogin = async (req, res) => {
 
     console.log("GoogleLogin successFully ✅")
 
-    res.redirect(`${process.env.FRONTEND_URL}/`);
+    res.redirect(`${process.env.FRONTEND_URL}`);
 
   } catch (error) {
 

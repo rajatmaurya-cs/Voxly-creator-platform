@@ -15,6 +15,7 @@ import {
 import { useContext } from "react";
 import { AuthContext } from "@/app/ContextProvider/AuthProvider";
 import Router, { useRouter } from "next/navigation";
+import ShaderAnimation from "@/components/ui/ShaderAnimation";
 
 const Hero = () => {
 
@@ -25,13 +26,11 @@ const Hero = () => {
   return (
     <section className="relative overflow-hidden bg-zinc-950 text-zinc-50 selection:bg-zinc-800 selection:text-zinc-100">
       
-      {/* BACKGROUND GRAPHICS: Sophisticated, subdued ambient lighting */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Fine, dim grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f29370a_1px,transparent_1px),linear-gradient(to_bottom,#1f29370a_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-        
-        {/* Soft, top-centered premium ambient glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[500px] w-[1000px] bg-gradient-to-r from-violet-500/10 via-indigo-500/5 to-cyan-500/10 blur-[120px] rounded-full opacity-70" />
+      {/* BACKGROUND GRAPHICS: Shader Animation */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <ShaderAnimation className="w-full h-full" />
+        {/* Dark overlay to ensure text readability */}
+        <div className="absolute inset-0 bg-zinc-950/70" />
       </div>
 
       <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-6 py-32 text-center z-10">
@@ -44,7 +43,7 @@ const Hero = () => {
 
         {/* HEADING: Stark, tight, and high-contrast */}
         <h1 className="mt-8 max-w-4xl text-4xl  tracking-tighter sm:text-6xl lg:text-7xl xl:text-8xl bg-gradient-to-b from-zinc-50 via-zinc-200 to-zinc-500 bg-clip-text text-transparent leading-[1.05]">
-          Write. Summarize.
+          Create. Summarize.
           <br />
           <span className="bg-gradient-to-r from-indigo-200 via-white to-violet-400 bg-clip-text text-transparent">
             Publish with Veyra

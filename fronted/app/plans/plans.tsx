@@ -231,27 +231,23 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16 max-w-6xl mx-auto">
             {/* Header Text */}
             <div className="text-center lg:text-left flex flex-col items-center lg:items-start">
-              <span className="px-3 py-1 text-xs font-semibold tracking-wider text-cyan-400 bg-cyan-950/50 border border-cyan-800/50 rounded-full uppercase">
+              <h2 className="text-sm font-medium tracking-[0.2em] text-neutral-400 uppercase mb-3">
                 Pricing Plans
-              </span>
-              <h1 className="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight text-white bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
+              </h2>
+              <h1 className="text-4xl sm:text-6xl font-light tracking-tight text-white mb-6 sm:whitespace-nowrap">
                 Choose your perfect plan
               </h1>
-              <p className="mt-4 text-lg text-neutral-400 max-w-2xl lg:mx-0 mx-auto">
+              <p className="text-lg font-light text-neutral-400 max-w-2xl lg:mx-0 mx-auto leading-relaxed">
                 Supercharge your social presence and content workflow with Veyra.
               </p>
 
               {/* Security Trust Banner */}
-              <div className="mt-8 max-w-full bg-neutral-900/40 border border-neutral-800/80 rounded-[20px] p-4 flex items-center gap-3.5 text-left backdrop-blur-sm shadow-md">
-                <div className="p-2 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-emerald-400 shrink-0">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-semibold text-neutral-200">Secure Checkout Guarantee</h4>
-                  <p className="mt-0.5 text-[15px] text-neutral-400 leading-relaxed">
-                    Veyra never stores your account ID, bank account details, or card credentials. We only record your payment ID & order ID to verify transactions.
-                  </p>
-                </div>
+              <div className="mt-10 flex items-start gap-3 max-w-lg text-left">
+                <ShieldCheck className="w-5 h-5 text-neutral-500 shrink-0 mt-0.5" strokeWidth={1.5} />
+                <p className="text-sm text-neutral-400 font-light leading-relaxed">
+                  <span className="font-medium text-neutral-300">Secure Checkout — </span>
+                  Veyra never stores your account ID, bank account details, or card credentials. We only record your payment ID & order ID to verify transactions.
+                </p>
               </div>
             </div>
 

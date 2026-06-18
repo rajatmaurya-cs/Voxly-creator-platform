@@ -24,7 +24,17 @@ import { useRouter } from "next/navigation";
 
 const Navbar = () => {
 
+  
+
   const { user, loggedIn, setLoggedIn, setUser, authloading } = useContext(AuthContext) as any;
+
+
+
+  console.log("The data on Navbar is✅ :",{
+  user,
+  loggedIn,
+  authloading
+});
 
   const [showProfile, setShowProfile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -126,6 +136,8 @@ const Navbar = () => {
               Veyra
             </span>
           </Link>
+
+          
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-4">

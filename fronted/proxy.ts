@@ -53,35 +53,42 @@ function extractCookieValue(setCookieHeaderStr: string, name: string): string | 
 
 export async function proxy(request: NextRequest) {
   // ---------------------------------------------------------------------------
-  // IMPORTANT BUGFIX: Skip auth checks for Next.js prefetch requests!
-  // Next.js strips cookies from prefetch requests for dynamic routes.
-  // If we redirect a prefetch, Next.js caches the redirect and breaks the link.
+  // CRITICAL FIX: Detect whether this is a full-page browser navigation 
+  // (typing URL / hard refresh) vs a Next.js client-side RSC request 
+  // (Link click / prefetch).
+  //
+  // WHY: Next.js App Router treats routes with <Suspense> as having a "static 
+  // shell" (Partial Prerendering). For these routes, the client router sends 
+  // RSC fetch requests WITHOUT cookies (sec-fetch-dest: "empty"). If middleware 
+  // redirects these cookieless requests, the client router CACHES the redirect 
+  // and breaks all subsequent navigations to that route.
+  //
+  // FIX: Only redirect to login for full-page document requests (browser 
+  // address bar navigation). For RSC requests without cookies, pass through — 
+  // the client-side AuthProvider handles auth for those routes.
   // ---------------------------------------------------------------------------
-  const isPrefetch = 
-    request.headers.get("next-router-prefetch") === "1" || 
-    request.headers.get("purpose") === "prefetch";
-
-  if (isPrefetch) {
-    return NextResponse.next();
-  }
+  const isDocumentRequest = request.headers.get("sec-fetch-dest") === "document";
 
   const accessToken = request.cookies.get("accessToken")?.value;
   const refreshToken = request.cookies.get("refreshToken")?.value;
   const isAccessExpired = isTokenExpired(accessToken);
 
-  const allHeaders: Record<string, string> = {};
-  request.headers.forEach((val, key) => { allHeaders[key] = val });
-
-   console.log("🔍 PROXY DEBUG:", {
+  console.log("🔍 PROXY DEBUG:", {
     hasAccessToken: !!accessToken,
     hasRefreshToken: !!refreshToken,
     isAccessExpired,
+    isDocumentRequest,
+    secFetchDest: request.headers.get("sec-fetch-dest"),
     url: request.url,
-    headers: allHeaders,
   });
 
-
   if (isAccessExpired && !refreshToken) {
+    // Only redirect full-page navigations (browser address bar / hard refresh).
+    // RSC/prefetch requests without cookies MUST pass through to avoid poisoning
+    // the Next.js client router cache with a cached redirect.
+    if (!isDocumentRequest) {
+      return NextResponse.next();
+    }
     const response = NextResponse.redirect(new URL("/auth/login", request.url));
     response.cookies.delete("accessToken");
     response.cookies.delete("refreshToken");

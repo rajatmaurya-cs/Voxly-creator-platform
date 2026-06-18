@@ -185,7 +185,7 @@ const ForgetPassword = () => {
         </h1>
 
         <p className="mt-2 text-sm leading-relaxed text-[#7d8590]">
-          Securely recover your Postify account using OTP verification.
+          Securely recover your Veyra account using OTP verification.
         </p>
 
       </div>

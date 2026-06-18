@@ -106,10 +106,10 @@ export default function LoginPage() {
 
 
   const handleGoogleLogin = () => {
-    
 
 
-     window.location.href = `/api/auth/google`;
+
+    window.location.href = `/api/auth/google`;
   }
 
   // ---------------- UI ----------------
@@ -145,39 +145,31 @@ export default function LoginPage() {
             {/* ---------- HEADER ---------- */}
 
             <div className="mb-9">
+              <div className="flex flex-col items-center gap-3">
 
-              <div className="flex items-center justify-center gap-4">
-
-                <div
-                  className="
-                flex
-                h-14
-                w-14
-                items-center
-                justify-center
-                rounded-2xl
-                border
-                border-[#2a313d]
-                bg-[#171b22]
-                shadow-inner
-              "
-                >
-                  <span className="text-xl font-bold tracking-tight text-white">
-                    🄥
+                {/* Logo + Brand */}
+                <div className="flex items-center ">
+                  <div className="relative w-25 h-25 shrink-0">
+                    <Image
+                      src="/pixel.png"
+                      alt="Veyra Logo"
+                      fill
+                      className="object-contain"
+                      priority
+                    />
+                  </div>
+                  <span
+                    className="text-3xl font-bold tracking-widest uppercase bg-gradient-to-r from-indigo-200 via-white to-violet-400 bg-clip-text text-transparent"
+                    style={{ fontFamily: "var(--font-orbitron)", letterSpacing: "0.18em" }}
+                  >
+                    Veyra
                   </span>
                 </div>
 
-                <div>
+                <p className="mt-1 text-sm text-[#8b90a0]">
+                  Welcome back
+                </p>
 
-                  <h1 className="text-3xl font-semibold tracking-[-0.03em] text-white">
-                  Veyra
-                  </h1>
-
-                  <p className="mt-1 text-sm text-[#8b90a0]">
-                    Welcome back
-                  </p>
-
-                </div>
               </div>
             </div>
 

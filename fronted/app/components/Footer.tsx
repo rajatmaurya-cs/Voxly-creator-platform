@@ -28,13 +28,21 @@ const Footer = () => {
           
           {/* Column 1: Brand Info */}
           <div className="lg:col-span-5 flex flex-col gap-5">
-            <div className="relative h-8 w-28">
-              <Image
-                src="/LogoOfPostify.png"
-                alt="Postify Logo"
-                fill
-                className="object-contain object-left"
-              />
+            <div className="flex items-center">
+              <div className="relative w-20 h-20 shrink-0">
+                <Image
+                  src="/pixel.png"
+                  alt="Veyra Logo"
+                  fill
+                  className="object-contain object-left"
+                />
+              </div>
+              <span
+                className="text-xl font-bold tracking-widest uppercase bg-gradient-to-r from-indigo-200 via-white to-violet-400 bg-clip-text text-transparent"
+                style={{ fontFamily: "var(--font-orbitron)", letterSpacing: "0.18em" }}
+              >
+                Veyra
+              </span>
             </div>
             <p className="text-zinc-400 text-xs md:text-sm leading-relaxed max-w-sm font-medium">
               Empowering your digital brand with next-generation AI content creation, automated scheduling, and smart analytics.

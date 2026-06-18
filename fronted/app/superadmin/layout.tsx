@@ -77,28 +77,29 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         >
           {/* Sidebar Header */}
           <div className="flex items-center justify-between px-1 py-2 mb-4">
-            <div className="flex items-center gap-2.5">
-              <div 
-                className="flex h-8 w-8 items-center justify-center rounded-lg border bg-white text-black shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
-                style={{ borderColor: "#e4e4e7" }}
-              >
-                <Shield size={16} strokeWidth={2.5} />
+            <Link href="/" className="flex items-center transition-opacity hover:opacity-90 group">
+              <div className="relative w-25 h-25 shrink-0">
+                <Image
+                  src="/pixel.png"
+                  alt="Veyra Logo"
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-bold tracking-tight text-black">
-                  Postify
+              <div className="flex flex-col justify-center">
+                <span
+                  className="text-lg font-bold tracking-widest uppercase bg-gradient-to-r from-zinc-900 via-indigo-950 to-violet-800 bg-clip-text text-transparent"
+                  style={{ fontFamily: "var(--font-orbitron)", letterSpacing: "0.12em" }}
+                >
+                  Veyra
                 </span>
-                <span className="text-[10px] tracking-wide text-zinc-500 font-bold -mt-0.5">
+                <span className="text-[10px] tracking-wide text-zinc-500 font-bold">
                   Super Admin
                 </span>
               </div>
-            </div>
-            <div 
-              className="px-1.5 py-0.5 text-[9px] font-bold tracking-wide text-zinc-700 bg-zinc-200/60 rounded border"
-              style={{ borderColor: "#e4e4e7" }}
-            >
-              v1.0
-            </div>
+            </Link>
+           
           </div>
 
           <nav className="flex flex-col gap-6">

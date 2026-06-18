@@ -191,6 +191,26 @@ return (
 
       {/* HEADER */}
       <div className="text-center space-y-3 mb-8">
+
+        {/* Logo + Brand */}
+        <div className="flex items-center justify-center  mb-4">
+          <div className="relative w-25 h-25 shrink-0">
+            <Image
+              src="/pixel.png"
+              alt="Veyra Logo"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+          <span
+            className="text-2xl font-bold tracking-widest uppercase bg-gradient-to-r from-indigo-200 via-white to-violet-400 bg-clip-text text-transparent"
+            style={{ fontFamily: "var(--font-orbitron)", letterSpacing: "0.18em" }}
+          >
+            Veyra
+          </span>
+        </div>
+
         <h2
           className="
             text-3xl
@@ -199,7 +219,7 @@ return (
             text-white
           "
         >
-          Create Account ✨
+          Create Account 
         </h2>
 
         <p className="text-sm text-[#8b90a0] leading-relaxed">

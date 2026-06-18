@@ -224,9 +224,19 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
         strategy="lazyOnload"
       />
 
-      <div className="min-h-screen text-white pt-24 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden flex flex-col items-center">
+      <div className="min-h-screen text-white pt-10 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden flex flex-col items-center">
        
         <div className="max-w-7xl w-full mx-auto relative z-10">
+          
+          {/* Test Mode Warning Banner */}
+          <div className="max-w-6xl mx-auto mb-10 p-4 rounded-2xl border border-amber-500/20 bg-amber-500/5 text-amber-200/90 text-sm leading-relaxed flex items-center gap-3 shadow-[0_4px_20px_rgba(245,158,11,0.05)]">
+            <span className="text-lg leading-none select-none">⚠️</span>
+            <div>
+              <strong className="text-amber-300 font-medium">Razorpay Test Mode Notice: </strong>
+              No real money will be deducted from your account. If Razorpay asks for card/account details, use dummy/test credentials for verification to upgrade your plan absolutely free.
+            </div>
+          </div>
+
           {/* Header Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16 max-w-6xl mx-auto">
             {/* Header Text */}

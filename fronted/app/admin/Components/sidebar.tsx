@@ -62,19 +62,26 @@ const Sidebar = () => {
       <div className="mb-10">
 
         <div className="flex items-center gap-3">
-
-          <Link  href={'/'}>
-           
-                <Image
-                          src={'/LogoPostify.png'}
-                          alt="Logo"
-                          width={120}
-                          height={30}
-                          className="h-12 w-auto object-contain lg:h-25"
-                           priority
-                        /> 
+          <Link
+            href="/"
+            className="flex items-center  transition-opacity hover:opacity-90 group"
+          >
+            <div className="relative w-25 h-25 shrink-0">
+              <Image
+                src="/pixel.png"
+                alt="Veyra Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+            <span
+              className="text-2xl font-bold tracking-widest uppercase bg-gradient-to-r from-indigo-200 via-white to-violet-400 bg-clip-text text-transparent"
+              style={{ fontFamily: "var(--font-orbitron)", letterSpacing: "0.15em" }}
+            >
+              Veyra
+            </span>
           </Link>
-
         </div>
 
       </div>

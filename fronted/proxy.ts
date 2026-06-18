@@ -69,11 +69,15 @@ export async function proxy(request: NextRequest) {
   const refreshToken = request.cookies.get("refreshToken")?.value;
   const isAccessExpired = isTokenExpired(accessToken);
 
+  const allHeaders: Record<string, string> = {};
+  request.headers.forEach((val, key) => { allHeaders[key] = val });
+
    console.log("🔍 PROXY DEBUG:", {
     hasAccessToken: !!accessToken,
     hasRefreshToken: !!refreshToken,
     isAccessExpired,
     url: request.url,
+    headers: allHeaders,
   });
 
 

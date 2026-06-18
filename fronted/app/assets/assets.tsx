@@ -7,6 +7,7 @@ export const assets = {
 export const blogCategories = [
     'All',
     'Technology',
+    'Science',
     'Startup',
     'Lifestyle',
     'Finance',

@@ -224,13 +224,7 @@ export default function BlogClient({ initialData }: Props) {
         {hasNextPage && (
 
           <div className="flex justify-center pt-14">
-            {/* <button
-              onClick={() => fetchNextPage()}
-              disabled={isFetchingNextPage}
-              className="rounded-2xl border border-white/10 bg-white px-8 py-3 text-sm font-medium text-black transition-all duration-300 hover:scale-[1.02] hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {isFetchingNextPage ? "Loading..." : "Load More"}
-            </button> */}
+         
 
              <button
           onClick={() => fetchNextPage()}

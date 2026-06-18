@@ -65,14 +65,20 @@ const Navbar = () => {
   });
 
 
+  // Show skeleton while auth state is resolving — but DON'T navigate
+  // until authloading is confirmed false. This prevents the Admin onClick
+  // from firing while loggedIn is still in its initial `false` state.
   if (authloading) { return <NavbarSkeleton /> }
 
+  // navLinks defined with a factory so loggedIn is read at click time,
+  // NOT captured as a stale closure at render time.
   const navLinks = [
     {
       href: "/admin",
       label: "Admin",
       icon: <LayoutGrid size={20} className="text-indigo-400" />,
       onClick: (e: any) => {
+        // Read loggedIn at the moment of click — not from a stale closure
         if (!loggedIn) {
           e.preventDefault();
           toast.error("Login First");

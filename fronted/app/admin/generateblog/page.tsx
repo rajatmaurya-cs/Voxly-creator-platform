@@ -786,10 +786,11 @@ const AddBlog = () => {
               <button
                 type="button"
                 onClick={handleGenerateContent}
+                className="w-full flex items-center justify-center"
               >
                 {generateContentMutation.isPending
                   ? "Generating..."
-                  : <AIButton />}
+                  : <AIButton className="w-full" />}
               </button>
 
               {!analysis ? (

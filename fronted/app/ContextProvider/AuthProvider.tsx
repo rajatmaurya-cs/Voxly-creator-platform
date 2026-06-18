@@ -3,7 +3,6 @@
 import {
   createContext,
   useState,
-  useContext,
   useEffect,
   Dispatch,
   SetStateAction,
@@ -39,15 +38,15 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 // ---------------- PROVIDER ----------------
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [loggedIn, setLoggedIn] = useState(false);
-
+  // These local states are only used when login/logout happens manually
+  // (i.e., not via the query). The query is the source of truth.
+  const [manualUser, setManualUser] = useState<User | null>(null);
+  const [manualLoggedIn, setManualLoggedIn] = useState<boolean | null>(null);
 
   // ---------------- QUERY ----------------
   const { data, isLoading, refetch, isError } = useQuery<User>({
     queryKey: ["auth-user"],
     queryFn: async () => {
-      console.log("Querying session state from URL:", `${process.env.NEXT_PUBLIC_API_URL}/auth/me`);
       const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/me`
       );
@@ -62,30 +61,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     refetchOnWindowFocus: false,
   });
 
-  // ---------------- SYNC STATE ----------------
+  // When the query resolves successfully, sync to manual state and clear overrides
   useEffect(() => {
-
     if (data) {
-      setUser(data);
-      setLoggedIn(true);
+      setManualUser(data);
+      setManualLoggedIn(true);
     }
-
     if (isError) {
-      setUser(null);
-      setLoggedIn(false);
+      setManualUser(null);
+      setManualLoggedIn(false);
     }
+  }, [data, isError]);
 
+  // Derive final values:
+  // - During initial load (isLoading=true, no cached data yet): show loading
+  // - Once we have data OR an error, use the resolved values
+  // - manualLoggedIn allows login/logout to update state instantly without waiting for a refetch
+  const resolvedUser = manualUser;
+  const resolvedLoggedIn = manualLoggedIn ?? false;
 
-  }, [data, isError, isLoading]);
+  // authloading is true ONLY when we have no resolved value yet (first load, no cache)
+  const authloading = isLoading && manualLoggedIn === null;
 
   return (
     <AuthContext.Provider
       value={{
-        user,
-        loggedIn,
-        setUser,
-        setLoggedIn,
-        authloading: isLoading,
+        user: resolvedUser,
+        loggedIn: resolvedLoggedIn,
+        setUser: setManualUser,
+        setLoggedIn: setManualLoggedIn as (v: boolean) => void,
+        authloading,
         refetchUser: refetch,
       }}
     >

@@ -2,9 +2,10 @@ import React from "react";
 
 type AIButtonProps = {
   data?: string;
+  className?: string;
 };
 
-const Button = ({ data = "Generate AI" }: AIButtonProps) => {
+const Button = ({ data = "Generate AI", className = "" }: AIButtonProps) => {
   return (
     <>
       <style>{`
@@ -124,7 +125,7 @@ const Button = ({ data = "Generate AI" }: AIButtonProps) => {
         }
       `}</style>
 
-      <div className="pb-ai-button">
+      <div className={`pb-ai-button ${className}`}>
         <span>{data}</span>
         <span className="pb-ai-sparkle">✦</span>
       </div>

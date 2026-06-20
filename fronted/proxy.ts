@@ -87,12 +87,11 @@ export async function proxy(request: NextRequest) {
   }
 
 
-  const isAuthRoute = request.nextUrl.pathname.startsWith("/api/auth/");
+  const isLogoutRoute = request.nextUrl.pathname === "/api/auth/logout";
 
-  if (isAccessExpired && refreshToken && !isAuthRoute) {
+  if (isAccessExpired && refreshToken && !isLogoutRoute) {
 
-
-    console.log("The AccessToken Expired & RefreshToken is presetn")
+    console.log("The AccessToken Expired & RefreshToken is present")
 
     const currentTime = new Date().toLocaleTimeString("en-IN", {
       timeZone: "Asia/Kolkata",

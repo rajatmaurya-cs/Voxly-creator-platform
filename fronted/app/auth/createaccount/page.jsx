@@ -199,6 +199,7 @@ return (
               src="/pixel.png"
               alt="Veyra Logo"
               fill
+              sizes="100px"
               className="object-contain"
               priority
             />

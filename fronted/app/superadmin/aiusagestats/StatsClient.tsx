@@ -158,6 +158,7 @@ const Client = ({ data }: ClientProps) => {
                     <Image
                       src="/user.png"
                       fill
+                      sizes="40px"
                       alt=""
                       className="object-cover grayscale"
                     />

@@ -326,6 +326,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
                     src={blog?.createdBy?.avatar || "/man.png"}
                     alt={blog?.createdBy?.fullName || "Author"}
                     fill
+                    sizes="48px"
                     className="rounded-full object-cover"
                   />
                 </div>

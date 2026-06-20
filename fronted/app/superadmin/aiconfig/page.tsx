@@ -360,7 +360,7 @@ const AIConfigDashboard = () => {
         >
           {saving ? (
             <span className="flex items-center justify-center gap-3">
-              <div className="w-4 h-4 border border-zinc-350 border-t-black rounded-full animate-spin"></div>
+              <div className="w-4 h-4"></div>
               <EditorLoader size={24} border={3} />
             </span>
           ) : (

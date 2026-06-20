@@ -12,7 +12,11 @@ planrouter.get('/getplans',(req,res,next)=>{
     next();
 },getPlans)
 
-planrouter.patch('/updateplan/:id', authMiddleware, updatePlan)
+planrouter.patch('/updateplan/:id', authMiddleware,(req,res,next)=>{
+    console.log("The role of user is",req?.user?.role)
+    next();
+},authMiddleware,superAdminMiddleware, updatePlan)
+
 planrouter.get('/getplanhistory', authMiddleware,getPlanHistory)
 
 export default planrouter;

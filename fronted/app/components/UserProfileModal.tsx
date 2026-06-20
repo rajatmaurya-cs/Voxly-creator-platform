@@ -119,6 +119,7 @@ const UserProfileModal = ({
                                     src={user?.avatar || "/man.png"}
                                     alt={user?.name || "User"}
                                     fill
+                                    sizes="112px"
                                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
                             </div>

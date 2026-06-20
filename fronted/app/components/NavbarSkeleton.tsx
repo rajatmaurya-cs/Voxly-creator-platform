@@ -17,6 +17,7 @@ const NavbarSkeleton = () => {
               src="/pixel.png"
               alt="Veyra Logo"
               fill
+              sizes="108px"
               className="object-contain"
               priority
             />

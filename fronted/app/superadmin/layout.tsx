@@ -83,6 +83,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   src="/pixel.png"
                   alt="Veyra Logo"
                   fill
+                  sizes="108px"
                   className="object-contain"
                   priority
                 />
@@ -181,6 +182,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   src={(user?.avatar && user.avatar !== "") ? user.avatar : "/user.png"}
                   alt="Profile"
                   fill
+                  sizes="32px"
                   className="rounded-full"
                 />
               </div>

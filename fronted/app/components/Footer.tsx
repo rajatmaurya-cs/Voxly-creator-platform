@@ -34,6 +34,7 @@ const Footer = () => {
                   src="/pixel.png"
                   alt="Veyra Logo"
                   fill
+                  sizes="80px"
                   className="object-contain object-left"
                 />
               </div>

@@ -58,8 +58,9 @@ async function updatePlan(data: Plan) {
       }),
     }
   );
-  if (!res.ok) throw new Error("Update failed");
-  return res.json();
+  const result = await res.json()
+  if (!res.ok) throw new Error(result.message);
+  return result;
 }
 
 const getPlanTheme = (name: string) => {

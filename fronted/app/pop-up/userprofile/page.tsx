@@ -19,6 +19,7 @@ const Page = () => {
               src={user?.avatar || "/default-avatar.png"}
               alt={user?.name || "Profile"}
               fill
+              sizes="128px"
               className="object-cover"
             />
           </div>

@@ -96,7 +96,9 @@ export async function proxy(request: NextRequest) {
   }
 
  
-  if (isAccessExpired && refreshToken) {
+  const isAuthRoute = request.nextUrl.pathname.startsWith("/api/auth/");
+
+  if (isAccessExpired && refreshToken && !isAuthRoute) {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/refreshtoken`, {
         method: "POST",
@@ -151,7 +153,7 @@ export async function proxy(request: NextRequest) {
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
             path: "/",
-            maxAge: 60 * 1000  , 
+            maxAge: 60, 
           });
         }
         if (newRefreshToken) {
@@ -191,5 +193,19 @@ export const config = {
     "/admin",
     "/admin/:path*",
     
+    // Only intercept API routes that require authentication
+    "/api/ai/:path*",
+    "/api/auth/me",
+    "/api/auth/logout",
+    "/api/blog/admin/:path*",
+    "/api/blog/addblog",
+    "/api/blog/toggle-blog",
+    "/api/blog/delete-blog",
+    "/api/blog/Report",
+    "/api/comment/addcomment",
+    "/api/comment/toggle-comment",
+    "/api/comment/removecomment",
+    "/api/payment/:path*",
+    "/api/plan/updateplan/:path*",
   ],
 };

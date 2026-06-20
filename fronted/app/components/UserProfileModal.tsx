@@ -1,7 +1,8 @@
 "use client";
 
+
 import Image from "next/image";
-import { X, Mail, Calendar, Shield, LogOut, CheckCircle2, CreditCard, Users } from "lucide-react";
+import { X, Mail, Calendar, Shield, LogOut, CheckCircle2, CreditCard, Users,CalendarClock} from "lucide-react";
 import { motion } from "framer-motion";
 import EditorLoader from "../Animations/EditorLoader";
 
@@ -33,8 +34,8 @@ const UserProfileModal = ({
 }: UserProfileModalProps) => {
     const isAdmin = user?.role?.toLowerCase() === "admin";
     const roleColor = isAdmin
-        ? "text-indigo-400 border-indigo-500/30 bg-indigo-500/5 ring-indigo-500/20"
-        : "text-emerald-400 border-emerald-500/30 bg-emerald-500/5 ring-emerald-500/20";
+        ? "text-indigo-400 border-indigo-500/30 bg-indigo-500/10"
+        : "text-emerald-400 border-emerald-500/30 bg-emerald-500/10";
 
     const backdropVariants = {
         hidden: { opacity: 0 },
@@ -47,7 +48,7 @@ const UserProfileModal = ({
             opacity: 1,
             scale: 1,
             y: 0,
-            transition: { type: "spring" as const, duration: 0.4, bounce: 0.15 }
+            transition: { type: "spring" as const, duration: 0.5, bounce: 0.2 }
         },
         exit: {
             opacity: 0,
@@ -63,28 +64,22 @@ const UserProfileModal = ({
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
+            className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
             onClick={onClose}
         >
-            {}
+            {/* Modal Wrapper */}
             <motion.div
                 variants={modalVariants}
                 onClick={(e) => e.stopPropagation()}
-                className="w-full max-w-md rounded-[24px] p-[1.5px] bg-zinc-900/50 relative overflow-hidden shadow-[0_0_50px_-12px_rgba(99,102,241,0.15)]"
+                className="relative w-full max-w-[400px] rounded-[32px] p-[1.5px] shadow-[0_0_80px_-15px_rgba(99,102,241,0.2)] overflow-hidden flex flex-col max-h-[90vh]"
             >
-                {}
-                <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden rounded-[24px]">
+                {/* Animated Gradient Border */}
+                <div className="absolute inset-0 z-0 pointer-events-none">
                     <motion.div
-                        animate={{
-                            rotate: [0, 360],
-                        }}
-                        transition={{
-                            duration: 5,
-                            repeat: Infinity,
-                            ease: "linear",
-                        }}
+                        animate={{ rotate: [0, 360] }}
+                        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
                         style={{
-                            backgroundImage: "conic-gradient(from 0deg, transparent 40%, rgba(255,255,255,0.7) 50%, transparent 60%)",
+                            backgroundImage: "conic-gradient(from 0deg, transparent 60%, rgba(99,102,241,0.8) 80%, rgba(236,72,153,0.8) 100%)",
                             originX: 0.5,
                             originY: 0.5,
                         }}
@@ -92,189 +87,143 @@ const UserProfileModal = ({
                     />
                 </div>
 
-                {}
-                <div className="relative z-10 w-full rounded-[23px] bg-zinc-950 p-6 sm:p-7 overflow-hidden">
-                    {}
-                    <div className="absolute -top-20 -left-20 w-48 h-48 bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none" />
-                    <div className="absolute -bottom-20 -right-20 w-48 h-48 bg-rose-500/10 rounded-full blur-[80px] pointer-events-none" />
+                {/* Inner Content Wrapper */}
+                <div className="relative z-10 w-full rounded-[30px] bg-[#0c0c0e] flex flex-col overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-zinc-800/50 hover:[&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar-thumb]:rounded-full">
+                    
+                    {/* Subtle Background Glows */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-32 bg-indigo-500/10 blur-[60px] pointer-events-none" />
 
-                    {}
+                    {/* Close Button */}
                     <motion.button
                         onClick={onClose}
                         whileHover={{ scale: 1.1, rotate: 90 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="absolute top-5 right-5 text-zinc-400 hover:text-white bg-zinc-900/50 hover:bg-zinc-800/80 p-2 rounded-full border border-zinc-800/60 transition-colors cursor-pointer"
+                        whileTap={{ scale: 0.9 }}
+                        className="absolute top-4 right-4 z-20 text-zinc-500 hover:text-white bg-zinc-900 hover:bg-zinc-800 p-2 rounded-full transition-colors cursor-pointer border border-zinc-800"
                     >
-                        <X size={18} />
+                        <X size={16} />
                     </motion.button>
 
-                    {}
-                    <div className="flex flex-col items-center mt-4 mb-6">
-                        <div className="relative group">
-                            {}
-                            <div className={`absolute -inset-1 rounded-full bg-gradient-to-tr ${isAdmin ? 'from-indigo-500 to-purple-500' : 'from-emerald-500 to-teal-500'} opacity-75 blur-sm group-hover:opacity-100 transition duration-1000 group-hover:duration-200`} />
+                    <div className="p-6 sm:p-8 flex flex-col">
+                        
+                        {/* Header: Avatar, Name, Role */}
+                        <div className="flex flex-col items-center mb-8 relative z-10">
+                            <div className="relative group mb-4">
+                                <div className={`absolute -inset-1.5 rounded-full bg-gradient-to-tr ${isAdmin ? 'from-indigo-500 to-purple-500' : 'from-emerald-500 to-teal-500'} opacity-60 blur-md group-hover:opacity-100 transition duration-700`} />
+                                <div className="relative h-24 w-24 rounded-full overflow-hidden border-[3px] border-[#0c0c0e] bg-zinc-900">
+                                    <Image
+                                        src={user?.avatar || "/man.png"}
+                                        alt={user?.name || "User"}
+                                        fill
+                                        sizes="96px"
+                                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                    />
+                                </div>
+                            </div>
 
-                            <div className="relative h-28 w-28 rounded-full overflow-hidden border-2 border-zinc-900 bg-zinc-950">
-                                <Image
-                                    src={user?.avatar || "/man.png"}
-                                    alt={user?.name || "User"}
-                                    fill
-                                    sizes="112px"
-                                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                                />
+                            <h2 className="text-xl font-bold text-white mb-2 text-center tracking-tight">
+                                {user?.name}
+                            </h2>
+
+                            <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-[11px] font-semibold tracking-wide uppercase ${roleColor}`}>
+                                <Shield size={12} />
+                                <span>{user?.role || "User"}</span>
                             </div>
                         </div>
 
-                        <h2 className="text-2xl font-bold bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent mt-4 tracking-tight">
-                            {user?.name}
-                        </h2>
-
-                        {}
-                        <div className={`mt-2.5 inline-flex items-center gap-1.5 rounded-full border px-3.5 py-0.5 text-xs font-semibold ring-1 ${roleColor}`}>
-                            <Shield size={12} />
-                            <span className="capitalize">{user?.role || "User"}</span>
-                        </div>
-                    </div>
-
-                    {}
-                    <div className="grid grid-cols-2 gap-3 my-5">
-                        {/* Email */}
-                        <div className="col-span-2 group flex items-center gap-3 p-3 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
-                            <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-zinc-400 group-hover:text-indigo-400 transition-colors shrink-0">
-                                <Mail size={16} />
-                            </div>
-                            <div className="flex flex-col min-w-0 flex-1">
-                                <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Email Address</span>
-                                <span className="text-sm text-zinc-300 font-medium truncate">{user?.email}</span>
-                            </div>
-                        </div>
-
-                        {/* Joined On */}
-                        <div className="col-span-1 group flex items-center gap-3 p-3 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
-                            <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-zinc-400 group-hover:text-indigo-400 transition-colors shrink-0">
-                                <Calendar size={16} />
-                            </div>
-                            <div className="flex flex-col min-w-0 flex-1">
-                                <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Joined On</span>
-                                <span className="text-xs text-zinc-300 font-medium truncate">
-                                    {user?.createdAt
-                                        ? new Date(user.createdAt).toLocaleDateString("en-US", {
-                                            year: "numeric",
-                                            month: "short",
-                                            day: "numeric",
-                                        })
-                                        : "-"}
+                        {/* Quick Stats Grid */}
+                        <div className="grid grid-cols-2 gap-3 mb-6">
+                            <div className="bg-zinc-900/40 border border-zinc-800/50 rounded-2xl p-4 flex items-center justify-between transition-colors hover:bg-zinc-900/80">
+                                <div className="flex items-center gap-2">
+                                    <Users size={18} className="text-indigo-400" />
+                                    <span className="text-xs text-zinc-400 font-medium">Followers</span>
+                                </div>
+                                <span className="text-sm font-semibold text-emerald-400">
+                                    {user?.followers?.length || 10}
                                 </span>
                             </div>
-                        </div>
-
-                        {/* Followers */}
-                        <div className="col-span-1 group flex items-center gap-3 p-3 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
-                            <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-zinc-400 group-hover:text-indigo-400 transition-colors shrink-0">
-                                <Users size={16} />
-                            </div>
-                            <div className="flex flex-col min-w-0 flex-1">
-                                <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Followers</span>
-                                <span className="text-xs text-zinc-300 font-medium truncate">
-                                    {user?.followers?.length || 0} followers
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Current Plan */}
-                        <div className="col-span-1 group flex items-center gap-3 p-3 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
-                            <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-zinc-400 group-hover:text-indigo-400 transition-colors shrink-0">
-                                <CreditCard size={16} />
-                            </div>
-                            <div className="flex flex-col min-w-0 flex-1">
-                                <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Current Plan</span>
-                                <span className="text-xs text-zinc-300 font-medium capitalize truncate">
+                            <div className="bg-zinc-900/40 border border-zinc-800/50 rounded-2xl p-4 flex items-center justify-between transition-colors hover:bg-zinc-900/80">
+                                <div className="flex items-center gap-2">
+                                    <CreditCard size={18} className="text-indigo-400" />
+                                    <span className="text-xs text-zinc-400 font-medium">Plan</span>
+                                </div>
+                                <span className="text-sm font-semibold text-emerald-400 capitalize">
                                     {user?.plan?.name || "Free"}
                                 </span>
                             </div>
                         </div>
 
-                        {/* Status */}
-                        <div className="col-span-1 group flex items-center gap-3 p-3 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
-                            <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-emerald-500 shrink-0">
-                                <CheckCircle2 size={16} />
+                        {/* Details Card */}
+                        <div className="bg-zinc-900/30 border border-zinc-800/50 rounded-2xl overflow-hidden flex flex-col divide-y divide-zinc-800/50">
+                            
+                            {/* Email */}
+                            <div className="flex items-center justify-between p-4 hover:bg-zinc-900/50 transition-colors">
+                                <div className="flex items-center gap-3">
+                                    <Mail size={16} className="text-zinc-500" />
+                                    <span className="text-sm text-zinc-400">Email</span>
+                                </div>
+                                <span className="text-sm text-zinc-200 font-medium truncate max-w-[150px] sm:max-w-[180px]">
+                                    {user?.email}
+                                </span>
                             </div>
-                            <div className="flex flex-col min-w-0 flex-1">
-                                <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Status</span>
-                                <span className="text-xs text-zinc-300 font-medium truncate">Active</span>
+
+                            {/* Joined */}
+                            <div className="flex items-center justify-between p-4 hover:bg-zinc-900/50 transition-colors">
+                                <div className="flex items-center gap-3">
+                                    <Calendar size={16} className="text-zinc-500" />
+                                    <span className="text-sm text-zinc-400">Joined</span>
+                                </div>
+                                <span className="text-sm text-zinc-200 font-medium">
+                                    {user?.createdAt
+                                        ? new Date(user.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })
+                                        : "-"}
+                                </span>
+                            </div>
+
+                            {/* Status */}
+                            <div className="flex items-center justify-between p-4 hover:bg-zinc-900/50 transition-colors">
+                                <div className="flex items-center gap-3">
+                                    <CheckCircle2 size={16} className="text-zinc-500" />
+                                    <span className="text-sm text-zinc-400">Status</span>
+                                </div>
+                                <span className="text-sm text-emerald-400 font-medium bg-emerald-500/10 px-2 py-0.5 rounded-md">
+                                    Active
+                                </span>
+                            </div>
+
+                            {/* Expiry */}
+                            <div className="flex items-center justify-between p-4 hover:bg-zinc-900/50 transition-colors">
+                                <div className="flex items-center gap-3">
+                                    <CalendarClock className="text-zinc-500"/>
+                                    <span className="text-sm text-zinc-400">Plan Expires On</span>
+                                </div>
+                                <span className="text-sm text-zinc-200 font-medium">
+                                    {user?.planExpiresAt
+                                        ? new Date(user.planExpiresAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })
+                                        : "N/A"}
+                                </span>
                             </div>
                         </div>
 
-                        {/* Plan Expires At */}
-                        {user?.planExpiresAt && user.planExpiresAt !== "Null" && (
-                            <div className="col-span-2 group flex items-center gap-3 p-3 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
-                                <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-zinc-400 group-hover:text-indigo-400 transition-colors shrink-0">
-                                    <Calendar size={16} />
+                        {/* Logout Button */}
+                        <div className="mt-8">
+                            {isLoggingOut ? (
+                                <div className="w-full h-[52px] flex items-center justify-center bg-zinc-900/50 rounded-xl border border-zinc-800">
+                                    <EditorLoader size={40} border={3} />
                                 </div>
-                                <div className="flex flex-col min-w-0 flex-1">
-                                    <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Plan Expires At</span>
-                                    <span className="text-sm text-zinc-300 font-medium truncate">
-                                        {new Date(user.planExpiresAt).toLocaleDateString("en-US", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                        })}
-                                    </span>
-                                </div>
-                            </div>
-                        )}
+                            ) : (
+                                <motion.button
+                                    onClick={onLogout}
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    className="w-full h-[52px] flex items-center justify-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-xl border border-red-500/20 transition-colors font-semibold group cursor-pointer"
+                                >
+                                    <span>Sign Out</span>
+                                    <LogOut size={16} className="group-hover:translate-x-1 transition-transform" />
+                                </motion.button>
+                            )}
+                        </div>
+
                     </div>
-
-                    {}
-                    {isLoggingOut ? (
-                        <div className="w-full mt-8 flex items-center justify-center">
-                            <EditorLoader size={40} border={3} />
-                        </div>
-                    ) : (
-                        <motion.button
-                            onClick={onLogout}
-                            whileHover={{ scale: 1.01 }}
-                            whileTap={{ scale: 0.99 }}
-                            className="
-      w-full
-      mt-4
-      py-3
-      px-4
-      rounded-2xl
-      border
-      border-red-500/20
-      font-semibold
-      transition-all
-      duration-300
-      flex
-      items-center
-      justify-center
-      gap-2
-      group
-      cursor-pointer
-      bg-gradient-to-r
-      from-red-500/10
-      to-rose-600/10
-      hover:from-red-650
-      hover:to-rose-650
-      text-red-400
-      hover:text-white
-      shadow-[0_0_20px_rgba(239,68,68,0.05)]
-      hover:shadow-[0_0_25px_rgba(239,68,68,0.2)]
-    "
-                        >
-                            <div className="flex items-center gap-3">
-                                <span className="text-sm font-medium">Logout</span>
-                                <LogOut
-                                    size={18}
-                                    className="transition-transform duration-200 group-hover:translate-x-1"
-                                />
-                            </div>
-                        </motion.button>
-                    )}
-
-
-
                 </div>
             </motion.div>
         </motion.div>

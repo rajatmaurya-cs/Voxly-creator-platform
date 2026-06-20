@@ -113,7 +113,7 @@ const editorConfig = {
 
 const models = [
   { id: 'llama-3.1-8b-instant', name: 'Meta 3.2', desc: 'Fast' },
-  { id: 'groq/compound', name: 'Claude', desc: 'Advanced code & Debugging' },
+  { id: 'meta-llama/llama-4-scout-17b-16e-instruct', name: 'Claude', desc: 'Advanced code & Debugging' },
   { id: 'llama-3.3-70b-versatile', name: 'Copilot', desc: 'Advanced Math Problems' },
   { id: 'openai/gpt-oss-120b', name: 'ChatGPT 5.1', desc: 'Tough Reasoning' },
 ]
@@ -748,7 +748,7 @@ const AddBlog = () => {
                   <div className="flex-shrink-0 h-12 w-12 rounded-2xl border border-[#222733] bg-[#171b22] flex items-center justify-center p-2">
                     {model === 'llama-3.3-70b-versatile' && <Image src="/copilot.png" className="object-contain" width={32} height={32} alt="Copilot" />}
                     {model === 'llama-3.1-8b-instant' && <Image src="/meta.png" className="object-contain" width={32} height={32} alt="Meta" />}
-                    {model === 'groq/compound' && <Image src="/claude.png" className="object-contain" width={32} height={32} alt="Claude" />}
+                    {model === 'meta-llama/llama-4-scout-17b-16e-instruct' && <Image src="/claude.png" className="object-contain" width={32} height={32} alt="Claude" />}
                     {model === 'openai/gpt-oss-120b' && <Image src="/chatgpt.png" className="object-contain" width={32} height={32} alt="ChatGPT" />}
                   </div>
 

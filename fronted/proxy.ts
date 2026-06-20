@@ -1,16 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-
-
 function isTokenExpired(token: string | undefined) {
   if (!token) return true;
   try {
     const parts = token.split(".");
     if (parts.length !== 3) return true;
-    
+
     const base64Url = parts[1];
     let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    
+
     const pad = base64.length % 4;
     if (pad) {
       base64 += "=".repeat(4 - pad);
@@ -21,10 +19,10 @@ function isTokenExpired(token: string | undefined) {
         .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
         .join("")
     );
-    
+
     const payload = JSON.parse(jsonPayload);
     if (typeof payload.exp !== "number") return true;
-    
+
     return Date.now() / 1000 >= payload.exp - 5;
   } catch (err) {
     return true;
@@ -36,14 +34,14 @@ function extractCookieValue(setCookieHeaderStr: string, name: string): string | 
   const searchStr = name + "=";
   const startIdx = setCookieHeaderStr.indexOf(searchStr);
   if (startIdx === -1) return null;
-  
+
   const valueStart = startIdx + searchStr.length;
   let endIdx = setCookieHeaderStr.indexOf(";", valueStart);
   if (endIdx === -1) {
     endIdx = setCookieHeaderStr.length;
   }
-  
-  
+
+
   let value = setCookieHeaderStr.slice(valueStart, endIdx).trim();
   if (value.endsWith(",")) {
     value = value.slice(0, -1).trim();
@@ -52,21 +50,8 @@ function extractCookieValue(setCookieHeaderStr: string, name: string): string | 
 }
 
 export async function proxy(request: NextRequest) {
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+
   const isDocumentRequest = request.headers.get("sec-fetch-dest") === "document";
 
   const accessToken = request.cookies.get("accessToken")?.value;
@@ -83,9 +68,15 @@ export async function proxy(request: NextRequest) {
   });
 
   if (isAccessExpired && !refreshToken) {
-    
-    
-    
+
+     const currentTime = new Date().toLocaleTimeString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      hour12: false,
+    });
+
+
+    console.log("In Porxyt.ts Both AccessToken & RefreshToken are not found at 🚫: ", currentTime)
+
     if (!isDocumentRequest) {
       return NextResponse.next();
     }
@@ -95,7 +86,7 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
- 
+
   const isAuthRoute = request.nextUrl.pathname.startsWith("/api/auth/");
 
   if (isAccessExpired && refreshToken && !isAuthRoute) {
@@ -103,13 +94,13 @@ export async function proxy(request: NextRequest) {
 
     console.log("The AccessToken Expired & RefreshToken is presetn")
 
-     const currentTime = new Date().toLocaleTimeString("en-IN", {
+    const currentTime = new Date().toLocaleTimeString("en-IN", {
       timeZone: "Asia/Kolkata",
       hour12: false,
     });
 
 
-    console.log("The request goes for refreshAccessToken from fornted proxy.ts at: ",currentTime)
+    console.log("The request goes for refreshAccessToken from fornted proxy.ts at: ", currentTime)
 
 
     try {
@@ -123,50 +114,28 @@ export async function proxy(request: NextRequest) {
       if (res.ok) {
 
         const setCookieHeader = res.headers.get("set-cookie") || "";
-        
+
 
         const newAccessToken = extractCookieValue(setCookieHeader, "accessToken");
         const newRefreshToken = extractCookieValue(setCookieHeader, "refreshToken");
 
         console.log("\n\nTokens refreshed in middleware:");
-        
+
         console.log("\n\nNew Access Token proxy.ts 🎃 :", newAccessToken ? "Found" : "Not Found");
 
         console.log("\n\nNew Refresh Token  proxy.ts 🎃 :", newRefreshToken ? "Found" : "Not Found");
 
 
-        const requestHeaders = new Headers(request.headers);
+   
+        const response = NextResponse.redirect(request.url, 307);
 
-
-        if (newAccessToken) {
-          request.cookies.set("accessToken", newAccessToken);
-        }
-        if (newRefreshToken) {
-          request.cookies.set("refreshToken", newRefreshToken);
-        }
-
-       
-        const newCookieHeaderValue = request.cookies.getAll()
-          .map((c) => `${c.name}=${c.value}`)
-          .join("; ");
-        
-        requestHeaders.set("cookie", newCookieHeaderValue);
-
-       
-        const response = NextResponse.next({
-          request: {
-            headers: requestHeaders,
-          },
-        });
-
-    
         if (newAccessToken) {
           response.cookies.set("accessToken", newAccessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
             path: "/",
-            maxAge: 60, 
+            maxAge: 60,
           });
         }
         if (newRefreshToken) {
@@ -175,13 +144,20 @@ export async function proxy(request: NextRequest) {
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
             path: "/",
-            maxAge: 7 * 24 * 60 * 60, 
+            maxAge: 7 * 24 * 60 * 60,
           });
         }
-        console.log("Token Generated proxy.ts ✅")
+
+        const now = new Date().toLocaleTimeString("en-IN", {
+          timeZone: "Asia/Kolkata",
+          hour12: false,
+        });
+        console.log("Token Generated & Redirecting proxy.ts at: ✅", now)
+
         return response;
+
       } else {
-  
+
         const response = NextResponse.redirect(new URL("/auth/login", request.url));
         response.cookies.delete("accessToken");
         response.cookies.delete("refreshToken");
@@ -200,13 +176,11 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    
+
     "/superadmin",
     "/superadmin/:path*",
     "/admin",
     "/admin/:path*",
-    
-    // Only intercept API routes that require authentication
     "/api/ai/:path*",
     "/api/auth/me",
     "/api/auth/logout",

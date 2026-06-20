@@ -14,7 +14,7 @@ import hashToken from "../utils/hashToken.js";
 
 import { redisClient } from "../Config/redis.js";
 
-/*------------------------------------- Model Import ----------------------------------- */
+
 import User from "../Models/User.js";
 import VerifiedEmail from "../Models/VerifiedEmail.js";
 import RefreshToken from "../Models/RefreshToken.js";
@@ -24,7 +24,7 @@ import fs from "fs";
 import imageKit from "../Config/imagekit.js";
 
 
-/*-----------------------User Login / Signup / google-Login  -------------------------------- */
+
 
 export const signup = async (req, res) => {
   try {
@@ -89,7 +89,7 @@ export const signup = async (req, res) => {
       } catch (uploadError) {
         console.error("Avatar upload failed:", uploadError);
       } finally {
-        // Safe temp file cleanup
+        
 
         fs.unlink(req.file.path, (err) => {
           if (err) console.error("Error deleting temp avatar file:", err);
@@ -216,7 +216,7 @@ export const login = async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       path: "/",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000, 
     });
 
 
@@ -239,7 +239,7 @@ export const login = async (req, res) => {
         email: user.email,
         role: user.role,
         avatar: user.avatar,
-        plan: user.plan, // 👈 Populated plan object containing name, price, etc.
+        plan: user.plan, 
         createdAt: user.createdAt,
         planExpiresAt: user.planExpiresAt
       },
@@ -263,13 +263,13 @@ export const googleLogin = async (req, res) => {
   try {
 
     console.log("GoogleLogin 1")
-    // ---------------- GET CODE ----------------
+    
 
     const code = req.query.code;
 
     console.log("GoogleLogin 2 code: ", code)
 
-    // ---------------- EXCHANGE CODE FOR TOKEN ----------------
+    
 
     const { data } = await axios.post(
       "https://oauth2.googleapis.com/token",
@@ -293,7 +293,7 @@ export const googleLogin = async (req, res) => {
 
     console.log("The data we get: ",data)
 
-    // ---------------- GET GOOGLE USER ----------------
+    
 
     const { data: googleUser } = await axios.get(
       "https://www.googleapis.com/oauth2/v2/userinfo",
@@ -305,7 +305,7 @@ export const googleLogin = async (req, res) => {
     );
     
     console.log("GoogleLogin 5")
-    // ---------------- FIND USER ----------------
+    
 
     let user = await User.findOne({
       email: googleUser.email,
@@ -313,7 +313,7 @@ export const googleLogin = async (req, res) => {
 
     console.log("GoogleLogin 6")
 
-    // ---------------- CREATE USER ----------------
+    
 
     if (!user) {
 
@@ -350,16 +350,16 @@ export const googleLogin = async (req, res) => {
 
 
 
-    // ---------------- UPDATE EXISTING USER ----------------
+    
 
     else {
 
-      // update avatar if missing
+      
       if (!user.avatar && googleUser.picture) {
         user.avatar = googleUser.picture;
       }
 
-      // add GOOGLE provider if not exists
+      
       if (user.authProvider && !user.authProvider.includes("GOOGLE")) {
         user.authProvider.push("GOOGLE");
       }
@@ -371,7 +371,7 @@ export const googleLogin = async (req, res) => {
 
     console.log("GoogleLogin 8")
 
-    // ---------------- TOKENS ----------------
+    
 
     const accessToken = createAccessToken(user);
 
@@ -380,7 +380,7 @@ export const googleLogin = async (req, res) => {
 
     const refreshToken = createRefreshToken(user);
 
-    // ---------------- STORE REFRESH TOKEN ----------------
+    
 
     await RefreshToken.deleteMany({
       userId: user._id,
@@ -397,7 +397,7 @@ export const googleLogin = async (req, res) => {
 
     console.log("GoogleLogin 11")
 
-    // ---------------- COOKIES ----------------
+    
 
     res.cookie("refreshToken", refreshToken, {
 
@@ -425,7 +425,7 @@ export const googleLogin = async (req, res) => {
       maxAge: 15 * 60 * 1000,
     });
 
-    // ---------------- REDIRECT ----------------
+    
 
     console.log("GoogleLogin successFully ✅")
 
@@ -446,7 +446,7 @@ export const googleLogin = async (req, res) => {
 
 
 
-/*--------------------------- Logout & refreshAccessToken---------------------------------- */
+
 
 export const logout = async (req, res) => {
   try {
@@ -458,7 +458,7 @@ export const logout = async (req, res) => {
       await RefreshToken.deleteOne({ token: hashedToken });
     }
 
-    // Optional: blacklist access token if you want
+    
     if (accessToken) {
       const decoded = jwt.decode(accessToken);
       const expiresIn = decoded?.exp ? decoded.exp - Math.floor(Date.now() / 1000) : 0;
@@ -508,7 +508,7 @@ export const refreshAccessToken = async (req, res) => {
 
 
 
-    // Do not delete immediately
+    
     const storedToken = await RefreshToken.findOne({
       token: hashedToken,
     });
@@ -525,9 +525,9 @@ export const refreshAccessToken = async (req, res) => {
 
 
 
-    // ==============================
-    // TOKEN ALREADY USED CASE
-    // ==============================
+    
+    
+    
 
     if (storedToken.used) {
 
@@ -626,9 +626,9 @@ export const refreshAccessToken = async (req, res) => {
 
       }
 
-      // ==============================
-      // POSSIBLE TOKEN THEFT
-      // ==============================
+      
+      
+      
 
 
       console.log(
@@ -652,9 +652,9 @@ export const refreshAccessToken = async (req, res) => {
 
 
 
-    // ==============================
-    // FIRST TIME TOKEN USE
-    // ==============================
+    
+    
+    
 
 
     storedToken.used = true;
@@ -785,7 +785,7 @@ export const refreshAccessToken = async (req, res) => {
   }
 };
 
-/*------------------------------------------ OTP-----------------------------------------*/
+
 
 export const sendOtp = async (req, res) => {
   try {
@@ -810,11 +810,11 @@ export const sendOtp = async (req, res) => {
 
 export const verifyOtp = async (req, res) => {
   try {
-    // console.log("1 ✅")
+    
 
     let { email, otp, purpose } = req.body;
 
-    // console.log("2 ✅")
+    
 
     if (!email || !otp || !purpose) {
       return res.status(400).json({
@@ -823,22 +823,22 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
-    // console.log("3 ✅")
+    
 
     email = email.toLowerCase().trim();
-    purpose = purpose.toUpperCase().trim(); // e.g. SIGNUP, RESET_PASSWORD
+    purpose = purpose.toUpperCase().trim(); 
 
     const otpKey = `otp:${purpose}:${email}`;
     const attemptsKey = `otpAttempts:${purpose}:${email}`;
 
-    // console.log("4 ✅")
+    
 
-    // ✅ Get OTP from Redis (purpose-based)
+    
     console.log("The status of redisClient: ", redisClient.isOpen)
 
     const storedOtp = await redisClient.get(otpKey);
 
-    // console.log("5 ✅")
+    
 
     if (!storedOtp) {
       return res.status(400).json({
@@ -847,19 +847,19 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
-    // console.log("6 ✅")
+    
 
-    // ✅ Attempts limiter (purpose-based)
+    
     const attempts = await redisClient.incr(attemptsKey);
 
-    // console.log("7 ✅")
+    
 
 
     if (attempts === 1) {
-      await redisClient.expire(attemptsKey, 300); // 5 minutes
+      await redisClient.expire(attemptsKey, 300); 
     }
 
-    // console.log("8 ✅")
+    
 
     if (attempts > 5) {
       return res.status(429).json({
@@ -868,13 +868,13 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
-    // console.log("9 ✅")
+    
 
-    // ✅ Compare OTP
+    
     const isMatch = await bcrypt.compare(otp.toString(), storedOtp);
 
 
-    // console.log("10 ✅")
+    
 
     if (!isMatch) {
       return res.status(400).json({
@@ -883,19 +883,19 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
-    // console.log("11 ✅")
+    
 
-    // ✅ Success: delete OTP + attempts
+    
     await redisClient.del(otpKey);
     await redisClient.del(attemptsKey);
 
-    // console.log("12 ✅")
+    
 
-    /**
-     * ✅ IMPORTANT:
-     * Store verification per purpose.
-     * Otherwise "verified" for signup can wrongly allow password reset etc.
-     */
+    
+
+
+
+
 
     await VerifiedEmail.updateOne(
       { email, purpose },
@@ -903,7 +903,7 @@ export const verifyOtp = async (req, res) => {
       { upsert: true }
     );
 
-    // console.log("13 ✅")
+    
 
     return res.status(200).json({
       success: true,
@@ -920,7 +920,7 @@ export const verifyOtp = async (req, res) => {
 };
 
 
-/*---------------------------------------verifyemails------------------------------------- */
+
 export const verifyEmails = async (req, res) => {
   try {
 
@@ -955,11 +955,11 @@ export const verifyEmails = async (req, res) => {
       message: "Server error",
     });
   }
-} // VerifyEmails for refresh
+} 
 
 
 
-/*-------------------------------- Password Reset------------------------------------------- */
+
 
 export const resetpassword = async (req, res) => {
   try {
@@ -1050,12 +1050,12 @@ export const toggleFollowAuthor = async (req, res) => {
   const isFollowing = followersArray.some(id => id.toString() === currentUserId.toString());
 
   if (isFollowing) {
-    // Unfollow
+    
     await User.findByIdAndUpdate(authorId, { $pull: { followers: currentUserId } });
     await User.findByIdAndUpdate(currentUserId, { $pull: { following: authorId } });
     return res.json({ following: false });
   } else {
-    // Follow
+    
     await User.findByIdAndUpdate(authorId, { $addToSet: { followers: currentUserId } });
     await User.findByIdAndUpdate(currentUserId, { $addToSet: { following: authorId } });
     return res.json({ following: true });

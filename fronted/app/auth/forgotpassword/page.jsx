@@ -6,8 +6,8 @@ import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 
 
-// import useSendOtp from '@/app/hooks/useSendotp'
-// import useVerifyOtp from '@/app/hooks/useVeriyOtp'
+
+
 
 import useSendOtp from '@/app/hooks/useSendOtp'
 import useVerifyOtp from '@/app/hooks/useVeriyOtp'
@@ -28,10 +28,10 @@ const ForgetPassword = () => {
   const resetPasswordMutation = useMutation({
     mutationFn: async ({ email, newpassword }) => {
 
-      // const res = await API.post("/auth/reset-password", {
-      //   email,
-      //   newpassword,
-      // });
+      
+      
+      
+      
 
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
@@ -135,13 +135,13 @@ const ForgetPassword = () => {
     "
   >
 
-    {/* Background Glow */}
+    {}
 
     <div className="absolute top-[-20%] right-[-10%] h-[500px] w-[500px] rounded-full bg-[#1a1f27] blur-3xl opacity-40" />
 
     <div className="absolute bottom-[-20%] left-[-10%] h-[500px] w-[500px] rounded-full bg-[#151922] blur-3xl opacity-40" />
 
-    {/* Main Container */}
+    {}
 
     <div
       className="
@@ -158,7 +158,7 @@ const ForgetPassword = () => {
       "
     >
 
-      {/* ---------- HEADER ---------- */}
+      {}
 
       <div className="mb-8 text-center">
 
@@ -190,13 +190,13 @@ const ForgetPassword = () => {
 
       </div>
 
-      {/* ---------- FORM ---------- */}
+      {}
 
       <form onSubmit={handleResetPassword} className="space-y-5">
 
         <div className="space-y-4">
 
-          {/* EMAIL + OTP BUTTON */}
+          {}
 
           <div className="flex gap-3">
 
@@ -261,7 +261,7 @@ const ForgetPassword = () => {
 
           </div>
 
-          {/* OTP SECTION */}
+          {}
 
           {otpSent && !isVerified && (
             <div
@@ -328,7 +328,7 @@ const ForgetPassword = () => {
             </div>
           )}
 
-          {/* PASSWORD SECTION */}
+          {}
 
           {isVerified && (
             <div className="space-y-4 animate-in fade-in duration-500">
@@ -391,7 +391,7 @@ const ForgetPassword = () => {
 
       </form>
 
-      {/* ---------- FOOTER ---------- */}
+      {}
 
       <div
         className="

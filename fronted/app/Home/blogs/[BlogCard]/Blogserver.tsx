@@ -48,7 +48,7 @@ const Blogserver = async ({ Id }: BlogServerProps) => {
   `${process.env.NEXT_PUBLIC_API_URL}/blog/blogbyid/${Id}?blogId=${Id}`,
   {
     next: {
-      revalidate: 300, // 5 minutes
+      revalidate: 300, 
     },
   }
 );

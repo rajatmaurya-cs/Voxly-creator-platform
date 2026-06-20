@@ -46,7 +46,7 @@ export default function InfoLayout({
         });
       },
       {
-        rootMargin: "-20% 0px -60% 0px", // triggers when section is in the middle of the viewport
+        rootMargin: "-20% 0px -60% 0px", 
       }
     );
 
@@ -62,7 +62,7 @@ export default function InfoLayout({
     setActiveId(id);
     const element = document.getElementById(id);
     if (element) {
-      const offset = 100; // Offset for sticky navbar
+      const offset = 100; 
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -81,14 +81,14 @@ export default function InfoLayout({
 
       <main className="flex-grow pt-28 pb-20">
         <div className="max-w-7xl mx-auto px-6">
-          {/* Tag */}
+          {}
           <div className="inline-block mb-4">
             <span className="px-3.5 py-1 rounded-full border border-zinc-800/80 bg-zinc-900/30 text-indigo-400 text-xs font-bold uppercase tracking-wider">
               {tag}
             </span>
           </div>
 
-          {/* Title & Description */}
+          {}
           <div className="max-w-3xl mb-8">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-100">
               {titleNormal}{" "}
@@ -99,7 +99,7 @@ export default function InfoLayout({
             </p>
           </div>
 
-          {/* Metadata Badges */}
+          {}
           <div className="flex flex-wrap gap-3 mb-12">
             {metaBadges.map((badge, idx) => {
               const Icon = badge.icon;
@@ -115,9 +115,9 @@ export default function InfoLayout({
             })}
           </div>
 
-          {/* Grid Layout */}
+          {}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            {/* Left Column: Navigation Sidebar */}
+            {}
             <aside className="lg:col-span-4">
               <div className="lg:sticky lg:top-24 bg-zinc-950/40 border border-zinc-900 rounded-2xl p-5 backdrop-blur-sm">
                 <h3 className="text-xs font-bold text-zinc-500 tracking-widest uppercase mb-4">
@@ -151,7 +151,7 @@ export default function InfoLayout({
               </div>
             </aside>
 
-            {/* Right Column: Main Content */}
+            {}
             <section className="lg:col-span-8 space-y-12">
               {sections.map((sec) => (
                 <article

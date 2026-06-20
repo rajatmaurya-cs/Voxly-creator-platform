@@ -3,7 +3,7 @@ import Config from "../Models/Config.js";
 import { redisClient } from "../Config/redis.js";
 
 const KEY = "app:config:v1";
-const TTL = 300; // 5 minutes
+const TTL = 300; 
 
 export default  async function getConfigCached() {
 

@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import { AuthContext } from "@/app/ContextProvider/AuthProvider";
 import EditorLoader from "@/app/Animations/EditorLoader";
-// ---------------- TYPES ----------------
+
 
 type User = {
   id: string;
@@ -24,7 +24,7 @@ type LoginResponse = {
   user: User;
 };
 
-// ---------------- COMPONENT ----------------
+
 
 export default function LoginPage() {
 
@@ -35,7 +35,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  // ---------------- LOGIN API ----------------
+  
 
   const loginMutation = useMutation<
     LoginResponse,
@@ -90,7 +90,7 @@ export default function LoginPage() {
     },
   });
 
-  // ---------------- HANDLERS ----------------
+  
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
 
@@ -112,7 +112,7 @@ export default function LoginPage() {
     window.location.href = `/api/auth/google`;
   }
 
-  // ---------------- UI ----------------
+  
 
   return (
 
@@ -137,17 +137,17 @@ export default function LoginPage() {
       "
         >
 
-          {/* ambient glow */}
+          {}
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_55%)]" />
 
           <div className="relative">
 
-            {/* ---------- HEADER ---------- */}
+            {}
 
             <div className="mb-9">
               <div className="flex flex-col items-center gap-3">
 
-                {/* Logo + Brand */}
+                {}
                 <div className="flex items-center ">
                   <div className="relative w-25 h-25 shrink-0">
                     <Image
@@ -173,11 +173,11 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* ---------- FORM ---------- */}
+            {}
 
             <form onSubmit={handleLogin} className="space-y-5">
 
-              {/* EMAIL */}
+              {}
 
               <div className="space-y-2">
 
@@ -211,7 +211,7 @@ export default function LoginPage() {
                 />
               </div>
 
-              {/* PASSWORD */}
+              {}
 
               <div className="space-y-2">
 
@@ -245,7 +245,7 @@ export default function LoginPage() {
                 />
               </div>
 
-              {/* FORGOT PASSWORD */}
+              {}
 
               <div className="flex justify-end pt-1">
 
@@ -266,7 +266,7 @@ export default function LoginPage() {
 
               </div>
 
-              {/* LOGIN BUTTON */}
+              {}
 
               <button
                 type="submit"
@@ -299,7 +299,7 @@ export default function LoginPage() {
 
             </form>
 
-            {/* ---------- DIVIDER ---------- */}
+            {}
 
             <div className="relative my-8">
 
@@ -329,7 +329,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* ---------- GOOGLE LOGIN ---------- */}
+            {}
 
             <button
               type="button"
@@ -404,7 +404,7 @@ export default function LoginPage() {
               </div>
             </button>
 
-            {/* ---------- SIGNUP ---------- */}
+            {}
 
             <p className="mt-8 text-center text-sm text-[#7c8393]">
 

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Helper to check if a JWT token is expired
+
 function isTokenExpired(token: string | undefined) {
   if (!token) return true;
   try {
@@ -10,7 +10,7 @@ function isTokenExpired(token: string | undefined) {
     
     const base64Url = parts[1];
     let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    // Add base64 padding if missing to prevent decoding failure in Edge/Vercel environments
+    
     const pad = base64.length % 4;
     if (pad) {
       base64 += "=".repeat(4 - pad);
@@ -31,7 +31,7 @@ function isTokenExpired(token: string | undefined) {
   }
 }
 
-// Safely extracts a specific cookie value from a combined Set-Cookie header string
+
 function extractCookieValue(setCookieHeaderStr: string, name: string): string | null {
   const searchStr = name + "=";
   const startIdx = setCookieHeaderStr.indexOf(searchStr);
@@ -43,7 +43,7 @@ function extractCookieValue(setCookieHeaderStr: string, name: string): string | 
     endIdx = setCookieHeaderStr.length;
   }
   
-  // Clean up any trailing commas that might separate multiple cookies
+  
   let value = setCookieHeaderStr.slice(valueStart, endIdx).trim();
   if (value.endsWith(",")) {
     value = value.slice(0, -1).trim();
@@ -52,21 +52,21 @@ function extractCookieValue(setCookieHeaderStr: string, name: string): string | 
 }
 
 export async function proxy(request: NextRequest) {
-  // ---------------------------------------------------------------------------
-  // CRITICAL FIX: Detect whether this is a full-page browser navigation 
-  // (typing URL / hard refresh) vs a Next.js client-side RSC request 
-  // (Link click / prefetch).
-  //
-  // WHY: Next.js App Router treats routes with <Suspense> as having a "static 
-  // shell" (Partial Prerendering). For these routes, the client router sends 
-  // RSC fetch requests WITHOUT cookies (sec-fetch-dest: "empty"). If middleware 
-  // redirects these cookieless requests, the client router CACHES the redirect 
-  // and breaks all subsequent navigations to that route.
-  //
-  // FIX: Only redirect to login for full-page document requests (browser 
-  // address bar navigation). For RSC requests without cookies, pass through — 
-  // the client-side AuthProvider handles auth for those routes.
-  // ---------------------------------------------------------------------------
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   const isDocumentRequest = request.headers.get("sec-fetch-dest") === "document";
 
   const accessToken = request.cookies.get("accessToken")?.value;
@@ -83,9 +83,9 @@ export async function proxy(request: NextRequest) {
   });
 
   if (isAccessExpired && !refreshToken) {
-    // Only redirect full-page navigations (browser address bar / hard refresh).
-    // RSC/prefetch requests without cookies MUST pass through to avoid poisoning
-    // the Next.js client router cache with a cached redirect.
+    
+    
+    
     if (!isDocumentRequest) {
       return NextResponse.next();
     }
@@ -151,7 +151,7 @@ export async function proxy(request: NextRequest) {
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
             path: "/",
-            maxAge: 60 * 1000  , // 15 minutes (in seconds)
+            maxAge: 60 * 1000  , 
           });
         }
         if (newRefreshToken) {
@@ -160,7 +160,7 @@ export async function proxy(request: NextRequest) {
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
             path: "/",
-            maxAge: 7 * 24 * 60 * 60, // 7 days (in seconds)
+            maxAge: 7 * 24 * 60 * 60, 
           });
         }
 

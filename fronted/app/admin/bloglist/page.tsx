@@ -24,7 +24,7 @@ const Page = () => {
   const [togglingBlogId, setTogglingBlogId] = useState<string | null>(null);
 
   const queryClient = useQueryClient();
-  const LIMIT: number = 2; // Increased limit for a more professional dashboard view
+  const LIMIT: number = 2; 
 
   const {
     data,
@@ -145,7 +145,7 @@ const Page = () => {
   <div className="min-h-screen bg-[#0b0d11] text-[#f3f4f6] px-6 py-12 font-sans antialiased selection:bg-[#1d2430] selection:text-white">
   <div className="max-w-5xl mx-auto">
 
-    {/* DASHBOARD HEADER */}
+    {}
     <div className="mb-10 flex flex-col gap-4 border-b border-[#1b1f27] pb-8 sm:flex-row sm:items-center sm:justify-between">
       
       <div>
@@ -169,7 +169,7 @@ const Page = () => {
       </div>
     </div>
 
-    {/* PUBLICATIONS LIST CONTAINER */}
+    {}
     <div className="space-y-4">
       {blogs.length === 0 ? (
         <div className="rounded-xl border border-dashed border-[#222733] bg-[#11141a] py-16 text-center">
@@ -208,13 +208,13 @@ const Page = () => {
               "
             >
 
-              {/* subtle hover glow */}
+              {}
               <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.03),transparent_60%)]" />
 
-              {/* WORKSPACE METADATA & CONTENT ROW */}
+              {}
               <div className="relative min-w-0 flex-1 space-y-3.5">
 
-                {/* STATUS PILLS */}
+                {}
                 <div className="flex items-center gap-2">
                   <span
                     className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] ${
@@ -237,7 +237,7 @@ const Page = () => {
                   </span>
                 </div>
 
-                {/* TEXT LOGS */}
+                {}
                 <div className="space-y-1">
                   <h2 className="break-words text-lg font-medium tracking-tight text-white transition-colors duration-200 group-hover:text-white">
                     {blog.title}
@@ -250,10 +250,10 @@ const Page = () => {
                   )}
                 </div>
 
-                {/* METADATA PLATFORM BAR */}
+                {}
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1 text-xs font-medium text-[#7c8393]">
 
-                  {/* TIMESTAMP */}
+                  {}
                   <div className="flex items-center gap-1.5">
                     <CalendarDays className="h-3.5 w-3.5 text-[#6b7280]" />
 
@@ -273,7 +273,7 @@ const Page = () => {
 
                   <span className="hidden text-[#2a313d] sm:inline">•</span>
 
-                  {/* MODERATOR TAG */}
+                  {}
                   <div className="flex items-center gap-2">
                     <div className="flex h-5 w-5 items-center justify-center rounded-full border border-[#2a313d] bg-[#171b22] text-[#c2c8d3]">
                       <UserRound className="h-2.5 w-2.5" />
@@ -288,10 +288,10 @@ const Page = () => {
                 </div>
               </div>
 
-              {/* ACTION MODULE SYSTEM */}
+              {}
               <div className="flex shrink-0 items-center gap-2 border-t border-[#1b1f27] pt-4 md:border-t-0 md:pt-0 sm:self-end md:self-start lg:self-center">
 
-                {/* TOGGLE WORKSPACE STATUS */}
+                {}
                 <button
                   disabled={isDisabled}
                   onClick={() => handletoggle(blog._id)}
@@ -330,7 +330,7 @@ const Page = () => {
                   )}
                 </button>
 
-                {/* DELETE BUTTON */}
+                {}
                 <button
                   onClick={() => handledelete(blog._id)}
                   disabled={isDisabled}
@@ -369,7 +369,7 @@ const Page = () => {
       )}
     </div>
 
-    {/* PAGINATION MODULE BUTTON */}
+    {}
     {hasNextPage && (
       <div className="mt-8 flex justify-center border-t border-[#1b1f27] pt-8">
 

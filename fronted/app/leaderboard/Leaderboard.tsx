@@ -51,7 +51,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
       <div className="max-w-4xl mx-auto">
 
 
-        {/* HEADER */}
+        {}
         <div className="text-center mb-12">
 
           <div className="inline-block mb-3">
@@ -82,7 +82,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
 
 
 
-        {/* TOP THREE */}
+        {}
 
         {topThree.length > 0 && (
 
@@ -94,7 +94,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
           ">
 
 
-            {/* SECOND */}
+            {}
 
             {topThree[1] && (
 
@@ -150,7 +150,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
 
 
 
-            {/* FIRST */}
+            {}
 
 
             {topThree[0] && (
@@ -211,7 +211,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
 
 
 
-            {/* THIRD */}
+            {}
 
             {topThree[2] && (
 
@@ -280,7 +280,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
 
 
 
-        {/* REMAINING USERS */}
+        {}
 
         <div className="flex flex-col gap-3">
 

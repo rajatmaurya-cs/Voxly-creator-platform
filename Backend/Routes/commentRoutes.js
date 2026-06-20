@@ -5,28 +5,28 @@ import adminMiddleware from '../Middleware/adminMiddleware.js';
 
 const commentRouter = express.Router();
 
-/* ================= Add Comment ================= */
+
 commentRouter.post('/addcomment' ,authMiddleware,addComment)
 
-/* ================= Get CommentById ================= */
+
 commentRouter.get('/allcomment/:blogId', getCommentsByBlogId)
 
 
-/* ================= Get AllComments ================= */
+
 commentRouter.get('/comments' , (req,res,next)=>{
     console.log("Request goes from /comments commentsrouter")
     next()
 },authMiddleware,getAllComments)
 
 
-/* ================= toggleComments ================= */
-// commentRouter.post('/toggle-comment' , authMiddleware , adminMiddleware , toggleComment )
+
+
 
 commentRouter.post('/toggle-comment' , toggleComment )
 
 
-/* ================= removeComment ================= */
-// commentRouter.post('/removecomment' , authMiddleware , adminMiddleware , removecomment)
+
+
 
 commentRouter.post('/removecomment' , removecomment)
 

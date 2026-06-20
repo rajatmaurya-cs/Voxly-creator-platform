@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 
 
-/*------------------Access Token  Used for API authorization----------------------*/
+
 
 function createAccessToken(user) {
   
@@ -22,14 +22,14 @@ function createAccessToken(user) {
 }
 
 
-/*-------------------Refresh Token Use Only to Generate New access toKen----------------------*/
+
 
 function createRefreshToken(user) {
   return jwt.sign(
 
     { 
       id: user._id,
-      jti: crypto.randomUUID() // Ensures every generated token has a unique signature
+      jti: crypto.randomUUID() 
     },
 
     process.env.REFRESH_TOKEN_SECRET,
@@ -40,11 +40,11 @@ function createRefreshToken(user) {
   );
 }
 
-/*----------------validateAccessToken--------------------------- */
+
 
 function validateAccessToken(token) {
 
-// header.payload.signature
+
 
   return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET); 
 

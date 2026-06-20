@@ -44,7 +44,7 @@ const commentSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-// ⭐️
+
 commentSchema.index({
   blogId: 1,
   isApproved: 1,

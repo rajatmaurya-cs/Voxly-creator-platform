@@ -6,9 +6,9 @@ import toast from "react-hot-toast";
 import EditorLoader from "@/app/Animations/EditorLoader";
 import LoadingAiConfig from "./loading-aiconfig";
 
-/* =========================
-   TYPES
-========================= */
+
+
+
 
 type AIConfig = {
   aiEnabled: boolean;
@@ -35,9 +35,9 @@ type APIResponse<T> = {
   history?: ConfigHistoryItem[];
 };
 
-/* =========================
-   COMPONENT
-========================= */
+
+
+
 
 const AIConfigDashboard = () => {
   const queryClient = useQueryClient();
@@ -45,9 +45,9 @@ const AIConfigDashboard = () => {
   const [editedConfig, setEditedConfig] = useState<AIConfig | null>(null);
   const [showHistory, setShowHistory] = useState<boolean>(false);
 
-  /* =========================
-     FETCH CONFIG
-  ========================= */
+  
+
+
 
   const fetchAIConfig = async (): Promise<AIConfig> => {
     const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL}/ai/config/config-dashboard`, {
@@ -77,9 +77,9 @@ const AIConfigDashboard = () => {
     retry: 1,
   });
 
-  /* =========================
-     FETCH HISTORY
-  ========================= */
+  
+
+
 
   const fetchAIConfigHistory = async (): Promise<ConfigHistoryItem[]> => {
     const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL}/ai/config/getConfigHistory`, {
@@ -110,9 +110,9 @@ const AIConfigDashboard = () => {
     retry: 1,
   });
 
-  /* =========================
-     INIT STATE
-  ========================= */
+  
+
+
 
   useEffect(() => {
     if (currentConfig) {
@@ -120,9 +120,9 @@ const AIConfigDashboard = () => {
     }
   }, [currentConfig]);
 
-  /* =========================
-     MUTATION
-  ========================= */
+  
+
+
 
   const updateMutation = useMutation<
     APIResponse<AIConfig>,
@@ -173,9 +173,9 @@ const AIConfigDashboard = () => {
 
   const disableAll = saving || configFetching || historyFetching;
 
-  /* =========================
-     SAVE HANDLER
-  ========================= */
+  
+
+
 
   const handleSave = () => {
     if (!editedConfig) return;
@@ -190,9 +190,9 @@ const AIConfigDashboard = () => {
     updateMutation.mutate(payload);
   };
 
-  /* =========================
-     ERROR STATE
-  ========================= */
+  
+
+
 
   if (configError) {
     return (
@@ -202,17 +202,17 @@ const AIConfigDashboard = () => {
     );
   }
 
-  /* =========================
-     LOADING STATE
-  ========================= */
+  
+
+
 
   if (configLoading || !editedConfig) {
     return <LoadingAiConfig />;
   }
 
-  /* =========================
-     UI (UNCHANGED)
-  ========================= */
+  
+
+
 
   return (
     <div className="p-4 sm:p-8 animate-in fade-in duration-500 h-full overflow-y-auto">
@@ -278,7 +278,7 @@ const AIConfigDashboard = () => {
           </div>
         </div>
 
-        {/* Global Rate Limit */}
+        {}
         <div 
           className="bg-zinc-50 rounded-xl border p-8"
           style={{ borderColor: "#e4e4e7" }}
@@ -313,7 +313,7 @@ const AIConfigDashboard = () => {
           />
         </div>
 
-        {/* Per-Minute Limit */}
+        {}
         <div 
           className="bg-zinc-50 rounded-xl border p-8"
           style={{ borderColor: "#e4e4e7" }}

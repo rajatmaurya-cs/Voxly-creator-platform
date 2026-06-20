@@ -28,7 +28,7 @@ type PlanHistoryItem = {
   changeReason?: string;
 };
 
-// ---------------- API FUNCTIONS ----------------
+
 
 async function getPlans(): Promise<Plan[]> {
   const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL}/plan/getplans`);
@@ -146,7 +146,7 @@ export default function AdminPlans() {
 
   return (
     <div className="p-4 sm:p-8 max-w-6xl mx-auto space-y-8 animate-in fade-in duration-350">
-      {/* Header */}
+      {}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-zinc-100 pb-5">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900">Manage Plans</h1>
@@ -156,9 +156,9 @@ export default function AdminPlans() {
         </div>
       </div>
 
-      {/* Main Grid */}
+      {}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Section: Plan Cards (Col span 2) */}
+        {}
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Select a Plan to edit</h2>
@@ -222,7 +222,7 @@ export default function AdminPlans() {
           </div>
         </div>
 
-        {/* Right Section: Edit Form / Selection Prompt (Col span 1) */}
+        {}
         <div className="lg:col-span-1">
           {selectedPlan ? (
             <div className="border border-zinc-250 rounded-2xl p-6 bg-white shadow-sm space-y-6 animate-in slide-in-from-right-4 duration-300">
@@ -238,7 +238,7 @@ export default function AdminPlans() {
               </div>
 
               <div className="space-y-4">
-                {/* Price input */}
+                {}
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-zinc-600 uppercase tracking-wide flex items-center justify-between">
                     <span>Price (USD / mo)</span>
@@ -267,7 +267,7 @@ export default function AdminPlans() {
                   </div>
                 </div>
 
-                {/* AI Generation limit */}
+                {}
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-zinc-600 uppercase tracking-wide flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-zinc-400" />
@@ -294,7 +294,7 @@ export default function AdminPlans() {
                   />
                 </div>
 
-                {/* AI Summarizer limit */}
+                {}
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-zinc-600 uppercase tracking-wide flex items-center gap-1.5">
                     <Sliders className="w-3.5 h-3.5 text-zinc-400" />
@@ -322,7 +322,7 @@ export default function AdminPlans() {
                 </div>
               </div>
 
-              {/* Form Actions */}
+              {}
               <div className="flex gap-3 pt-2">
                 <button
                   onClick={() => setSelectedPlan(null)}
@@ -365,7 +365,7 @@ export default function AdminPlans() {
         </div>
       </div>
 
-      {/* Config Mutability Log */}
+      {}
       <div className="border-t border-zinc-200 pt-8 mt-12">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
           <div>

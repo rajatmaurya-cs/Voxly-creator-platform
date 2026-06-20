@@ -7,7 +7,7 @@ const NavbarSkeleton = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         
-        {/* Logo (same structure as Navbar to prevent layout shift) */}
+        {}
         <Link
           href="/"
           className="flex items-center gap-3 transition-opacity hover:opacity-90 group z-50"
@@ -29,9 +29,9 @@ const NavbarSkeleton = () => {
           </span>
         </Link>
 
-        {/* Desktop Navigation Skeleton */}
+        {}
         <div className="hidden md:flex items-center gap-4">
-          {/* Sign In Placeholder */}
+          {}
           <button
             className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-650 animate-pulse mr-2 animate-pulse"
             disabled
@@ -40,7 +40,7 @@ const NavbarSkeleton = () => {
             <div className="h-4 bg-zinc-800 rounded animate-pulse w-12" />
           </button>
 
-          {/* Admin */}
+          {}
           <button
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg
               bg-zinc-900/60 border border-zinc-800 text-sm font-medium text-zinc-650
@@ -51,7 +51,7 @@ const NavbarSkeleton = () => {
             <div className="h-4 bg-zinc-800 rounded animate-pulse w-12" />
           </button>
 
-          {/* Price */}
+          {}
           <button
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg
               bg-zinc-900/60 border border-zinc-800 text-sm font-medium text-zinc-650
@@ -62,7 +62,7 @@ const NavbarSkeleton = () => {
             <div className="h-4 bg-zinc-800 rounded animate-pulse w-10" />
           </button>
 
-          {/* LeaderBoard */}
+          {}
           <button
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg
               bg-zinc-900/60 border border-zinc-800 text-sm font-medium text-zinc-650
@@ -74,7 +74,7 @@ const NavbarSkeleton = () => {
           </button>
         </div>
 
-        {/* Mobile Menu Button Skeleton */}
+        {}
         <div className="flex md:hidden items-center gap-3">
           <div className="w-9 h-9 rounded-lg bg-zinc-900/60 border border-zinc-800 flex items-center justify-center animate-pulse">
             <div className="w-5 h-5 rounded-full bg-zinc-800 animate-pulse" />

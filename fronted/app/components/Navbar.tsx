@@ -75,20 +75,20 @@ const Navbar = () => {
   });
 
 
-  // Show skeleton while auth state is resolving — but DON'T navigate
-  // until authloading is confirmed false. This prevents the Admin onClick
-  // from firing while loggedIn is still in its initial `false` state.
+  
+  
+  
   if (authloading) { return <NavbarSkeleton /> }
 
-  // navLinks defined with a factory so loggedIn is read at click time,
-  // NOT captured as a stale closure at render time.
+  
+  
   const navLinks = [
     {
       href: "/admin",
       label: "Admin",
       icon: <LayoutGrid size={20} className="text-indigo-400" />,
       onClick: (e: any) => {
-        // Read loggedIn at the moment of click — not from a stale closure
+        
         if (!loggedIn) {
           e.preventDefault();
           toast.error("Login First");
@@ -114,7 +114,7 @@ const Navbar = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
-          {/* Logo */}
+          {}
           <Link
             href="/"
             className="flex items-center transition-opacity hover:opacity-90 group z-50"
@@ -139,7 +139,7 @@ const Navbar = () => {
 
           
 
-          {/* Desktop Navigation */}
+          {}
           <div className="hidden md:flex items-center gap-4">
             {!loggedIn && (
               <Link
@@ -193,7 +193,7 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {}
           <div className="flex md:hidden items-center gap-3">
             {loggedIn && (
               <button
@@ -215,7 +215,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile Drawer Overlay */}
+      {}
       <AnimatePresence>
         {isOpen && (
           <motion.div

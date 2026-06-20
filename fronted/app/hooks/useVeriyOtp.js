@@ -13,11 +13,11 @@ export default function useVerifyOtp(purpose) {
   const mutation = useMutation({
     mutationFn: async ({ email, otp }) => {
 
-      //   const res = await API.post("/auth/verifyotp", {
-      //     email,
-      //     otp,
-      //     purpose, 
-      //   });
+      
+      
+      
+      
+      
 
       const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/verifyotp`,

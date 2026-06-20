@@ -167,11 +167,11 @@ const isCreating = signupMutation.isPending;
 return (
   <div className="min-h-screen bg-[#0b0d11] text-[#f3f4f6] relative overflow-hidden flex items-center justify-center px-4 py-10">
 
-    {/* BACKGROUND GLOW */}
+    {}
     <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#3b82f6]/10 blur-[140px] rounded-full pointer-events-none"></div>
     <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#8b5cf6]/10 blur-[140px] rounded-full pointer-events-none"></div>
 
-    {/* CARD */}
+    {}
     <div
       className="
         relative
@@ -189,10 +189,10 @@ return (
       "
     >
 
-      {/* HEADER */}
+      {}
       <div className="text-center space-y-3 mb-8">
 
-        {/* Logo + Brand */}
+        {}
         <div className="flex items-center justify-center  mb-4">
           <div className="relative w-25 h-25 shrink-0">
             <Image
@@ -227,13 +227,13 @@ return (
         </p>
       </div>
 
-      {/* FORM */}
+      {}
       <form
         onSubmit={handleSignup}
         className="flex flex-col gap-5"
       >
 
-        {/* AVATAR UPLOAD */}
+        {}
         {isVerified && (
           <div className="flex flex-col items-center justify-center gap-3 my-2">
             <div className="relative group">
@@ -261,7 +261,7 @@ return (
           </div>
         )}
 
-        {/* FULL NAME */}
+        {}
         {isVerified && (
           <div className="relative group">
 
@@ -304,7 +304,7 @@ return (
           </div>
         )}
 
-        {/* EMAIL + OTP */}
+        {}
         <div className="flex gap-3">
 
           <div className="relative group flex-1">
@@ -387,7 +387,7 @@ return (
           )}
         </div>
 
-        {/* PASSWORD */}
+        {}
         {isVerified && (
           <div className="relative group">
 
@@ -430,7 +430,7 @@ return (
           </div>
         )}
 
-        {/* CREATE ACCOUNT */}
+        {}
         {isVerified && (
           <button
             type="submit"
@@ -454,7 +454,7 @@ return (
         )}
       </form>
 
-      {/* OTP BOX */}
+      {}
       {otpSent && (
         <div
           className="
@@ -518,7 +518,7 @@ return (
         </div>
       )}
 
-      {/* DIVIDER */}
+      {}
       <div className="relative my-8">
 
         <div className="absolute inset-0 flex items-center">
@@ -541,7 +541,7 @@ return (
         </div>
       </div>
 
-      {/* GOOGLE BUTTON */}
+      {}
       <button
         type="button"
         onClick={() => {
@@ -577,7 +577,7 @@ return (
         <span>Continue with Google</span>
       </button>
 
-      {/* FOOTER */}
+      {}
       <p className="text-center text-[#8b90a0] mt-8 text-sm">
         Already have an account?{" "}
 
@@ -595,7 +595,7 @@ return (
         </span>
       </p>
 
-      {/* POWERED BY */}
+      {}
       <div className="mt-8 pt-6 border-t border-[#1b1f27] text-center">
         <p
           className="

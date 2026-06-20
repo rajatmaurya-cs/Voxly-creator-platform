@@ -58,7 +58,7 @@ const Sidebar = () => {
   return (
    <aside className="flex h-screen w-72 flex-col border-r border-zinc-800 bg-[#0a0a0a] px-5 py-6 text-white">
 
-      {/* LOGO */}
+      {}
       <div className="mb-10">
 
         <div className="flex items-center">
@@ -86,7 +86,7 @@ const Sidebar = () => {
 
       </div>
 
-      {/* NAVIGATION */}
+      {}
       <nav className="flex flex-col gap-3">
 
         {navItems.map((item) => {
@@ -108,14 +108,14 @@ const Sidebar = () => {
               )}
             >
 
-              {/* HOVER GLOW */}
+              {}
               <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                 <div className="absolute right-0 top-0 h-20 w-20 rounded-full bg-white/5 blur-2xl" />
               </div>
 
               <div className="relative z-10 flex items-center gap-4">
 
-                {/* ICON */}
+                {}
                 <div
                   className={clsx(
                     'flex h-11 w-11 items-center justify-center rounded-xl border transition-all duration-300',
@@ -138,7 +138,7 @@ const Sidebar = () => {
 
                 </div>
 
-                {/* TEXT */}
+                {}
                 <div className="flex flex-col">
 
                   <span
@@ -175,13 +175,13 @@ const Sidebar = () => {
 
       </nav>
 
-      {/* FOOTER */}
+      {}
      <div className="mt-auto">
   <div className="rounded-3xl border border-zinc-800 bg-gradient-to-b from-zinc-900 to-zinc-950 p-5 shadow-xl">
 
     <div className="mb-4 flex items-center gap-3">
 
-      {/* Avatar */}
+      {}
       <div className="h-11 w-11 rounded-full p-[2px] bg-white/80">
         {user?.avatar ? (
           <Image
@@ -198,7 +198,7 @@ const Sidebar = () => {
         )}
       </div>
 
-      {/* Text */}
+      {}
       <div>
         <h3 className="text-sm font-semibold text-white">
           {user?.name}

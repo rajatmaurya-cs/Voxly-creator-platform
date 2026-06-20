@@ -5,47 +5,47 @@ import User from "../Models/User.js";
 
 export const getDashboardStats = async (req, res) => {
   try {
-    // console.log("1  🚫")
-    // console.log("Inside dashboard");
-    // console.log("User:", req.user);
+    
+    
+    
 
     const { name, id } = req.user;
 
-    // console.log("1  🚫")
+    
 
-    // console.log("User Name:", name);
-    // console.log("User ID:", id);
+    
+    
 
-    // console.log("3  🚫")
+    
 
-    // Find all blogs of current user
+    
     const blogs = await Blog.find({ createdBy: id });
 
-    // console.log("4  🚫")
+    
 
-    // Extract blog ids
+    
     const blogIds = blogs.map((blog) => blog._id);
 
-    // console.log("5  🚫")
+    
 
-    // Find comments on user's blogs
+    
     const comments = await Comment.find({
       blogId: { $in: blogIds },
     });
 
 
-    // console.log("6  🚫")
+    
 
-    // Count drafts
+    
     const draftBlogs = await Blog.countDocuments({
       createdBy: id,
       isPublished: false,
     });
 
-    // Calculate total likes on user's blogs
+    
     const totalLikes = blogs.reduce((sum, blog) => sum + (blog.likes?.length || 0), 0);
 
-    // Fetch user profile to get total followers
+    
     const userFromDb = await User.findById(id);
     
     const totalFollowers = userFromDb?.followers?.length || 0;
@@ -61,7 +61,7 @@ export const getDashboardStats = async (req, res) => {
       },
     });
 
-    // console.log("7  🚫")
+    
 
   } catch (err) {
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { BlogGridSkeleton } from "./loading-skeleton";
 
-// Default Full-Page Loader for Next.js Route Loading
+
 export default function Loading() {
   return (
     <section className="min-h-screen bg-[#050816] text-white font-sans antialiased">
@@ -9,7 +9,7 @@ export default function Loading() {
       <div className="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:px-8">
 
 
-        {/* HEADER */}
+        {}
         <div className="mb-10 flex flex-col gap-6">
 
 
@@ -32,7 +32,7 @@ export default function Loading() {
 
 
 
-          {/* SEARCH BAR SKELETON */}
+          {}
           <div className="relative mx-auto w-full max-w-lg">
 
             <div
@@ -53,7 +53,7 @@ export default function Loading() {
 
 
 
-        {/* CATEGORY FILTER SKELETON */}
+        {}
         <div className="mb-10 flex flex-wrap justify-center gap-3 animate-pulse">
 
           {[...Array(6)].map((_, i) => (
@@ -78,7 +78,7 @@ export default function Loading() {
 
 
 
-        {/* BLOG GRID SKELETON */}
+        {}
         <BlogGridSkeleton />
 
 

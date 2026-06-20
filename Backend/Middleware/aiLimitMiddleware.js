@@ -25,9 +25,9 @@ const checkAiLimit = (type) => {
         });
       }
 
-      // ----------------------------
-      // Per-minute rate limit
-      // ----------------------------
+      
+      
+      
 
       const perMinute = Number(
         config.aiPerMinuteLimit
@@ -51,9 +51,9 @@ const checkAiLimit = (type) => {
         });
       }
 
-      // ----------------------------
-      // Global daily limit
-      // ----------------------------
+      
+      
+      
 
       const dailyAppLimit = Number(
         config.dailyappLimit
@@ -101,17 +101,17 @@ const checkAiLimit = (type) => {
         });
       }
 
-      // ----------------------------
-      // Admin bypass
-      // ----------------------------
+      
+      
+      
 
       if (role === "ADMIN") {
         return next();
       }
 
-      // ----------------------------
-      // User + Plan
-      // ----------------------------
+      
+      
+      
 
       const user = await User.findById(userId)
         .populate("plan");
@@ -134,9 +134,9 @@ const checkAiLimit = (type) => {
         });
       }
 
-      // ----------------------------
-      // Reset Usage Every 12 Hours
-      // ----------------------------
+      
+      
+      
 
       const twelveHours =
         12 * 60 * 60 * 1000;
@@ -152,9 +152,9 @@ const checkAiLimit = (type) => {
         await usage.save();
       }
 
-      // ----------------------------
-      // Generation Limit
-      // ----------------------------
+      
+      
+      
 
       if (type === "generation") {
         const limit =
@@ -171,9 +171,9 @@ const checkAiLimit = (type) => {
         }
       }
 
-      // ----------------------------
-      // Summarizer Limit
-      // ----------------------------
+      
+      
+      
 
       if (type === "summarizer") {
         const limit =

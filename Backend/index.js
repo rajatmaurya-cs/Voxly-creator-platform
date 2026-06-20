@@ -36,7 +36,7 @@ app.options(/.*/, cors(corsOptions));
 
 
 
-/* ================= Backend Checking Route ================= */
+
 app.set("trust proxy", 1);
 
 
@@ -49,7 +49,7 @@ app.get("/api/health", (req, res) => {
 
 
 
-/* ================= INIT (DB/Redis) ================= */
+
 let isDbConnected = false;
 
 async function init() {
@@ -121,7 +121,7 @@ app.use(async (req, res, next) => {
 
 
 
-/* ================= ROUTES ================= */
+
 app.use("/api/auth", (req, res, next) => {
 
   console.log("indes.js /api/auth ✅")
@@ -149,7 +149,7 @@ app.use("/api/comment", (req, res, next) => {
 
 }, commentRouter);
 
-// app.use("/api/ai", authMiddleware, AiRouter);
+
 
 app.use("/api/ai/config", authMiddleware, (req, res, next) => {
   console.log("/api/ai/config ✅")
@@ -205,7 +205,7 @@ app.get("/", (req, res) => {
   });
 });
 
-/* ================= 404 ================= */
+
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -213,7 +213,7 @@ app.use((req, res) => {
   });
 });
 
-/* ================= GLOBAL ERROR ================= */
+
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     success: false,

@@ -12,7 +12,7 @@ const Page = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-zinc-950 to-zinc-900 px-4">
       <div className="w-full max-w-md rounded-3xl border border-zinc-800 bg-zinc-900/70 backdrop-blur-xl p-8 shadow-2xl">
 
-        {/* Avatar */}
+        {}
         <div className="flex justify-center mb-6">
           <div className="relative h-32 w-32 rounded-full ring-4 ring-white ring-offset-4 ring-offset-zinc-900 overflow-hidden">
             <Image
@@ -24,7 +24,7 @@ const Page = () => {
           </div>
         </div>
 
-        {/* User Info */}
+        {}
         <div className="text-center">
           <h1 className="text-3xl font-bold text-white">
             {user?.name}
@@ -39,10 +39,10 @@ const Page = () => {
           </div>
         </div>
 
-        {/* Divider */}
+        {}
         <div className="my-8 border-t border-zinc-800" />
 
-        {/* Details */}
+        {}
         <div className="space-y-4">
           <div className="flex justify-between">
             <span className="text-zinc-500">User ID</span>

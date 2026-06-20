@@ -5,7 +5,7 @@ export function CommentModerationSkeleton() {
   return (
     <div className="flex-1 w-full min-w-0 bg-[#050816] text-[#f3f4f6] px-6 py-10 font-sans antialiased flex flex-col h-full animate-pulse">
 
-      {/* HUB CONTROL HEADER SKELETON */}
+      {}
       <div className="mb-10 flex flex-col justify-between gap-6 border-b border-white/15 pb-8 md:flex-row md:items-center">
 
         <div>
@@ -27,7 +27,7 @@ export function CommentModerationSkeleton() {
 
 
 
-        {/* Filter Toolbar Skeleton */}
+        {}
         <div className="
           flex items-center gap-1.5 
           rounded-2xl border border-white/15 
@@ -42,7 +42,7 @@ export function CommentModerationSkeleton() {
 
 
 
-      {/* REGISTRY MATRIX SKELETON */}
+      {}
       <div className="
         relative flex flex-1 flex-col 
         overflow-hidden rounded-3xl 

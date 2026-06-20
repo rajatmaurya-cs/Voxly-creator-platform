@@ -66,13 +66,13 @@ const UserProfileModal = ({
             className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
             onClick={onClose}
         >
-            {/* Outer Border Wrapper */}
+            {}
             <motion.div
                 variants={modalVariants}
                 onClick={(e) => e.stopPropagation()}
                 className="w-full max-w-md rounded-[24px] p-[1.5px] bg-zinc-900/50 relative overflow-hidden shadow-[0_0_50px_-12px_rgba(99,102,241,0.15)]"
             >
-                {/* Animated Border Glow (Rotating Conic Gradient) */}
+                {}
                 <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden rounded-[24px]">
                     <motion.div
                         animate={{
@@ -92,13 +92,13 @@ const UserProfileModal = ({
                     />
                 </div>
 
-                {/* Card Content Container */}
+                {}
                 <div className="relative z-10 w-full rounded-[23px] bg-zinc-950 p-8 overflow-hidden">
-                    {/* Decorative Background Glows */}
+                    {}
                     <div className="absolute -top-20 -left-20 w-48 h-48 bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none" />
                     <div className="absolute -bottom-20 -right-20 w-48 h-48 bg-rose-500/10 rounded-full blur-[80px] pointer-events-none" />
 
-                    {/* Close Button */}
+                    {}
                     <motion.button
                         onClick={onClose}
                         whileHover={{ scale: 1.1, rotate: 90 }}
@@ -108,10 +108,10 @@ const UserProfileModal = ({
                         <X size={18} />
                     </motion.button>
 
-                    {/* Profile Header */}
+                    {}
                     <div className="flex flex-col items-center mt-4 mb-6">
                         <div className="relative group">
-                            {/* Outer rotating/pulsing ring */}
+                            {}
                             <div className={`absolute -inset-1 rounded-full bg-gradient-to-tr ${isAdmin ? 'from-indigo-500 to-purple-500' : 'from-emerald-500 to-teal-500'} opacity-75 blur-sm group-hover:opacity-100 transition duration-1000 group-hover:duration-200`} />
 
                             <div className="relative h-28 w-28 rounded-full overflow-hidden border-2 border-zinc-900 bg-zinc-950">
@@ -128,16 +128,16 @@ const UserProfileModal = ({
                             {user?.name}
                         </h2>
 
-                        {/* Role Badge */}
+                        {}
                         <div className={`mt-2.5 inline-flex items-center gap-1.5 rounded-full border px-3.5 py-0.5 text-xs font-semibold ring-1 ${roleColor}`}>
                             <Shield size={12} />
                             <span className="capitalize">{user?.role || "User"}</span>
                         </div>
                     </div>
 
-                    {/* User Details Section */}
+                    {}
                     <div className="space-y-3.5 my-6">
-                        {/* Email Row */}
+                        {}
                         <div className="group flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
                             <div className="flex items-center gap-3 w-full">
                                 <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-zinc-400 group-hover:text-indigo-400 transition-colors">
@@ -150,7 +150,7 @@ const UserProfileModal = ({
                             </div>
                         </div>
 
-                        {/* Joined Date Row */}
+                        {}
                         <div className="group flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-zinc-400 group-hover:text-indigo-400 transition-colors">
@@ -170,7 +170,7 @@ const UserProfileModal = ({
                                 </div>
                             </div>
                         </div>
-                        {/* Followers Row */}
+                        {}
                         <div className="group flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-zinc-400 group-hover:text-indigo-400 transition-colors">
@@ -185,7 +185,7 @@ const UserProfileModal = ({
                             </div>
                         </div>
 
-                        {/* Status Row */}
+                        {}
                         <div className="group flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-emerald-500">
@@ -198,7 +198,7 @@ const UserProfileModal = ({
                             </div>
                         </div>
 
-                        {/* Plan Row */}
+                        {}
                         <div className="group flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-zinc-400 group-hover:text-indigo-400 transition-colors">
@@ -213,7 +213,7 @@ const UserProfileModal = ({
                             </div>
                         </div>
 
-                        {/* Expiry Date Row */}
+                        {}
                         <div className="group flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/40 border border-zinc-900 hover:border-zinc-850 hover:bg-zinc-900/60 transition-all duration-300">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800/60 text-zinc-400 group-hover:text-indigo-400 transition-colors">
@@ -235,7 +235,7 @@ const UserProfileModal = ({
                         </div>
                     </div>
 
-                    {/* Logout Button */}
+                    {}
                     {isLoggingOut ? (
                         <div className="w-full mt-8 flex items-center justify-center">
                             <EditorLoader size={40} border={3} />

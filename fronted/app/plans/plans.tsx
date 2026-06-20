@@ -228,7 +228,7 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
        
         <div className="max-w-7xl w-full mx-auto relative z-10">
           
-          {/* Test Mode Warning Banner */}
+          {}
           <div className="max-w-6xl mx-auto mb-10 p-4 rounded-2xl border border-amber-500/20 bg-amber-500/5 text-amber-200/90 text-sm leading-relaxed flex items-center gap-3 shadow-[0_4px_20px_rgba(245,158,11,0.05)]">
             <span className="text-lg leading-none select-none">⚠️</span>
             <div>
@@ -237,9 +237,9 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
             </div>
           </div>
 
-          {/* Header Layout */}
+          {}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16 max-w-6xl mx-auto">
-            {/* Header Text */}
+            {}
             <div className="text-center lg:text-left flex flex-col items-center lg:items-start">
               <h2 className="text-sm font-medium tracking-[0.2em] text-neutral-400 uppercase mb-3">
                 Pricing Plans
@@ -251,7 +251,7 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
                 Supercharge your social presence and content workflow with Veyra.
               </p>
 
-              {/* Security Trust Banner */}
+              {}
               <div className="mt-10 flex items-start gap-3 max-w-lg text-left">
                 <ShieldCheck className="w-5 h-5 text-neutral-500 shrink-0 mt-0.5" strokeWidth={1.5} />
                 <p className="text-sm text-neutral-400 font-light leading-relaxed">
@@ -261,13 +261,13 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
               </div>
             </div>
 
-            {/* Wallet Graphic */}
+            {}
             <div className="flex justify-center lg:justify-end items-center overflow-visible mt-2.5">
               <PriceCards />
             </div>
           </div>
 
-          {/* Cards Grid */}
+          {}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
             {plansList.map((plan) => {
               const isPopular = plan.popular;
@@ -281,7 +281,7 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
                     }`}
                 >
                   <div>
-                    {/* Header */}
+                    {}
                     <div className="flex justify-between items-start">
                       <h3 className="text-4xl  text-white tracking-tight">
                         {plan.name}
@@ -297,7 +297,7 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
                       ) : null}
                     </div>
 
-                    {/* Price Section */}
+                    {}
                     <div className="flex flex-col gap-1 mt-6">
                       {plan.id === "pro" && (
                         <span className="text-sm text-neutral-400 font-medium">From</span>
@@ -314,12 +314,12 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
                       </div>
                     </div>
 
-                    {/* Subtitle */}
+                    {}
                     <p className="mt-4 text-base text-zinc-300 font-medium">
                       {plan.subtitle}
                     </p>
 
-                    {/* Action Button */}
+                    {}
                     <button
                       onClick={() => handlePayment(plan.id)}
                       disabled={isCurrentPlan}
@@ -333,7 +333,7 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
                       {isCurrentPlan ? "Current Plan" : plan.buttonText}
                     </button>
 
-                    {/* Everything In and Features */}
+                    {}
                     <div className="mt-8">
                       <p className="text-sm font-semibold text-zinc-200 mb-4">
                         {plan.everythingText}
@@ -354,7 +354,7 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
                     </div>
                   </div>
 
-                  {/* Footer Disclaimers inside Card */}
+                  {}
                   <div className="mt-8 pt-6 border-t border-neutral-900/60 text-[11px] text-neutral-500 space-y-2">
                     <p>Unlimited subject to abuse guardrails.</p>
                     <div className="flex flex-col gap-1.5">

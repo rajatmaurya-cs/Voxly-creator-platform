@@ -3,7 +3,7 @@
 import React from 'react';
 import styles from './Card.module.css';
 
-// SVG Logos as inline components
+
 const NetBankingLogo = () => (
   <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
     <rect width="32" height="32" rx="6" fill="rgba(255,255,255,0.15)" />
@@ -37,7 +37,7 @@ const Card = () => {
       <div className={styles.wallet}>
         <div className={styles['wallet-back']} />
 
-        {/* Net Banking Card */}
+        {}
         <div className={`${styles.card} ${styles.netbanking}`}>
           <div className={styles['card-inner']}>
             <div className={styles['card-top']}>
@@ -57,7 +57,7 @@ const Card = () => {
           </div>
         </div>
 
-        {/* UPI Card */}
+        {}
         <div className={`${styles.card} ${styles.upi}`}>
           <div className={styles['card-inner']}>
             <div className={styles['card-top']}>
@@ -77,7 +77,7 @@ const Card = () => {
           </div>
         </div>
 
-        {/* Credit Card */}
+        {}
         <div className={`${styles.card} ${styles.creditcard}`}>
           <div className={styles['card-inner']}>
             <div className={styles['card-top']}>
@@ -97,7 +97,7 @@ const Card = () => {
           </div>
         </div>
 
-        {/* Pocket / Wallet Base */}
+        {}
         <div className={styles.pocket}>
           <svg className={styles['pocket-svg']} viewBox="0 0 280 160" fill="none">
             <path
@@ -113,13 +113,13 @@ const Card = () => {
           </svg>
           <div className={styles['pocket-content']}>
             <div className={styles['eye-icon-wrapper']}>
-              {/* Eye slash (hidden state) */}
+              {}
               <svg className={`${styles['eye-icon']} ${styles['eye-slash']}`} width={18} height={18} viewBox="0 0 24 24" fill="none" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                 <circle cx={12} cy={12} r={3} />
                 <line x1={3} y1={3} x2={21} y2={21} />
               </svg>
-              {/* Eye open (visible state) */}
+              {}
               <svg className={`${styles['eye-icon']} ${styles['eye-open']}`} style={{ opacity: 0 }} width={18} height={18} viewBox="0 0 24 24" fill="none" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                 <circle cx={12} cy={12} r={3} />

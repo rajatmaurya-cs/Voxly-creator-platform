@@ -9,7 +9,7 @@ const Page = async () => {
       `${process.env.NEXT_PUBLIC_API_URL}/plan/getplans`,
       {
         next: {
-          revalidate: 300, // 5 minutes
+          revalidate: 300, 
         },
       }
     );

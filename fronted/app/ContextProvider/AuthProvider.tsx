@@ -12,7 +12,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/apiFetch";
 
-// ---------------- TYPES ----------------
+
 
 type User = {
   id: string;
@@ -32,18 +32,18 @@ type AuthContextType = {
   refetchUser: () => void;
 };
 
-// ---------------- CONTEXT ----------------
+
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-// ---------------- PROVIDER ----------------
+
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
 
-  // ---------------- QUERY ----------------
+  
   const { data, isLoading, refetch, isError } = useQuery<User>({
     queryKey: ["auth-user"],
     queryFn: async () => {
@@ -62,7 +62,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     refetchOnWindowFocus: false,
   });
 
-  // ---------------- SYNC STATE ----------------
+  
   useEffect(() => {
 
     if (data) {

@@ -9,11 +9,11 @@ export default function Navbar() {
   return (
     <nav className="w-full bg-black shadow-md px-4 py-3">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Logo */}
+        {}
         <Link href="/" className="flex items-center gap-2">
           <div className="relative w-10 h-10">
             <Image
-              src="/pixel.png" // <- Put your image path here
+              src="/pixel.png" 
               alt="Logo"
             
               width={50}
@@ -25,7 +25,7 @@ export default function Navbar() {
           <span className="text-xl font-bold text-gray-800">BrandName</span>
         </Link>
 
-        {/* Desktop Menu */}
+        {}
         <div className="hidden md:flex items-center gap-8">
           <Link href="/" className="text-gray-700 hover:text-blue-600 transition">
             Home
@@ -41,7 +41,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
+        {}
         <button
           className="md:hidden flex flex-col gap-1.5"
           onClick={() => setIsOpen(!isOpen)}
@@ -53,7 +53,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {}
       {isOpen && (
         <div className="md:hidden mt-4 pb-4 flex flex-col gap-4">
           <Link href="/" onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-blue-600">

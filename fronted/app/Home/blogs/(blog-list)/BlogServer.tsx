@@ -10,7 +10,7 @@ type BlogSectionProps = {
 async function fetchBlogs({ category = "All", search = "", page = 1, limit = 3, }: BlogSectionProps) {
 
 
-  // ✅ Server component: call backend directly, NOT through /api proxy
+  
   const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/blog/allblog`
 
 

@@ -15,7 +15,7 @@ export function BlogGridSkeleton() {
           "
         >
 
-          {/* IMAGE SKELETON */}
+          {}
           <div className="
             relative h-60 w-full 
             bg-white/[0.10] 
@@ -39,7 +39,7 @@ export function BlogGridSkeleton() {
 
 
 
-          {/* CONTENT SKELETON */}
+          {}
           <div className="space-y-5 p-5">
 
 
@@ -58,7 +58,7 @@ export function BlogGridSkeleton() {
             </div>
 
 
-            {/* AUTHOR SKELETON */}
+            {}
             <div className="
               flex items-center justify-between gap-3 
               border-t border-white/15 

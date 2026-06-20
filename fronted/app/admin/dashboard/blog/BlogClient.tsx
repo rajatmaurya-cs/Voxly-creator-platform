@@ -136,7 +136,7 @@ const BlogClient = () => {
 <div className="min-h-screen bg-[#0b0d11] text-[#f3f4f6] antialiased selection:bg-[#1d2430] selection:text-white">
   <div className="mx-auto max-w-5xl px-6 py-12">
 
-    {/* CONTROL HUB HEADER */}
+    {}
     <div className="mb-10 flex flex-col gap-4 border-b border-[#1b1f27] pb-8 sm:flex-row sm:items-center sm:justify-between">
 
       <div>
@@ -160,7 +160,7 @@ const BlogClient = () => {
       </div>
     </div>
 
-    {/* COMPACT DATA LIST */}
+    {}
     <div className="space-y-4">
       {latestBlogs.length === 0 ? (
         <div className="rounded-xl border border-dashed border-[#222733] bg-[#11141a] py-16 text-center">
@@ -198,12 +198,12 @@ const BlogClient = () => {
               "
             >
 
-              {/* subtle hover glow */}
+              {}
               <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.03),transparent_60%)]" />
 
               <div className="relative flex-1 min-w-0 space-y-3.5">
 
-                {/* STATUS INDICATORS */}
+                {}
                 <div className="flex items-center gap-2">
                   <span
                     className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] ${
@@ -226,7 +226,7 @@ const BlogClient = () => {
                   </span>
                 </div>
 
-                {/* TEXT WRAPPERS */}
+                {}
                 <div className="space-y-1">
                   <h2 className="break-words text-lg font-medium tracking-tight text-white transition-colors duration-200">
                     {blog.title}
@@ -239,10 +239,10 @@ const BlogClient = () => {
                   )}
                 </div>
 
-                {/* PLATFORM INLINE META DATA */}
+                {}
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1 text-xs font-medium text-[#7c8393]">
 
-                  {/* DATE FIELD */}
+                  {}
                   <div className="flex items-center gap-1.5">
                     <CalendarDays className="h-3.5 w-3.5 text-[#6b7280]" />
 
@@ -262,7 +262,7 @@ const BlogClient = () => {
 
                   <span className="hidden text-[#2a313d] sm:inline">•</span>
 
-                  {/* MODERATION PROFILE */}
+                  {}
                   <div className="flex items-center gap-2">
                     <div className="flex h-5 w-5 items-center justify-center rounded-full border border-[#2a313d] bg-[#171b22] text-[#c2c8d3]">
                       <UserRound className="h-2.5 w-2.5" />
@@ -277,7 +277,7 @@ const BlogClient = () => {
                 </div>
               </div>
 
-              {/* ACTIONS */}
+              {}
               <div className="flex shrink-0 items-center border-t border-[#1b1f27] pt-4 md:border-t-0 md:pt-0">
 
                 <button
@@ -341,7 +341,7 @@ const BlogClient = () => {
       )}
     </div>
 
-    {/* FOOTER */}
+    {}
     {isFetching && !isLoading && (
       <div className="mt-8 flex justify-center">
 

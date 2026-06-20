@@ -16,7 +16,7 @@ export async function apiFetch(
 
   console.log("The response received in apiFetch is: ", response.status)
 
-  // ✅ If not 401 → return normally
+  
   if (response.status !== 401) {
     return response;
   }
@@ -67,8 +67,8 @@ export async function apiFetch(
 
   const refreshed = await refreshPromise;
 
-  // ❌ refresh failed → logout flow
-  // ❌ refresh failed → logout flow
+  
+  
   if (!refreshed) {
     return new Response(
       JSON.stringify({
@@ -84,7 +84,7 @@ export async function apiFetch(
     );
   }
 
-  // 🔁 retry original request ONCE
+  
   response = await makeRequest();
 
   return response;

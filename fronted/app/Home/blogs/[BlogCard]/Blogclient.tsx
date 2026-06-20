@@ -279,7 +279,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
   return (
     <div className="min-h-screen bg-[#050816] text-white relative overflow-hidden">
 
-      {/* BACKGROUND */}
+      {}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-[-200px] left-[-100px] w-[500px] h-[500px] bg-violet-600/20 blur-[140px] rounded-full" />
 
@@ -290,10 +290,10 @@ const Blogclient = ({ blog }: BlogClientProps) => {
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-8 py-10 md:py-16">
 
-        {/* HERO */}
+        {}
         <div className="mb-10">
 
-          {/* CATEGORY */}
+          {}
           <div className="flex items-center gap-3 mb-6 flex-wrap">
 
             <span className="px-4 py-1.5 rounded-full border border-cyan-500/20 bg-cyan-500/10 text-cyan-300 text-sm font-medium backdrop-blur-xl shadow-lg shadow-cyan-500/10">
@@ -304,21 +304,21 @@ const Blogclient = ({ blog }: BlogClientProps) => {
 
           </div>
 
-          {/* TITLE */}
+          {}
           <h1 className="text-4xl md:text-6xl font-semibold leading-[1.08] tracking-tight mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-500 text-transparent bg-clip-text">
             {blog.title}
           </h1>
 
-          {/* SUBTITLE */}
+          {}
           <p className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-4xl mb-8">
             {blog.subTitle}
           </p>
 
-          {/* META & STATS */}
+          {}
           <div className="border-y border-white/5 py-6 mb-10">
             <div className="flex items-start justify-between gap-4">
 
-              {/* LEFT */}
+              {}
               <div className="flex items-center gap-4 min-w-0">
 
                 <div className="relative w-12 h-12 shrink-0">
@@ -361,7 +361,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
                 </div>
               </div>
 
-              {/* RIGHT */}
+              {}
               <div className="flex items-center gap-3">
                 <button
                   onClick={handleLike}
@@ -394,18 +394,18 @@ const Blogclient = ({ blog }: BlogClientProps) => {
 
         </div>
 
-        {/* IMAGE FIXED */}
+        {}
         <div className="relative mb-16 group">
 
-          {/* Glow */}
+          {}
           <div className="absolute -inset-2 rounded-[36px] bg-gradient-to-r from-violet-600/40 via-cyan-500/30 to-fuchsia-600/40 blur-2xl opacity-60 group-hover:opacity-90 transition duration-700" />
 
-          {/* White Premium Border */}
+          {}
           <div className="relative rounded-[36px] p-[2px] bg-white/20 shadow-[0_0_50px_rgba(255,255,255,0.08)]">
 
             <div className="relative h-[300px] md:h-[700px] overflow-hidden rounded-[34px] border border-white/10 bg-black">
 
-              {/* Main Image */}
+              {}
               <Image
                 src={blog.image}
                 alt={blog.title}
@@ -415,13 +415,13 @@ const Blogclient = ({ blog }: BlogClientProps) => {
                 className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
               />
 
-              {/* Dark Overlay */}
+              {}
               <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
 
-              {/* Elegant White Border Line */}
+              {}
               <div className="absolute inset-0 rounded-[34px] ring-1 ring-white/30 ring-inset pointer-events-none" />
 
-              {/* Top Light Reflection */}
+              {}
               <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
 
             </div>
@@ -430,10 +430,10 @@ const Blogclient = ({ blog }: BlogClientProps) => {
 
         </div>
 
-        {/* CONTENT */}
+        {}
         <div className="max-w-5xl mx-auto">
 
-          {/* BLOG CONTENT */}
+          {}
           <div ref={contentRef}
             className="relative mb-10">
 
@@ -689,7 +689,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
                 </>
               )}
 
-              {/* subtle inner border */}
+              {}
               <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/5 pointer-events-none" />
             </button>
 
@@ -705,7 +705,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
   "
             >
 
-              {/* ICON */}
+              {}
               <div
                 className="
       shrink-0
@@ -753,47 +753,46 @@ export default Blogclient;
 
 
 
-// const summariseMutation = useMutation({
-
-//   mutationFn: async () => {
-//     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ai/summarise`, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({ content: blog.content }),
-//     });
-
-//     const data = await res.json();
-//     console.log(data.content)
-
-//     if (!data?.success) {
-//       throw new Error(data?.message || "Summarise failed");
-//     }
-
-//     return data.content;
-//   },
-
-//   onSuccess: (newContent) => {
-//     setAicontent(newContent)
-//     setShowContent("AI")
-//   },
-
-//   onError: (err) => {
-//     const msg =
-//       err?.message || "Something went wrong";
-
-//     if (msg.toLowerCase().includes("limit")) {
-//       Report.failure(
-//         "Daily AI Limit Reached",
-//         "Try again tomorrow",
-//         "Okay"
-//       );
-//     } else {
-//       toast.error(msg);
-//     }
-//   },
-// });
 
 
-// const ailoading = summariseMutation.isPending;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

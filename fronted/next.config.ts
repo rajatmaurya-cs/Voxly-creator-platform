@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
 
   experimental: {
     staleTimes: {
-      dynamic: 30, // Cache dynamic routes in the browser for 30 seconds to prevent loading flashes
+      dynamic: 30, 
     },
   },
 

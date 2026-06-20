@@ -22,10 +22,10 @@ type Props = {
 const CommentClient = ({ comments }: Props) => {
   return (
     <section className="max-w-5xl mx-auto relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-[#060816] via-[#0a1020] to-[#071425] p-6 md:p-8 shadow-[0_0_60px_rgba(0,140,255,0.08)]">
-      {/* Background Glow */}
+      {}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,180,255,0.08),transparent_35%)] pointer-events-none" />
 
-      {/* Heading */}
+      {}
       <div className="relative flex items-start justify-between mb-8">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-white">
@@ -55,7 +55,7 @@ const CommentClient = ({ comments }: Props) => {
         </div>
       </div>
 
-      {/* Comments */}
+      {}
       <div className="relative space-y-4">
         {comments.map((comment) => (
           <div
@@ -63,7 +63,7 @@ const CommentClient = ({ comments }: Props) => {
             className="rounded-[1.8rem] border border-white/10 bg-gradient-to-r from-white/[0.03] to-white/[0.015] p-5 md:p-6 backdrop-blur-xl"
           >
             <div className="flex items-start gap-4">
-              {/* Avatar */}
+              {}
               <div className="relative shrink-0">
                 <div className="absolute inset-0 rounded-full bg-cyan-500/20 blur-md" />
 
@@ -80,7 +80,7 @@ const CommentClient = ({ comments }: Props) => {
 />
               </div>
 
-              {/* Content */}
+              {}
               <div className="flex-1 min-w-0">
                 <h3 className="text-white font-semibold text-[18px] leading-none">
                   {comment?.createdBy?.fullName || "User"}

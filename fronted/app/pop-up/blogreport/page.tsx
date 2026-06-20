@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 
 import { AuthContext } from "@/app/ContextProvider/AuthProvider";
 
-// ---------------- TYPES ----------------
+
 type Analysis = {
   avgSentenceLength: string;
   paragraphs: number;
@@ -33,7 +33,7 @@ const BlogReport = ({ type, analysis, onClose }: BlogReportProps) => {
 
   if (!analysis || !mounted) return null;
 
-  // ---------------- STYLES ----------------
+  
   const verdictStyle =
     analysis.verdict === "Good"
       ? "text-green-300 bg-green-500/10 border-green-500/30"
@@ -51,14 +51,14 @@ const BlogReport = ({ type, analysis, onClose }: BlogReportProps) => {
   return createPortal(
     <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-[999] px-4">
 
-      {/* CARD */}
+      {}
       <div className="relative w-full max-w-md rounded-3xl border border-white/10 bg-gradient-to-b from-zinc-900 to-black shadow-2xl overflow-hidden">
 
-        {/* glow effect */}
+        {}
         <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-purple-600/20 blur-3xl rounded-full" />
 
-        {/* CLOSE */}
-        {/* CLOSE */}
+        {}
+        {}
         <button
           type="button"
           onClick={() => {
@@ -72,7 +72,7 @@ const BlogReport = ({ type, analysis, onClose }: BlogReportProps) => {
 
         <div className="p-6 relative z-10">
 
-          {/* HEADER */}
+          {}
           <div className="text-center">
             <h2 className="text-xl font-bold text-white">
               Blog Quality Report
@@ -86,7 +86,7 @@ const BlogReport = ({ type, analysis, onClose }: BlogReportProps) => {
             </span>
           </div>
 
-          {/* USER */}
+          {}
           <div className="mt-6 flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/10">
             <img
               src={user?.avatar || '/user_icon.svg'}
@@ -100,7 +100,7 @@ const BlogReport = ({ type, analysis, onClose }: BlogReportProps) => {
             </div>
           </div>
 
-          {/* STATS */}
+          {}
           <div className="mt-6 space-y-2 text-sm text-gray-300">
 
             <div className="flex justify-between py-2 border-b border-white/5">
@@ -129,12 +129,12 @@ const BlogReport = ({ type, analysis, onClose }: BlogReportProps) => {
             </div>
           </div>
 
-          {/* VERDICT */}
+          {}
           <div className={`mt-5 text-center py-3 rounded-2xl border ${verdictStyle}`}>
             Verdict: {analysis?.verdict}
           </div>
 
-          {/* FOOTER */}
+          {}
           <p className="mt-5 text-[11px] text-gray-500 text-center">
             This report is auto-generated and may require human validation.
           </p>

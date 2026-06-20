@@ -24,14 +24,14 @@ export const addComment = async (req, res) => {
 
     const userId = req.user.id;
 
-    /* ---------------- COMMENT RATE LIMIT ---------------- */
+    
 
     const key = `CommentAttempts:${userId}`;
     
     const attempts = await redisClient.incr(key);
 
     if (attempts === 1) {
-      await redisClient.expire(key, 60); // 1 minute window
+      await redisClient.expire(key, 60); 
     }
 
     if (attempts > 1) {
@@ -41,7 +41,7 @@ export const addComment = async (req, res) => {
       });
     }
 
-    /* ---------------- INPUT VALIDATION ---------------- */
+    
     const { content, blogId } = req.body;
 
     if (!content || !blogId) {
@@ -59,7 +59,7 @@ export const addComment = async (req, res) => {
       });
     }
 
-    /* ---------------- SPAM / AI MODERATION ---------------- */
+    
 
     let riskLevel = spamFilter(content);
 
@@ -90,7 +90,7 @@ export const addComment = async (req, res) => {
       }
     }
 
-    /* ---------------- SAVE COMMENT ---------------- */
+    
     const isApproved = riskLevel === "SAFE";
 
 
@@ -165,32 +165,32 @@ export const getAllComments = async (req, res) => {
 
   try {
     console.log("Entered in getAllComments")
-    // Logged in user
+    
 
     const userId = req.user.id;
 
     console.log("The admin is: ",userId)
 
-    // Find all blogs published by this user
+    
     const blogs = await Blog.find({
       createdBy: userId
     }).select("_id");
 
-    // Convert blogs into array of ids
+    
     const blogIds = blogs.map(blog => blog._id);
 
-    // Get comments of those blogs
+    
     const comments = await Comment.find({
       blogId: { $in: blogIds }
     })
 
-      // who commented
+      
       .populate("createdBy", "_id fullName email avatar")
 
-      // which blog
+      
       .populate("blogId", "_id title slug")
 
-      // who moderated
+      
       .populate("moderatedBy", "_id fullName")
 
       .sort({ createdAt: -1 });
@@ -217,46 +217,46 @@ export const getAllComments = async (req, res) => {
 
 
 
-// export const getCommentsByBlogId = async (req, res) => {
-//   try {
-//     const { blogId } = req.params;
 
-//     const comments = await Comment.find({
-//       blogId,
-//       isApproved: true
-//     })
-//       .select("content createdBy createdAt updatedAt riskLevel")
-//       .populate("createdBy", "fullName avatar")
-//       .sort({ createdAt: -1 })
-//       .lean();
 
-//     return res.status(200).json({
-//       success: true,
-//       message: comments.length
-//         ? "Comments fetched successfully"
-//         : "No comments yet",
-//       comments
-//     });
 
-//   } catch (error) {
-//     return res.status(500).json({
-//       success: false,
-//       message: error.message || "Internal server error"
-//     });
-//   }
-// };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
   export const toggleComment = async (req, res) => {
     try {
 
-      // if (!req.user) {
-      //   return res.status(404).json({
-      //     success: false,
-      //     message: "Please Login to Post Comment"
-      //   })
-      // }
+      
+      
+      
+      
+      
+      
 
 
       const { commentId } = req.body;
@@ -274,7 +274,7 @@ export const getAllComments = async (req, res) => {
 
 
       comment.isApproved = !comment.isApproved;
-      // comment.moderatedBy = req.user.id
+      
       comment.moderatedAt = Date.now()
 
       await comment.save();
@@ -301,12 +301,12 @@ export const getAllComments = async (req, res) => {
   export const removecomment = async (req, res) => {
     try {
 
-      // if (!req.user) {
-      //   return res.status(404).json({
-      //     success: false,
-      //     message: "Please Login to Post Comment"
-      //   })
-      // }
+      
+      
+      
+      
+      
+      
 
 
 

@@ -3,22 +3,22 @@ import jwt from "jsonwebtoken";
 import User from "../Models/User.js";
 import {
 
-  /*====signup & Login =====*/
+  
   login,
   signup,
   googleLogin,
-  /*===== Logout & refreshAccessToken =====*/
+  
   logout,
   refreshAccessToken,
-  /*===== Logout OTP refreshAccessToken =====*/
+  
   sendOtp,
   verifyOtp,
-  /*===== Emails =====*/
+  
   verifyEmails,
-  /*===== Reset Password =====*/
+  
   resetpassword,
   checkmailforreset,
-   /*===== Follow =====*/
+   
   toggleFollowAuthor,
   getLeaderboard
 
@@ -30,7 +30,7 @@ import upload from "../Middleware/Multer.js";
 
 const authRouter = express.Router();
 
-authRouter.get("/me", async (req, res) => { // 👈 Make this async
+authRouter.get("/me", async (req, res) => { 
   try {
     const token = req?.cookies?.accessToken;
 
@@ -40,10 +40,10 @@ authRouter.get("/me", async (req, res) => { // 👈 Make this async
       });
     }
 
-    // 1. Verify and decode the JWT token to get the user ID
+    
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
-    // 2. Fetch the user from the DB and populate the plan details
+    
     const userFromDb = await User.findById(decoded.id).populate("plan");
 
     if (!userFromDb) {
@@ -52,7 +52,7 @@ authRouter.get("/me", async (req, res) => { // 👈 Make this async
       });
     }
 
-    // 3. Return the user info with the populated plan object
+    
     res.json({
       success: true,
       user: {
@@ -61,7 +61,7 @@ authRouter.get("/me", async (req, res) => { // 👈 Make this async
         email: userFromDb.email,
         role: userFromDb.role,
         avatar: userFromDb.avatar,
-        plan: userFromDb.plan, // 👈 Populated plan object containing name, price, etc.
+        plan: userFromDb.plan, 
         createdAt: userFromDb.createdAt,
         planExpiresAt:userFromDb.planExpiresAt,
         following: userFromDb.following || [],
@@ -81,7 +81,7 @@ authRouter.get("/me", async (req, res) => { // 👈 Make this async
   }
 });
 
-/* --------------------------- Signup & Login --------------------------- */
+
 
 
 
@@ -93,7 +93,7 @@ authRouter.post("/login", (req, res, next) => {
   next()
 }, login);
 
-/*----------------------------- Google Login -------------------------------------------- */
+
 
 authRouter.get("/google", (req, res, next) => {
 
@@ -125,7 +125,7 @@ next();
 
 
 
-/* --------------------------- Logout and Refresh Token --------------------------- */
+
 
 authRouter.post("/logout", authMiddleware, logout);
 
@@ -142,7 +142,7 @@ authRouter.post("/refreshtoken",(req,res , next)=>{
 
 
 
-/* --------------------------- OTP --------------------------- */
+
 
 authRouter.post("/sendotp", sendOtp);
 
@@ -154,14 +154,14 @@ authRouter.post("/verifyotp", (req,res,next)=>{
 
 
 
-/* --------------------------- EMAIL --------------------------- */
+
 
 authRouter.post("/verifyemail", verifyEmails);
 
 
 
 
-/* --------------------------- PASSWORD RESET --------------------- */
+
 
 authRouter.post("/checkemailforreset", checkmailforreset);
 authRouter.post("/reset-password", resetpassword);

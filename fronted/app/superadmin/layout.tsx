@@ -12,19 +12,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  // Helper to check active state
+  
   const isStatsActive = pathname === "/superadmin" || pathname.startsWith("/superadmin/aiusagestats");
   const isConfigActive = pathname.startsWith("/superadmin/aiconfig");
   const isPlansActive = pathname.startsWith("/superadmin/plansconfig");
 
-  // Close sidebar on navigation change on mobile
+  
   React.useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
   return (
     <div className="flex h-screen w-screen flex-col overflow-hidden bg-white text-zinc-900 lg:flex-row animate-fade-in">
-      {/* MOBILE TOPBAR */}
+      {}
       <div 
         className="sticky top-0 z-40 flex shrink-0 items-center justify-between border-b bg-[#f8f9fa] px-4 py-3 lg:hidden"
         style={{ borderColor: "#e4e4e7" }}
@@ -39,10 +39,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <span className="text-sm font-bold tracking-tight text-black">
           Super Admin
         </span>
-        <div className="w-10 h-10" /> {/* Spacer */}
+        <div className="w-10 h-10" /> {}
       </div>
 
-      {/* MOBILE OVERLAY */}
+      {}
       {open && (
         <div
           className="fixed inset-0 z-40 bg-black/45 backdrop-blur-xs lg:hidden"
@@ -50,7 +50,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         />
       )}
 
-      {/* SIDEBAR WRAPPER */}
+      {}
       <div
         className={`
           fixed left-0 top-0 z-50 h-screen w-64
@@ -59,7 +59,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           ${open ? "translate-x-0" : "-translate-x-full"}
         `}
       >
-        {/* CLOSE BUTTON MOBILE */}
+        {}
         <div className="absolute right-4 top-4 z-50 lg:hidden">
           <button
             onClick={() => setOpen(false)}
@@ -70,12 +70,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           </button>
         </div>
 
-        {/* Sidebar */}
+        {}
         <aside 
           className="flex h-full w-64 flex-col gap-6 border-r bg-[#f8f9fa] p-5 shadow-xs"
           style={{ borderColor: "#e4e4e7" }}
         >
-          {/* Sidebar Header */}
+          {}
           <div className="flex items-center justify-between px-1 py-2 mb-4">
             <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-90 group">
               <div className="relative w-27 h-27 shrink-0 -my-6 -mx-6">
@@ -167,7 +167,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </nav>
 
-          {/* User Profile Footer */}
+          {}
           <div className="mt-auto">
             <div 
               className="flex items-center gap-3 rounded-xl border bg-white p-3 shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-all hover:bg-zinc-50 cursor-pointer"
@@ -200,7 +200,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </aside>
       </div>
 
-      {/* Main Content */}
+      {}
       <main className="w-full flex-1 overflow-y-auto bg-white px-6 py-8 md:px-10 lg:px-12">
         {children}
       </main>

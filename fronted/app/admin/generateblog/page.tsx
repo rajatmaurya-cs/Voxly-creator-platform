@@ -37,7 +37,7 @@ import { ImagePlus, X } from "lucide-react";
 
 import { apiFetch } from "@/lib/apiFetch";
 
-// ---------------- TYPES ----------------
+
 
 type Analysis = {
   avgSentenceLength: string;
@@ -150,7 +150,7 @@ const AddBlog = () => {
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [showReport, setShowReport] = useState<boolean>(false);
 
-  // ---------------- IMAGE PREVIEW ----------------
+  
   const previewUrl = useMemo(() => {
     return image ? URL.createObjectURL(image) : null;
   }, [image]);
@@ -161,7 +161,7 @@ const AddBlog = () => {
     };
   }, [previewUrl]);
 
-  // ---------------- AI CONTENT ----------------
+  
   const generateContentMutation = useMutation({
     mutationFn: async ({
       title,
@@ -204,7 +204,7 @@ const AddBlog = () => {
     },
   });
 
-  // ---------------- REPORT ----------------
+  
   const generateReportMutation = useMutation({
     mutationFn: async (htmlContent: string) => {
       const res = await apiFetch(
@@ -239,7 +239,7 @@ const AddBlog = () => {
     },
   });
 
-  // ---------------- ADD BLOG ----------------
+  
   const addBlogMutation = useMutation({
     mutationFn: async (formData: FormData) => {
       const res = await apiFetch(
@@ -281,7 +281,7 @@ const AddBlog = () => {
     },
   });
 
-  // ---------------- HANDLERS ----------------
+  
   const handleGenerateContent = () => {
     if (!title.trim()) return toast.error("Title required");
     if (!subTitle.trim()) return toast.error("Subtitle required");
@@ -335,7 +335,7 @@ const AddBlog = () => {
 
     if (!file) return;
 
-    // 10MB limit
+    
     if (file.size > 10 * 1024 * 1024) {
       toast.error("Image size must be less than 10MB");
       return;
@@ -344,12 +344,12 @@ const AddBlog = () => {
     setImage(file);
   };
 
-  // ---------------- RENDER ----------------
+  
   return (
     <div className="min-h-screen bg-[#0b0d11] text-[#f3f4f6]">
       <div className="mx-auto w-full max-w-7xl px-3 sm:px-5 lg:px-8 py-4 sm:py-8">
 
-        {/* TOP BAR */}
+        {}
         <div
           className="
         mb-5 sm:mb-8
@@ -380,10 +380,10 @@ const AddBlog = () => {
           className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-5"
         >
 
-          {/* LEFT SIDE */}
+          {}
           <div className="space-y-5">
 
-            {/* TITLE + SUBTITLE */}
+            {}
             <div
               className="
             rounded-3xl
@@ -449,7 +449,7 @@ const AddBlog = () => {
 
             </div>
 
-            {/* EDITOR */}
+            {}
             <div
               className="
             overflow-hidden
@@ -520,10 +520,10 @@ const AddBlog = () => {
 
           </div>
 
-          {/* RIGHT SIDEBAR */}
+          {}
           <div className="space-y-5">
 
-            {/* SETTINGS */}
+            {}
             <div
               className="
             rounded-3xl
@@ -539,7 +539,7 @@ const AddBlog = () => {
 
               <div className="mt-5 space-y-5">
 
-                {/* CATEGORY */}
+                {}
                 <div>
                   <label className="mb-2 block text-sm text-[#9ca3af]">
                     Category
@@ -573,7 +573,7 @@ const AddBlog = () => {
                 </div>
 
 
-                {/* IMAGE */}
+                {}
 
                 <div>
                   <label className="mb-2 block text-sm text-[#9ca3af]">
@@ -670,7 +670,7 @@ const AddBlog = () => {
                 </div>
 
 
-                {/* PUBLISH */}
+                {}
                 <div
                   className="
                 rounded-2xl
@@ -708,7 +708,7 @@ const AddBlog = () => {
                     </button>
                   </div>
 
-                  {/* Status Indicator Bar */}
+                  {}
                   <div className="flex items-center gap-2 rounded-xl bg-[#0b0d11] border border-[#222733]/60 px-3 py-2 text-xs">
                     <div
                       className={`
@@ -727,7 +727,7 @@ const AddBlog = () => {
 
             </div>
 
-            {/* ACTIONS */}
+            {}
             <div
               className="
             rounded-3xl
@@ -737,14 +737,14 @@ const AddBlog = () => {
             space-y-4
           "
             >
-              {/* AI MODEL SELECTOR */}
+              {}
               <div>
                 <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-[#7b8190]">
                   AI Model
                 </label>
                 
                 <div className="flex items-center gap-3">
-                  {/* Selected Model Logo */}
+                  {}
                   <div className="flex-shrink-0 h-12 w-12 rounded-2xl border border-[#222733] bg-[#171b22] flex items-center justify-center p-2">
                     {model === 'llama-3.3-70b-versatile' && <Image src="/copilot.png" className="object-contain" width={32} height={32} alt="Copilot" />}
                     {model === 'llama-3.1-8b-instant' && <Image src="/meta.png" className="object-contain" width={32} height={32} alt="Meta" />}
@@ -752,7 +752,7 @@ const AddBlog = () => {
                     {model === 'openai/gpt-oss-120b' && <Image src="/chatgpt.png" className="object-contain" width={32} height={32} alt="ChatGPT" />}
                   </div>
 
-                  {/* Listbox Dropdown */}
+                  {}
                   <div className="flex-1 relative">
                     <Listbox value={model} onChange={setModel}>
                       <div className="relative">
@@ -852,7 +852,7 @@ const AddBlog = () => {
 
         </form>
 
-        {/* REPORT MODAL */}
+        {}
         {showReport && analysis && (
           <BlogReport
             analysis={analysis}

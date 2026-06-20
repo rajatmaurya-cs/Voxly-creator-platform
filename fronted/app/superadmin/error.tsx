@@ -23,7 +23,7 @@ export default function AiusageStatsError({
     style={{ borderColor: "#e4e4e7" }}
   >
     
-    {/* Icon / indicator */}
+    {}
     <div 
       className="mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-lg border bg-white text-black"
       style={{ borderColor: "#e4e4e7" }}
@@ -31,17 +31,17 @@ export default function AiusageStatsError({
       <span className="text-xs">⚠</span>
     </div>
 
-    {/* Title */}
+    {}
     <div className="text-sm font-bold tracking-tight text-black">
       Failed to Load Dashboard
     </div>
 
-    {/* Message */}
+    {}
     <p className="mt-2 text-xs text-zinc-650 font-bold">
       {error.message}
     </p>
 
-    {/* Retry button */}
+    {}
     <button
       onClick={() => {
         startTransition(() => {

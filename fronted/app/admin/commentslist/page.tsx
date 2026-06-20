@@ -156,7 +156,7 @@ const Page = () => {
   return (
     <div className="flex-1 w-full min-w-0 bg-[#0b0d11] text-[#f3f4f6] px-6 py-10 font-sans antialiased selection:bg-[#1d2430] selection:text-white flex flex-col h-full">
 
-  {/* HUB CONTROL HEADER */}
+  {}
   <div className="mb-10 flex flex-col justify-between gap-6 border-b border-[#1b1f27] pb-8 md:flex-row md:items-center">
 
     <div className="min-w-0">
@@ -174,7 +174,7 @@ const Page = () => {
       </p>
     </div>
 
-    {/* FILTER TOOLBAR */}
+    {}
     <div className="flex items-center gap-1.5 rounded-2xl border border-[#222733] bg-[#171b22] p-1 shadow-inner self-start md:self-center shrink-0">
 
       <button
@@ -213,7 +213,7 @@ const Page = () => {
     </div>
   </div>
 
-  {/* FEEDBACK TRACKING STATUSES */}
+  {}
   <div className="mb-4 space-y-3">
 
     {isError && (
@@ -232,10 +232,10 @@ const Page = () => {
 
   </div>
 
-  {/* REGISTRY MATRIX */}
+  {}
   <div className="relative flex flex-1 flex-col overflow-hidden rounded-3xl border border-[#1b1f27] bg-[#11141a]">
 
-    {/* subtle glow */}
+    {}
     <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.03),transparent_60%)]" />
 
     <div className="relative w-full min-w-0 flex-1 overflow-x-auto">
@@ -288,31 +288,31 @@ const Page = () => {
                   className="group align-middle transition-all duration-200 hover:bg-[#171b22]/70"
                 >
 
-                  {/* MATRIX KEY INDEX */}
+                  {}
                   <td className="px-5 py-4.5 font-mono text-xs text-[#6b7280]">
                     {(index + 1).toString().padStart(2, "0")}
                   </td>
 
-                  {/* PROFILE SIGNATURE */}
+                  {}
                   <td className="min-w-0 px-5 py-4.5">
                     <p className="break-all text-xs font-medium tracking-tight text-[#e5e7eb]">
                       {comment.createdBy?.fullName || "Anonymous Identifier"}
                     </p>
                   </td>
 
-                  {/* PAYLOAD CONTENT */}
+                  {}
                   <td className="min-w-0 px-5 py-4.5">
                     <p className="max-w-xl break-words text-sm leading-relaxed text-[#8b90a0]">
                       {comment.content}
                     </p>
                   </td>
 
-                  {/* TIMESTAMP */}
+                  {}
                   <td className="whitespace-nowrap px-5 py-4.5 text-xs font-medium text-[#7c8393]">
                     {Moment(comment.createdAt).fromNow()}
                   </td>
 
-                  {/* STATUS */}
+                  {}
                   <td className="whitespace-nowrap px-5 py-4.5">
 
                     <span
@@ -335,7 +335,7 @@ const Page = () => {
 
                   </td>
 
-                  {/* ACTION */}
+                  {}
                   <td className="whitespace-nowrap px-5 py-4.5 text-center">
 
                     <button
@@ -377,7 +377,7 @@ const Page = () => {
 
                   </td>
 
-                  {/* DELETE */}
+                  {}
                   <td className="whitespace-nowrap px-5 py-4.5 text-center">
 
                     <button

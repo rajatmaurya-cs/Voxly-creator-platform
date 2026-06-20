@@ -1,6 +1,6 @@
 
 
-/*----------------------------------Prompts---------------------------------------------------*/
+
 import {blogPrompt} from './Service/Prompts/Prompt.js'
 import {summaryPrompt} from './Service/Prompts/Prompt.js'
 

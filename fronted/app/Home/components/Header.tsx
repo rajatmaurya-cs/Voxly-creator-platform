@@ -26,22 +26,22 @@ const Hero = () => {
   return (
     <section className="relative overflow-hidden bg-zinc-950 text-zinc-50 selection:bg-zinc-800 selection:text-zinc-100">
       
-      {/* BACKGROUND GRAPHICS: Shader Animation */}
+      {}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <ShaderAnimation className="w-full h-full" />
-        {/* Dark overlay to ensure text readability */}
+        {}
         <div className="absolute inset-0 bg-zinc-950/70" />
       </div>
 
       <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-6 py-32 text-center z-10">
         
-        {/* PREMIUM BADGE */}
+        {}
         <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/40 px-3.5 py-1.5 text-xs font-medium tracking-wider text-zinc-400 uppercase backdrop-blur-md transition-colors duration-300 hover:border-zinc-700">
           <Sparkles size={12} className="text-violet-400 animate-pulse" />
           <span>The Future of Publishing</span>
         </div>
 
-        {/* HEADING: Stark, tight, and high-contrast */}
+        {}
         <h1 className="mt-8 max-w-4xl text-4xl  tracking-tighter sm:text-6xl lg:text-7xl xl:text-8xl bg-gradient-to-b from-zinc-50 via-zinc-200 to-zinc-500 bg-clip-text text-transparent leading-[1.05]">
           Create. Summarize.
           <br />
@@ -50,12 +50,12 @@ const Hero = () => {
           </span>
         </h1>
 
-        {/* SUBTEXT: Clean, readable, and perfectly balanced */}
+        {}
         <p className="mt-8 max-w-2xl text-base tracking-tight text-zinc-400 sm:text-lg lg:text-xl leading-relaxed">
           An intelligent ecosystem built for modern creators. Generate high-fidelity blogs, condense complex articles instantly, and distribute content seamlessly.
         </p>
 
-        {/* CALL TO ACTIONS */}
+        {}
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row w-full sm:w-auto px-4">
           <Link
             href="/admin/generateblog"
@@ -79,7 +79,7 @@ const Hero = () => {
           </Link>
         </div>
 
-        {/* FEATURE GRID SECTION */}
+        {}
         <div className="mt-25 w-full text-center">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-900/30 px-3.5 py-1.5 text-xs font-semibold tracking-wider text-indigo-400 uppercase">
             <Sparkles size={11} className="text-indigo-400" />
@@ -92,7 +92,7 @@ const Hero = () => {
 
         <div className="mt-16 grid w-full max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 text-left">
           
-          {/* Card 1: AI Blog Generator */}
+          {}
           <div className="group relative overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/10 p-8 backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/50 hover:bg-zinc-900/20 hover:shadow-[0_0_15px_2px_rgba(99,102,241,0.25)]">
             <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-400 transition-all duration-300 group-hover:text-indigo-400 group-hover:border-indigo-500/40 group-hover:bg-indigo-500/10 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.3)] group-hover:drop-shadow-[0_0_5px_rgba(129,140,248,0.4)]">
               <BrainCircuit size={18} />
@@ -105,7 +105,7 @@ const Hero = () => {
             </p>
           </div>
 
-          {/* Card 2: AI Summarizer */}
+          {}
           <div className="group relative overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/10 p-8 backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/50 hover:bg-zinc-900/20 hover:shadow-[0_0_15px_2px_rgba(99,102,241,0.25)]">
             <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-400 transition-all duration-300 group-hover:text-indigo-400 group-hover:border-indigo-500/40 group-hover:bg-indigo-500/10 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.3)] group-hover:drop-shadow-[0_0_5px_rgba(129,140,248,0.4)]">
               <Terminal size={18} />
@@ -118,7 +118,7 @@ const Hero = () => {
             </p>
           </div>
 
-          {/* Card 3: Author Dashboard */}
+          {}
           <div className="group relative overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/10 p-8 backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/50 hover:bg-zinc-900/20 hover:shadow-[0_0_15px_2px_rgba(99,102,241,0.25)]">
             <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-400 transition-all duration-300 group-hover:text-indigo-400 group-hover:border-indigo-500/40 group-hover:bg-indigo-500/10 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.3)] group-hover:drop-shadow-[0_0_5px_rgba(129,140,248,0.4)]">
               <LayoutGrid size={18} />
@@ -131,7 +131,7 @@ const Hero = () => {
             </p>
           </div>
 
-          {/* Card 4: Follow & Like */}
+          {}
           <div className="group relative overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/10 p-8 backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/50 hover:bg-zinc-900/20 hover:shadow-[0_0_15px_2px_rgba(99,102,241,0.25)]">
             <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-400 transition-all duration-300 group-hover:text-indigo-400 group-hover:border-indigo-500/40 group-hover:bg-indigo-500/10 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.3)] group-hover:drop-shadow-[0_0_5px_rgba(129,140,248,0.4)]">
               <Heart size={18} />
@@ -144,7 +144,7 @@ const Hero = () => {
             </p>
           </div>
 
-          {/* Card 5: Leaderboard */}
+          {}
           <div className="group relative overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/10 p-8 backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/50 hover:bg-zinc-900/20 hover:shadow-[0_0_15px_2px_rgba(99,102,241,0.25)]">
             <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-400 transition-all duration-300 group-hover:text-indigo-400 group-hover:border-indigo-500/40 group-hover:bg-indigo-500/10 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.3)] group-hover:drop-shadow-[0_0_5px_rgba(129,140,248,0.4)]">
               <Trophy size={18} />
@@ -157,7 +157,7 @@ const Hero = () => {
             </p>
           </div>
 
-          {/* Card 6: Read & Discover */}
+          {}
           <div className="group relative overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/10 p-8 backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/50 hover:bg-zinc-900/20 hover:shadow-[0_0_15px_2px_rgba(99,102,241,0.25)]">
             <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-400 transition-all duration-300 group-hover:text-indigo-400 group-hover:border-indigo-500/40 group-hover:bg-indigo-500/10 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.3)] group-hover:drop-shadow-[0_0_5px_rgba(129,140,248,0.4)]">
               <BookOpen size={18} />

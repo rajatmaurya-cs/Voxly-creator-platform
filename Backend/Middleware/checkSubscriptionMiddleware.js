@@ -26,7 +26,7 @@ const checkSubscriptionMiddleware = async (
       });
     }
 
-    // Free users don't expire
+    
     if (
       !user.plan ||
       user.plan.name === "free"
@@ -34,19 +34,19 @@ const checkSubscriptionMiddleware = async (
       return next();
     }
 
-    // No expiry date set
+    
     if (!user.planExpiresAt) {
       return next();
     }
 
     const now = new Date();
 
-    // Subscription still active
+    
     if (user.planExpiresAt > now) {
       return next();
     }
 
-    // Subscription expired
+    
     const freePlan = await Plan.findOne({
       name: "free",
     });

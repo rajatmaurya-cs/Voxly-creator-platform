@@ -7,7 +7,7 @@ async function getAIStats() {
 
   const allowedCookies = ["accessToken", "refreshToken"];
 
-  // Construct cookie header from the fresh middleware cookies
+  
   const cookieHeader = cookieStore
     .getAll()
     .filter((c) => allowedCookies.includes(c.name))
@@ -24,7 +24,7 @@ async function getAIStats() {
         Cookie: cookieHeader,
       },
       next: {
-        revalidate: 300, // 5 minutes
+        revalidate: 300, 
       },
     }
   );

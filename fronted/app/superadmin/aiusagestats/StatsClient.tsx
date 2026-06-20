@@ -66,7 +66,7 @@ const Client = ({ data }: ClientProps) => {
 
   return (
     <div className="w-full max-w-5xl py-4 animate-in fade-in duration-500">
-      {/* Warning Disclaimer Banner */}
+      {}
       <div className="mb-8 flex items-center gap-3 rounded-xl border border-amber-200 bg-amber-50/70 p-4 text-amber-800 backdrop-blur-sm">
         <FiAlertTriangle className="h-5 w-5 shrink-0 text-amber-600" />
         <div className="text-xs font-semibold tracking-wide">
@@ -74,7 +74,7 @@ const Client = ({ data }: ClientProps) => {
         </div>
       </div>
 
-      {/* Header */}
+      {}
       <div className="mb-10">
         <div className="text-2xl font-bold tracking-tight text-black">
           AI Usage Dashboard
@@ -84,7 +84,7 @@ const Client = ({ data }: ClientProps) => {
         </p>
       </div>
 
-      {/* Stats Cards */}
+      {}
       <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map((card) => (
           <div
@@ -108,7 +108,7 @@ const Client = ({ data }: ClientProps) => {
         ))}
       </div>
 
-      {/* Recent Activity */}
+      {}
       <div 
         className="mt-8 overflow-hidden rounded-xl border bg-white"
         style={{ borderColor: "#e4e4e7" }}
@@ -149,7 +149,7 @@ const Client = ({ data }: ClientProps) => {
                 className="group flex flex-col gap-5 border-b p-6 transition hover:bg-zinc-50 md:flex-row md:items-center md:justify-between last:border-none"
                 style={{ borderColor: "#e4e4e7" }}
               >
-                {/* Left - User Info */}
+                {}
                 <div className="flex items-center gap-4">
                   <div 
                     className="relative flex h-10 w-10 overflow-hidden rounded-lg border bg-zinc-50"
@@ -172,7 +172,7 @@ const Client = ({ data }: ClientProps) => {
                   </div>
                 </div>
 
-                {/* Center - Badges */}
+                {}
                 <div className="flex flex-wrap gap-3">
                   {log.role === "admin" ? (
                     <span 
@@ -198,7 +198,7 @@ const Client = ({ data }: ClientProps) => {
                   </span>
                 </div>
 
-                {/* Right - Timestamp */}
+                {}
                 <div className="text-[10px] text-zinc-600 font-bold tracking-wide">
                   {log.createdAt && (
                     <Moment format="MMM DD, YYYY">
@@ -212,7 +212,7 @@ const Client = ({ data }: ClientProps) => {
         )}
       </div>
 
-      {/* Analytics Section */}
+      {}
       <div 
         className="mt-8 overflow-hidden rounded-xl border bg-white p-6 mb-10"
         style={{ borderColor: "#e4e4e7" }}

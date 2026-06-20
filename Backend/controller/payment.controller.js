@@ -40,7 +40,7 @@ export const generateOrderId = async (req, res) => {
     console.log(`The currentRank is ${currentRank} & the rank is: ${user.plan?.name}`)
     console.log("\nThe newRank is: ",newRank)
 
-    // 🔒 BLOCK upgrade/downgrade or same plan
+    
     if (currentRank >= newRank) {
       console.log("Blocked to buy this Plan")
       return res.status(400).json({
@@ -53,10 +53,10 @@ export const generateOrderId = async (req, res) => {
     console.log("Price:", selectedPlan.price);
 
 
-    // return res.status(200).json({
-    //   success:true,
-    //   message:"Request moved forward"
-    // })
+    
+    
+    
+    
 
     const order = await razorpay.orders.create({
       amount: selectedPlan.price * 100,

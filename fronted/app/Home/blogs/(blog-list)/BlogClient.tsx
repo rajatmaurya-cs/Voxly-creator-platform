@@ -81,10 +81,10 @@ export default function BlogClient({ initialData }: Props) {
 
     const filtered = (blogs || []).filter((blog) => {
 
-      if (searchWords.length === 0) return true; // show all when search empty
+      if (searchWords.length === 0) return true; 
 
       const title = blog.title.toLowerCase();
-      // Any word in search must exist in title
+      
       return searchWords.some(word => title.includes(word));
     });
 
@@ -98,7 +98,7 @@ export default function BlogClient({ initialData }: Props) {
     <section className="min-h-screen bg-[#050816] text-white font-sans antialiased">
       <div className="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:px-8">
 
-        {/* HEADER */}
+        {}
         <div className="mb-10 flex flex-col gap-6">
           <div className="space-y-3">
             <h1 className="text-4xl font-medium tracking-tight md:text-5xl">
@@ -111,7 +111,7 @@ export default function BlogClient({ initialData }: Props) {
             </p>
           </div>
 
-          {/* SEARCH - centered + not too wide */}
+          {}
           <div className="relative mx-auto w-full max-w-lg">
             <Search
               size={18}
@@ -128,7 +128,7 @@ export default function BlogClient({ initialData }: Props) {
           </div>
         </div>
 
-        {/* CATEGORY FILTER - centered */}
+        {}
         <div className="mb-10 flex flex-wrap justify-center gap-3">
           {blogCategories.map((cat) => (
             <button
@@ -144,7 +144,7 @@ export default function BlogClient({ initialData }: Props) {
           ))}
         </div>
 
-        {/* BLOG GRID */}
+        {}
         {isLoading ? (
           <BlogGridSkeleton />
         ) : (
@@ -155,7 +155,7 @@ export default function BlogClient({ initialData }: Props) {
                 key={blog._id}
                 className="group overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-white/20 hover:bg-white/[0.05] hover:shadow-2xl hover:shadow-black/40"
               >
-                {/* IMAGE */}
+                {}
                 <div className="relative overflow-hidden">
                   <div className="relative h-60 w-full overflow-hidden">
                     <Image
@@ -174,13 +174,13 @@ export default function BlogClient({ initialData }: Props) {
                   </span>
                 </div>
 
-                {/* CONTENT */}
+                {}
                 <div className="space-y-5 p-5">
                   <h2 className="line-clamp-2 text-xl font-medium leading-relaxed text-white transition-colors group-hover:text-gray-200">
                     {blog.title}
                   </h2>
 
-                  {/* AUTHOR */}
+                  {}
                   <div className="flex items-center justify-between gap-3 border-t border-white/10 pt-4">
 
                     <div className="flex items-center gap-3">
@@ -220,7 +220,7 @@ export default function BlogClient({ initialData }: Props) {
           </div>
         )}
 
-        {/* LOAD MORE */}
+        {}
         {hasNextPage && (
 
           <div className="flex justify-center pt-14">

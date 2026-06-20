@@ -11,7 +11,7 @@ export function BlogPublicationsSkeleton() {
       <div className="max-w-5xl mx-auto animate-pulse">
 
 
-        {/* DASHBOARD HEADER SKELETON */}
+        {}
         <div className="mb-10 flex flex-col gap-4 border-b border-white/15 pb-8 sm:flex-row sm:items-center sm:justify-between">
 
           <div className="space-y-2">
@@ -41,7 +41,7 @@ export function BlogPublicationsSkeleton() {
 
 
 
-        {/* PUBLICATIONS LIST SKELETON */}
+        {}
         <div className="space-y-4">
 
           {[...Array(3)].map((_, i) => (
@@ -61,12 +61,12 @@ export function BlogPublicationsSkeleton() {
               <div className="flex-1 min-w-0 space-y-3.5">
 
 
-                {/* Status Pill */}
+                {}
                 <div className="w-32 h-5 rounded-md bg-white/20" />
 
 
 
-                {/* Title & Description */}
+                {}
                 <div className="space-y-2">
 
                   <div className="h-6 w-3/4 rounded-lg bg-white/20" />
@@ -79,7 +79,7 @@ export function BlogPublicationsSkeleton() {
 
 
 
-                {/* Metadata details */}
+                {}
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1">
 
                   <div className="flex items-center gap-1.5">
@@ -115,7 +115,7 @@ export function BlogPublicationsSkeleton() {
 
 
 
-              {/* Action Buttons */}
+              {}
               <div className="
               flex shrink-0 items-center gap-2 
               border-t border-white/15 
@@ -124,11 +124,11 @@ export function BlogPublicationsSkeleton() {
               ">
 
 
-                {/* Toggle Status Button Skeleton */}
+                {}
                 <div className="h-9 w-28 rounded-lg bg-white/10 border border-white/15" />
 
 
-                {/* Delete Button Skeleton */}
+                {}
                 <div className="h-9 w-9 rounded-lg bg-white/10 border border-white/15" />
 
 

@@ -7,7 +7,7 @@ export function useHomeBlogs({
   initialData,
 } = {}) {
 
-  // const endpoint = "https://postifybackend-six.vercel.app/api/blog/allblog";
+  
 
   const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/blog/allblog`
 

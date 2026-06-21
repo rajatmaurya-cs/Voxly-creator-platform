@@ -39,18 +39,17 @@ body, html {
 
 
 .rich-text h1,
-.rich-text h2:first-of-type {
-  font-family: var(--rich-font);
+.rich-text h2 {
+  font-family: var(--rt-serif) !important;
   color: var(--story-paper);
-  text-wrap: balance;
+  text-wrap: wrap !important;
 }
 
-.rich-text h2:not(:first-of-type),
 .rich-text h3,
 .rich-text h4 {
   font-family: var(--rt-mono) !important;
   color: var(--story-paper);
-  text-wrap: balance;
+  text-wrap: wrap !important;
 }
 
 .rich-text h1 {

@@ -207,5 +207,8 @@ export const config = {
     "/api/comment/removecomment",
     "/api/payment/:path*",
     "/api/plan/updateplan/:path*",
+    "/api/blog/like/:path*",
+    "/api/auth/follow/:path*",
+    
   ],
 };

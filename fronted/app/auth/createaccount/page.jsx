@@ -109,11 +109,7 @@ const Page = () => {
   };
 
 
-  useEffect(() => {
-    if (otp.length === 6 && !isVerifying && !isVerified) {
-      verifyOtp(email, otp);
-    }
-  }, [otp, isVerifying, isVerified, email, verifyOtp]);
+  // We trigger verifyOtp in the OtpInput onChange instead of a useEffect to prevent infinite loops
 
 
   useEffect(() => {
@@ -476,7 +472,12 @@ return (
 
           <OtpInput
             value={otp}
-            onChange={setOtp}
+            onChange={(newOtp) => {
+              setOtp(newOtp);
+              if (newOtp.length === 6 && !isVerifying && !isVerified) {
+                verifyOtp(email, newOtp);
+              }
+            }}
             numInputs={6}
             disabled={isVerifying}
             containerStyle={{

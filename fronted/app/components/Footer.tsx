@@ -1,6 +1,10 @@
-import React from "react";
+"use client";
+import React, { useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { AuthContext } from "../ContextProvider/AuthProvider";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import {
   FaLinkedinIn,
   FaGithub,
@@ -19,6 +23,9 @@ import {
 } from "lucide-react";
 
 const Footer = () => {
+  const { loggedIn } = useContext(AuthContext) as any;
+  const router = useRouter();
+
   return (
     <footer className="w-full bg-[#16161a] text-zinc-300 border-t border-zinc-900/60 mt-auto font-sans">
       <div className="max-w-7xl mx-auto px-6">
@@ -93,9 +100,21 @@ const Footer = () => {
               <Link href="/Home/blogs" className="text-zinc-400 hover:text-indigo-400 transition-colors">
                 See Blogs
               </Link>
-              <Link href="/admin" className="text-zinc-400 hover:text-indigo-400 transition-colors">
+              
+              <Link
+                href="/admin"
+                onClick={(e) => {
+                  if (!loggedIn) {
+                    e.preventDefault();
+                    toast.error("Login First");
+                    setTimeout(() => router.push('/auth/login'), 2000);
+                  }
+                }}
+                className="text-zinc-400 hover:text-indigo-400 transition-colors"
+              >
                 Create Blog
               </Link>
+
               <Link href="/plans" className="text-zinc-400 hover:text-indigo-400 transition-colors">
                 Pricing Plans
               </Link>

@@ -97,7 +97,7 @@ export const addComment = async (req, res) => {
     const comment = await Comment.create({
       content,
       blogId,
-      createdBy:"698e05f05e8afff72723802a",
+      createdBy: userId,
       riskLevel,
       isApproved
     });

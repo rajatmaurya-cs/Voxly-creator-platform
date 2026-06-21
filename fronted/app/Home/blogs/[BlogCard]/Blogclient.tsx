@@ -204,7 +204,7 @@ const Blogclient = ({ blog }: BlogClientProps) => {
     },
 
     onSuccess: (data) => {
-      if (data.message) toast.success(data.message || "Comment added");
+      if (data.message) toast.success("Comment added SuccessFully");
       else if (!data.message) toast.error("Your comment violated our community guidelines and has been sent for moderation");
       setComment("");
       queryClient.invalidateQueries({

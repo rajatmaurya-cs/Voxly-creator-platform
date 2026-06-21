@@ -64,28 +64,28 @@ app.use(async (req, res, next) => {
   try {
     const refreshToken = req?.cookies?.refreshToken
 
-    console.log("The RefreshToken before decoding🎃: ", refreshToken)
+   if(refreshToken) console.log("The RefreshToken before decoding is present 🎃 ")
 
     if (refreshToken) {
       const decoded = jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET
       );
-      console.log("The RefreshToken after decoding🎃: ", decoded)
+      console.log("The RefreshToken after decoding  is also present 🎃")
     } else {
       console.log("No RefreshToken found in cookies🎃");
     }
 
     const accessToken = req?.cookies?.accessToken
 
-    console.log("The accessToken before decoding🎃: ", accessToken);
+      if(accessToken)console.log("The accessToken before decoding is presetn 🎃 ");
 
     if (accessToken) {
       const decoded2 = jwt.verify(
         accessToken,
         process.env.ACCESS_TOKEN_SECRET
       );
-      console.log("The accessToken after decoding🎃: ", decoded2);
+      console.log("The accessToken after decoding is present 🎃");
     } else {
       console.log("No accessToken found in cookies🎃");
     }

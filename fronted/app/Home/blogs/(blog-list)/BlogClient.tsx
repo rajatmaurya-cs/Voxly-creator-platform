@@ -147,6 +147,11 @@ export default function BlogClient({ initialData }: Props) {
         {}
         {isLoading ? (
           <BlogGridSkeleton />
+        ) : filteredBlogs.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20 text-center w-full col-span-full">
+            <p className="text-xl text-gray-400 font-medium">Blogs are not found</p>
+            <p className="text-sm text-gray-500 mt-2">Try checking other categories or check back later.</p>
+          </div>
         ) : (
           <div className="grid gap-7 sm:grid-cols-2 xl:grid-cols-3">
             {filteredBlogs.map((blog, idx) => (

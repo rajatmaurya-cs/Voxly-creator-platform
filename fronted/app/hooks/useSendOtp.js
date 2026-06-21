@@ -9,9 +9,9 @@ export default function useSendOtp(purpose) {
     const [otpSent, setOtpSent] = useState(false);
 
     const mutation = useMutation({
-
+        
         mutationFn: async ({ email }) => {
-
+                console.log("Request useSendOtp fronted✅")
             const res = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/sendotp`, {
                 method: "POST",
                 headers: {

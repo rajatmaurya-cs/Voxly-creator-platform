@@ -778,9 +778,12 @@ console.log("27")
 
 export const sendOtp = async (req, res) => {
   try {
+
     let { email, purpose } = req.body;
     email = email.toLowerCase().trim();
     purpose = purpose.toUpperCase().trim();
+
+    console.log(`The email  is ${email} & purpose ${purpose} we recieved `)
 
     await sendOtpService(email, purpose);
 
@@ -800,10 +803,13 @@ export const sendOtp = async (req, res) => {
 export const verifyOtp = async (req, res) => {
   try {
     
+    console.log("1  🚀")
 
     let { email, otp, purpose } = req.body;
 
+    console.log(`The otp that comes for verification is ${otp} and the user is ${email} & the purpose is ${purpose}`)
     
+     console.log("2 🚀")
 
     if (!email || !otp || !purpose) {
       return res.status(400).json({
@@ -812,22 +818,31 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
-    
+     console.log("3 🚀")
 
     email = email.toLowerCase().trim();
     purpose = purpose.toUpperCase().trim(); 
 
+
+     console.log("4 🚀")
+
     const otpKey = `otp:${purpose}:${email}`;
     const attemptsKey = `otpAttempts:${purpose}:${email}`;
+
+
+     console.log("5 🚀")
 
     
 
     
     console.log("The status of redisClient: ", redisClient.isOpen)
 
+
+     console.log("6 🚀")
+
     const storedOtp = await redisClient.get(otpKey);
 
-    
+     console.log("7 🚀")
 
     if (!storedOtp) {
       return res.status(400).json({
@@ -836,19 +851,19 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
-    
+     console.log("8 🚀")
 
     
     const attempts = await redisClient.incr(attemptsKey);
 
-    
+     console.log("9 🚀")
 
 
     if (attempts === 1) {
       await redisClient.expire(attemptsKey, 300); 
     }
 
-    
+     console.log("10  🚀")
 
     if (attempts > 5) {
       return res.status(429).json({
@@ -857,12 +872,12 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
-    
+   console.log("11  🚀")    
 
     
     const isMatch = await bcrypt.compare(otp.toString(), storedOtp);
 
-
+ console.log("12  🚀")
     
 
     if (!isMatch) {
@@ -873,7 +888,7 @@ export const verifyOtp = async (req, res) => {
     }
 
     
-
+     console.log("13  🚀")
     
     await redisClient.del(otpKey);
     await redisClient.del(attemptsKey);
@@ -881,7 +896,7 @@ export const verifyOtp = async (req, res) => {
     
 
     
-
+     console.log("14  🚀")
 
 
 
@@ -892,7 +907,7 @@ export const verifyOtp = async (req, res) => {
       { upsert: true }
     );
 
-    
+   console.log("15  🚀")    
 
     return res.status(200).json({
       success: true,

@@ -144,7 +144,10 @@ authRouter.post("/refreshtoken",(req,res , next)=>{
 
 
 
-authRouter.post("/sendotp", sendOtp);
+authRouter.post("/sendotp",(req,res,next)=>{
+  console.log("Request goes for /sendotp  🚀 ")
+  next()
+},sendOtp);
 
 authRouter.post("/verifyotp", (req,res,next)=>{
   console.log("Request goes from /VerifyOtp ✅")

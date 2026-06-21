@@ -12,13 +12,7 @@ export default function useVerifyOtp(purpose) {
 
   const mutation = useMutation({
     mutationFn: async ({ email, otp }) => {
-
-      
-      
-      
-      
-      
-
+      console.log(`The otp that is sending from fronted is ${otp} for user ${email}`)
       const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/verifyotp`,
         {

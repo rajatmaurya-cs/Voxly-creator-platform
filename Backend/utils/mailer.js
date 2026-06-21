@@ -13,6 +13,7 @@ const transporter = nodemailer.createTransport({
 
 export async function sendOtpEmail(to, otp) {
 
+  console.log(`The otp is sending to ${to} and the otp is ${otp}`)
 
   const info = await transporter.sendMail({
     from: `${process.env.BREVO_FROM_NAME} <${process.env.BREVO_FROM_EMAIL}>`,

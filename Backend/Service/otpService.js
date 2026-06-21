@@ -24,6 +24,8 @@ export const sendOtpService = async (email, purpose) => {
 
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
+  console.log("The otp that generate is: ",otp)
+
 
   const hashedOTP = await bcrypt.hash(otp, 10);
 
@@ -41,4 +43,5 @@ export const sendOtpService = async (email, purpose) => {
   await sendOtpEmail(email, otp);
 
   return true;
+  
 };

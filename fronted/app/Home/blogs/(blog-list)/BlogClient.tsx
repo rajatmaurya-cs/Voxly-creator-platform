@@ -173,32 +173,35 @@ export default function BlogClient({ initialData }: Props) {
                   </div>
 
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-
-                  <span className="absolute left-4 top-4 rounded-full border border-white/10 bg-black/40 px-3 py-1 text-xs font-normal text-white backdrop-blur-md">
-                    {blog.category}
-                  </span>
                 </div>
 
-                {}
+                {/* Content */}
                 <div className="space-y-5 p-5">
-                  <h2 className="line-clamp-2 text-xl font-medium leading-relaxed text-white transition-colors group-hover:text-gray-200">
-                    {blog.title}
-                  </h2>
+                  <div className="space-y-2">
+                    <span className="inline-block rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-normal text-gray-300">
+                      {blog.category}
+                    </span>
+                    <h2 className="line-clamp-2 text-xl font-medium leading-relaxed text-white transition-colors group-hover:text-gray-200">
+                      {blog.title}
+                    </h2>
+                  </div>
 
-                  {}
+                  {/* Footer */}
                   <div className="flex items-center justify-between gap-3 border-t border-white/10 pt-4">
 
                     <div className="flex items-center gap-3">
 
-                      <div className="rounded-full border-2 border-white p-1 shadow-lg">
-                        <Image
-                          src={blog?.createdBy?.avatar || "/man.png"}
-                          alt={blog?.createdBy?.fullName || "Unknown"}
-                          width={44}
-                          height={44}
-                          priority
-                          className="rounded-full object-cover"
-                        />
+                      <div className="h-12 w-12 flex-shrink-0 rounded-full border-2 border-white p-1 shadow-lg flex items-center justify-center">
+                        <div className="relative h-full w-full rounded-full overflow-hidden">
+                          <Image
+                            src={blog?.createdBy?.avatar || "/man.png"}
+                            alt={blog?.createdBy?.fullName || "Unknown"}
+                            fill
+                            sizes="40px"
+                            priority
+                            className="object-cover"
+                          />
+                        </div>
                       </div>
 
                       <div>

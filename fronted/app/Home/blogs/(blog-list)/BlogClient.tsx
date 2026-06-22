@@ -181,7 +181,7 @@ export default function BlogClient({ initialData }: Props) {
                     <span className="inline-block rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-normal text-gray-300">
                       {blog.category}
                     </span>
-                    <h2 className="line-clamp-2 text-xl font-medium leading-relaxed text-white transition-colors group-hover:text-gray-200">
+                    <h2 className="line-clamp-2 break-words text-xl font-medium leading-relaxed text-white transition-colors group-hover:text-gray-200">
                       {blog.title}
                     </h2>
                   </div>

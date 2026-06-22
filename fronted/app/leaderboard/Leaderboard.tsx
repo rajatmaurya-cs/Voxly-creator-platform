@@ -132,7 +132,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
                 </h3>
 
 
-                <p className="text-xs text-green-400 mt-1">
+                <p className="text-1xl text-green-400 mt-1 font-bold">
 
                   {topThree[1].followersCount ? (
                     topThree[1].followersCount + ( topThree[1].followersCount )*19379
@@ -196,7 +196,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
                 </h2>
 
 
-                <p className="text-xs text-green-400 mt-1">
+                <p className="text-1xl text-green-400 mt-1 font-bold">
                   {topThree[0].followersCount ? (
                     topThree[0].followersCount + ( topThree[0].followersCount )*19379
                   ).toLocaleString() : ((Math.floor(Math.random() * 9) + 1)*437)}
@@ -258,7 +258,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
                 </h3>
 
 
-                <p className="text-xs text-green-400 mt-1">
+                <p className="text-1xl text-green-400 mt-1 font-bold">
                 {topThree[2].followersCount ? (
                     topThree[2].followersCount + ( topThree[2].followersCount )*19379
                   ).toLocaleString() : ((Math.floor(Math.random() * 9) + 1)*437)}
@@ -365,9 +365,6 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
                    <span className="ml-2">followers</span>
                 </p>
 
-                <p className="text-[11px] text-zinc-500">
-                  followers
-                </p>
 
               </div>
 

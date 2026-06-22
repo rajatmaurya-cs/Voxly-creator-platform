@@ -94,17 +94,7 @@ body, html {
   text-shadow: 0 12px 50px rgba(0, 0, 0, 0.48);
 }
 
-.rich-text h1::before {
-  content: "VEYRA  /  UNTOLD STORIES";
-  display: block;
-  margin-bottom: 1rem;
-  font-family: var(--rich-font);
-  color: var(--story-red);
-  font-size: 0.68rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.24em;
-}
+
 
 .rich-text h1::after {
   content: "";

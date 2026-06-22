@@ -138,10 +138,8 @@ const Page = () => {
   const disableAll = toggleMutation.isPending || removeMutation.isPending;
 
   const handleRemove = async (commentId: string) => {
-    if (confirm("Permanently delete this discussion node?")) {
-      settogglingcomment(commentId);
-      removeMutation.mutate(commentId);
-    }
+    settogglingcomment(commentId);
+    removeMutation.mutate(commentId);
   };
 
   const handleTogglePublish = async (commentId: string, isApproved: boolean) => {

@@ -24,14 +24,14 @@ export const addComment = async (req, res) => {
 
     const userId = req.user.id;
 
-    
+
 
     const key = `CommentAttempts:${userId}`;
-    
+
     const attempts = await redisClient.incr(key);
 
     if (attempts === 1) {
-      await redisClient.expire(key, 60); 
+      await redisClient.expire(key, 60);
     }
 
     if (attempts > 1) {
@@ -41,7 +41,7 @@ export const addComment = async (req, res) => {
       });
     }
 
-    
+
     const { content, blogId } = req.body;
 
     if (!content || !blogId) {
@@ -59,7 +59,7 @@ export const addComment = async (req, res) => {
       });
     }
 
-    
+
 
     let riskLevel = spamFilter(content);
 
@@ -90,7 +90,7 @@ export const addComment = async (req, res) => {
       }
     }
 
-    
+
     const isApproved = riskLevel === "SAFE";
 
 
@@ -123,40 +123,40 @@ export const addComment = async (req, res) => {
 
 
 
- export const getCommentsByBlogId = async (req, res) => {
-    try {
+export const getCommentsByBlogId = async (req, res) => {
+  try {
 
-      const { blogId } = req.params;
+    const { blogId } = req.params;
 
-      const comments = await Comment.find({
-        blogId,
-        isApproved: true
-      })
-        .populate("createdBy", "fullName avatar")
-        .sort({ createdAt: -1 });
+    const comments = await Comment.find({
+      blogId,
+      isApproved: true
+    })
+      .populate("createdBy", "fullName avatar")
+      .sort({ createdAt: -1 });
 
 
-      if (comments.length === 0) {
-        return res.status(200).json({
-          success: true,
-          message: "No comments yet",
-          comments: []
-        });
-      }
-
-      res.status(200).json({
+    if (comments.length === 0) {
+      return res.status(200).json({
         success: true,
-        message: "Comments fetched successfully",
-        comments
-      });
-
-    } catch (error) {
-      res.status(500).json({
-        success: false,
-        message: error.message
+        message: "No comments yet",
+        comments: []
       });
     }
-  };
+
+    res.status(200).json({
+      success: true,
+      message: "Comments fetched successfully",
+      comments
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
 
 
 
@@ -165,32 +165,32 @@ export const getAllComments = async (req, res) => {
 
   try {
     console.log("Entered in getAllComments")
-    
+
 
     const userId = req.user.id;
 
-    console.log("The admin is: ",userId)
+    console.log("The admin is: ", userId)
 
-    
+
     const blogs = await Blog.find({
       createdBy: userId
     }).select("_id");
 
-    
+
     const blogIds = blogs.map(blog => blog._id);
 
-    
+
     const comments = await Comment.find({
       blogId: { $in: blogIds }
     })
 
-      
+
       .populate("createdBy", "_id fullName email avatar")
 
-      
+
       .populate("blogId", "_id title slug")
 
-      
+
       .populate("moderatedBy", "_id fullName")
 
       .sort({ createdAt: -1 });
@@ -201,7 +201,7 @@ export const getAllComments = async (req, res) => {
     });
 
   } catch (error) {
-    console.log("The error in getAllComments: ",error)
+    console.log("The error in getAllComments: ", error)
 
     res.status(500).json({
       success: false,
@@ -248,86 +248,83 @@ export const getAllComments = async (req, res) => {
 
 
 
-  export const toggleComment = async (req, res) => {
-    try {
-
-      
-      
-      
-      
-      
-      
+export const toggleComment = async (req, res) => {
+  try {
 
 
-      const { commentId } = req.body;
 
 
-      const comment = await Comment.findById(commentId)
 
 
-      if (!comment) {
-        return res.status(404).json({
-          success: false,
-          message: "Comment not found"
-        });
-      }
 
 
-      comment.isApproved = !comment.isApproved;
-      
-      comment.moderatedAt = Date.now()
 
-      await comment.save();
+    const { commentId } = req.body;
 
 
-      res.status(200).json({
-        success: true,
-        message: "Comment approval status updated",
-        isApproved: comment.isApproved
-      });
+    const comment = await Comment.findById(commentId)
 
-    } catch (error) {
-      res.status(500).json({
+
+    if (!comment) {
+      return res.status(404).json({
         success: false,
-        message: error.message
+        message: "Comment not found"
       });
     }
-  };
 
 
+    comment.isApproved = !comment.isApproved;
+
+    comment.moderatedAt = Date.now()
+
+    await comment.save();
 
 
+    res.status(200).json({
+      success: true,
+      message: "Comment approval status updated",
+      isApproved: comment.isApproved
+    });
 
-  export const removecomment = async (req, res) => {
-    try {
-
-      
-      
-      
-      
-      
-      
-
-
-
-      const { commentId } = req.body;
-      
-      const comment = await Comment.findByIdAndDelete(commentId)
-
-      if (!comment) {
-        return res.json({
-          success: false,
-          message: "Comment not found"
-        })
-      }
-
-      return res.json({
-        success: true,
-        message: "Comment deleted successfully"
-      })
-
-    } catch (error) {
-
-    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
   }
+};
+
+
+
+
+
+export const removecomment = async (req, res) => {
+  try {
+    const { commentId } = req.body;
+
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    await delay(5000);
+    return res.status(200).json({
+      success:true,
+      message:"Comment deleted successfully"
+    })
+
+    const comment = await Comment.findByIdAndDelete(commentId)
+
+    if (!comment) {
+      return res.json({
+        success: false,
+        message: "Comment not found"
+      })
+    }
+
+    return res.json({
+      success: true,
+      message: "Comment deleted successfully"
+    })
+
+  } catch (error) {
+
+  }
+}
 

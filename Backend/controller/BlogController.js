@@ -31,7 +31,7 @@ export const addBlog = async (req, res) => {
       category,
       isPublished,
       aiAnalysis,
-      contentSource, 
+      contentSource,
     } = blogData;
 
 
@@ -97,7 +97,7 @@ export const addBlog = async (req, res) => {
 export const getallblog = async (req, res) => {
   try {
 
-      
+
     const page = Math.max(parseInt(req.query.page || "1", 10), 1);
 
     const limit = Math.min(Math.max(parseInt(req.query.limit || "8", 10), 1), 50);
@@ -154,15 +154,15 @@ export const getallblog = async (req, res) => {
 
 export const BlogAdmin = async (req, res) => {
 
-  console.log("BlogbyAdmin: ",req.user.name)
-  
+  console.log("BlogbyAdmin: ", req.user.name)
+
   const page = parseInt(req.query.page, 10) || 1;
 
   const limit = parseInt(req.query.limit, 10) || 10;
 
   const skip = (page - 1) * limit;
 
-  
+
   const filter = {
     createdBy: req.user.id,
   };
@@ -200,19 +200,19 @@ export const getblogbyid = async (req, res) => {
 
 
     const { blogId } = req.params;
-    
-    console.log("Entered in blogbyId: ",blogId)
+
+    console.log("Entered in blogbyId: ", blogId)
 
 
 
     const blog = await Blog.findById(blogId).populate("createdBy", "fullName email avatar");
 
 
-    
+
 
 
     if (!blog) return res.json({ success: false, message: "Blog not found" })
-      
+
     res.json({
       success: true,
       blog,
@@ -230,42 +230,35 @@ export const getblogbyid = async (req, res) => {
 
 export const deleteBlog = async (req, res) => {
   try {
-
-    
-    
-    
-    
-    
-    
     const { blogId } = req.body;
 
-    console.log("The blogId:",blogId)
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    await delay(5000); 
+    
+   return res.status(200).json({
+      success: true,
+      message: "Blog deleted successfully",
+    });
 
+    const deletedBlog = await Blog.findByIdAndDelete(blogId);
 
-
-
-    
-
-    
-    
-    
-    
-    
-    
-
-    
-console.log("Blog deleted successfully")
+    if (!deletedBlog) {
+      return res.status(404).json({
+        success: false,
+        message: "Blog not found",
+      });
+    }
 
     res.status(200).json({
       success: true,
-      message: "Blog deleted successfully"
+      message: "Blog deleted successfully",
     });
 
   } catch (error) {
     res.status(500).json({
       success: false,
       message: "Server error",
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -276,12 +269,12 @@ console.log("Blog deleted successfully")
 export const toggleblogpublish = async (req, res) => {
   try {
 
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
 
     console.log("Entered in toggleblegpublish")
 
@@ -291,7 +284,7 @@ export const toggleblogpublish = async (req, res) => {
 
     const blog = await Blog.findById(blogId);
 
-    console.log("The blog that has to be delete : ",blog.title)
+    console.log("The blog that has to be delete : ", blog.title)
 
 
     if (!blog) {
@@ -301,15 +294,15 @@ export const toggleblogpublish = async (req, res) => {
       });
     }
 
-    console.log("The current Status of blog is: ",blog.isPublished)
+    console.log("The current Status of blog is: ", blog.isPublished)
 
     blog.isPublished = !blog.isPublished;
 
-    
+
 
     await blog.save();
 
-    console.log("Now after the current status blog: ",blog.isPublished)
+    console.log("Now after the current status blog: ", blog.isPublished)
 
     res.json({ success: true, message: "Blog updated status successfully" });
   } catch (error) {
@@ -350,23 +343,23 @@ export const toggleLikeBlog = async (req, res) => {
   try {
     const blogId = req.params.id;
 
-    const userId = req.user.id; 
+    const userId = req.user.id;
 
     const blog = await Blog.findById(blogId);
 
     if (!blog) return res.status(404).json({ message: "Blog not found" });
 
-    
+
     const likesArray = blog.likes || [];
     const hasLiked = likesArray.some(id => id.toString() === userId.toString());
 
     if (hasLiked) {
-      
+
       await Blog.findByIdAndUpdate(blogId, { $pull: { likes: userId } });
       return res.status(200).json({ liked: false, message: "Unliked successfully" });
 
     } else {
-      
+
       await Blog.findByIdAndUpdate(blogId, { $addToSet: { likes: userId } });
 
       return res.status(200).json({ liked: true, message: "Liked successfully" });

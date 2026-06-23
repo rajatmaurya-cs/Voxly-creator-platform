@@ -16,7 +16,7 @@ import { AuthContext } from "../ContextProvider/AuthProvider";
 import { useContext, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/apiFetch";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import UserProfileModal from "./UserProfileModal";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";

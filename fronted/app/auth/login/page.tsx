@@ -1,12 +1,19 @@
 "use client";
 
 import { useState, useContext } from "react";
+
 import Image from "next/image";
+
 import { useRouter } from "next/navigation";
+
 import { useMutation } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+
+import {toast } from "sonner";
+
 import Link from "next/link";
+
 import { AuthContext } from "@/app/ContextProvider/AuthProvider";
+
 import EditorLoader from "@/app/Animations/EditorLoader";
 
 
@@ -77,7 +84,7 @@ export default function LoginPage() {
 
       setUser(data.user);
 
-      toast.success("Login successful");
+      toast.success("Login successfull");
 
       router.replace("/");
 

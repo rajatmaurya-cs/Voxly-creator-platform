@@ -3,7 +3,8 @@ import { Geist, Geist_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 import { AuthProvider } from "./ContextProvider/AuthProvider";
-import { Toaster } from "react-hot-toast";
+// import { Toaster } from "react-hot-toast";
+import { Toaster } from "sonner";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -39,14 +40,26 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#050816]">
-        
+
         <Providers>
           <AuthProvider>
             {children}
           </AuthProvider>
         </Providers>
 
-        <Toaster position="top-right" />
+        <Toaster
+        position="top-center"
+          toastOptions={{
+            classNames: {
+              toast:
+                "!bg-zinc-900/90 !text-white !border-zinc-700 backdrop-blur-lg",
+              title: "!text-white",
+              description: "!text-zinc-300",
+              actionButton:
+                "!bg-white !text-black !border-none",
+            },
+          }}
+        />
 
       </body>
     </html>

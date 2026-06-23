@@ -1,15 +1,17 @@
 'use client'
+
 import { useEffect, useState } from "react";
+
 import { useRouter } from "next/navigation";
+
 import OtpInput from "react-otp-input";
-import toast from "react-hot-toast";
+
+import {toast } from "sonner";
+
 import { useMutation } from "@tanstack/react-query";
 
-
-
-
-
 import useSendOtp from '@/app/hooks/useSendOtp'
+
 import useVerifyOtp from '@/app/hooks/useVeriyOtp'
 
 const ForgetPassword = () => {

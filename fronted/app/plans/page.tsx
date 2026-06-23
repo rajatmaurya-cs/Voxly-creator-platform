@@ -1,6 +1,6 @@
 import { apiFetch } from '@/lib/apiFetch'
 import Plans from './plans'
-import React from 'react'
+
 
 const Page = async () => {
   let plans = [];

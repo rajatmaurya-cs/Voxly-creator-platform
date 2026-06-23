@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import Script from "next/script";
 import { apiFetch } from "@/lib/apiFetch";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import {
   Sparkles,
@@ -46,7 +46,11 @@ interface PlansProps {
 const Plans = ({ dbPlans = [] }: PlansProps) => {
 
   const authContext = useContext(AuthContext);
-  const user = authContext ? authContext.user : null;
+
+ 
+
+
+  const { loggedIn, user } = useContext(AuthContext) as any;
 
   const router = useRouter();
 
@@ -55,6 +59,11 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
   const handlePayment = async (plan: string) => {
     try {
       if (plan === 'free') { router.push('/Home'); return; }
+      if (!loggedIn) {
+        toast.error("Please login to upgrade your plan");
+        router.push("/auth/login");
+        return;
+      }
       toast.loading("Initiating payment request...", { id: "payment-toast" });
       const response = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/payment/create-order`,
@@ -73,15 +82,15 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
       const data = await response.json();
 
       if (!data.success) {
-        
-        toast.error(data.message , {id:"payment-toast"})
-        return ;
+
+        toast.error(data.message, { id: "payment-toast" })
+        return;
       }
 
       if (!window.Razorpay) {
-        
+
         toast.error("Something Went Wrong.")
-        return ;
+        return;
       }
 
       toast.success("Order created! Opening payment modal...", { id: "payment-toast" });
@@ -154,13 +163,13 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
       everythingText: "Everything you need:",
       popular: false,
       features: [
-        { 
-          text: `${dbPlans.find((p) => p.name.toLowerCase() === "free")?.limits?.aiGeneration ?? 1} AI Generation limit`, 
-          icon: Zap 
+        {
+          text: `${dbPlans.find((p) => p.name.toLowerCase() === "free")?.limits?.aiGeneration ?? 1} AI Generation limit`,
+          icon: Zap
         },
-        { 
-          text: `${dbPlans.find((p) => p.name.toLowerCase() === "free")?.limits?.aiSummarizer ?? 2} AI Summariser limit`, 
-          icon: MessageSquare 
+        {
+          text: `${dbPlans.find((p) => p.name.toLowerCase() === "free")?.limits?.aiSummarizer ?? 2} AI Summariser limit`,
+          icon: MessageSquare
         },
         { text: "Standard generation speed", icon: TrendingUp },
         { text: "Access to standard model", icon: Cpu },
@@ -177,13 +186,13 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
       everythingText: "Everything in Free and:",
       popular: true,
       features: [
-        { 
-          text: `${dbPlans.find((p) => p.name.toLowerCase() === "pro")?.limits?.aiGeneration ?? 10} AI Generation limit`, 
-          icon: Zap 
+        {
+          text: `${dbPlans.find((p) => p.name.toLowerCase() === "pro")?.limits?.aiGeneration ?? 10} AI Generation limit`,
+          icon: Zap
         },
-        { 
-          text: `${dbPlans.find((p) => p.name.toLowerCase() === "pro")?.limits?.aiSummarizer ?? 10} AI Summariser limit`, 
-          icon: MessageSquare 
+        {
+          text: `${dbPlans.find((p) => p.name.toLowerCase() === "pro")?.limits?.aiSummarizer ?? 10} AI Summariser limit`,
+          icon: MessageSquare
         },
         { text: "Fast generation speed", icon: TrendingUp },
         { text: "Access to premium model", icon: Sparkles },
@@ -200,13 +209,13 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
       everythingText: "Everything in Pro and:",
       popular: false,
       features: [
-        { 
-          text: `${dbPlans.find((p) => p.name.toLowerCase() === "plus")?.limits?.aiGeneration ?? 40} AI Generation limit`, 
-          icon: Zap 
+        {
+          text: `${dbPlans.find((p) => p.name.toLowerCase() === "plus")?.limits?.aiGeneration ?? 40} AI Generation limit`,
+          icon: Zap
         },
-        { 
-          text: `${dbPlans.find((p) => p.name.toLowerCase() === "plus")?.limits?.aiSummarizer ?? 40} AI Summariser limit`, 
-          icon: MessageSquare 
+        {
+          text: `${dbPlans.find((p) => p.name.toLowerCase() === "plus")?.limits?.aiSummarizer ?? 40} AI Summariser limit`,
+          icon: MessageSquare
         },
         { text: "Maximum generation speed", icon: TrendingUp },
         { text: "Access to elite writing models", icon: Sparkles },
@@ -225,10 +234,10 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
       />
 
       <div className="min-h-screen text-white pt-10 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden flex flex-col items-center">
-       
+
         <div className="max-w-7xl w-full mx-auto relative z-10">
-          
-          {}
+
+          { }
           <div className="max-w-6xl mx-auto mb-10 p-4 rounded-2xl border border-amber-500/20 bg-amber-500/5 text-amber-200/90 text-sm leading-relaxed flex items-center gap-3 shadow-[0_4px_20px_rgba(245,158,11,0.05)]">
             <span className="text-lg leading-none select-none">⚠️</span>
             <div>
@@ -237,9 +246,9 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
             </div>
           </div>
 
-          {}
+          { }
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16 max-w-6xl mx-auto">
-            {}
+            { }
             <div className="text-center lg:text-left flex flex-col items-center lg:items-start">
               <h2 className="text-sm font-medium tracking-[0.2em] text-neutral-400 uppercase mb-3">
                 Pricing Plans
@@ -251,7 +260,7 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
                 Supercharge your social presence and content workflow with Veyra.
               </p>
 
-              {}
+              { }
               <div className="mt-10 flex items-start gap-3 max-w-lg text-left">
                 <ShieldCheck className="w-5 h-5 text-neutral-500 shrink-0 mt-0.5" strokeWidth={1.5} />
                 <p className="text-sm text-neutral-400 font-light leading-relaxed">
@@ -261,13 +270,13 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
               </div>
             </div>
 
-            {}
+            { }
             <div className="flex justify-center lg:justify-end items-center overflow-visible mt-2.5">
               <PriceCards />
             </div>
           </div>
 
-          {}
+          { }
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
             {plansList.map((plan) => {
               const isPopular = plan.popular;
@@ -276,12 +285,12 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
                 <div
                   key={plan.id}
                   className={`flex flex-col justify-between p-8 sm:p-10 rounded-[32px] bg-[#212121] border transition-all duration-300 hover:scale-[1.02] hover:border-neutral-700/80 ${isPopular
-                      ? "border-neutral-700 shadow-[0_0_40px_rgba(139,92,246,0.05)] ring-1 ring-neutral-700"
-                      : "border-neutral-800/80"
+                    ? "border-neutral-700 shadow-[0_0_40px_rgba(139,92,246,0.05)] ring-1 ring-neutral-700"
+                    : "border-neutral-800/80"
                     }`}
                 >
                   <div>
-                    {}
+                    { }
                     <div className="flex justify-between items-start">
                       <h3 className="text-4xl  text-white tracking-tight">
                         {plan.name}
@@ -297,7 +306,7 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
                       ) : null}
                     </div>
 
-                    {}
+                    { }
                     <div className="flex flex-col gap-1 mt-6">
                       {plan.id === "pro" && (
                         <span className="text-sm text-neutral-400 font-medium">From</span>
@@ -314,26 +323,26 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
                       </div>
                     </div>
 
-                    {}
+                    { }
                     <p className="mt-4 text-base text-zinc-300 font-medium">
                       {plan.subtitle}
                     </p>
 
-                    {}
+                    { }
                     <button
                       onClick={() => handlePayment(plan.id)}
                       disabled={isCurrentPlan}
                       className={`w-full mt-6 py-3.5 px-6 rounded-full font-semibold text-center transition-all duration-200 cursor-pointer ${isCurrentPlan
-                          ? "bg-zinc-800 text-zinc-500 border border-zinc-700/50 cursor-not-allowed opacity-60"
-                          : plan.id === "free"
-                            ? "bg-neutral-800 hover:bg-neutral-700 text-white border border-neutral-700"
-                            : "bg-white hover:bg-neutral-200 text-neutral-900"
+                        ? "bg-zinc-800 text-zinc-500 border border-zinc-700/50 cursor-not-allowed opacity-60"
+                        : plan.id === "free"
+                          ? "bg-neutral-800 hover:bg-neutral-700 text-white border border-neutral-700"
+                          : "bg-white hover:bg-neutral-200 text-neutral-900"
                         }`}
                     >
                       {isCurrentPlan ? "Current Plan" : plan.buttonText}
                     </button>
 
-                    {}
+                    { }
                     <div className="mt-8">
                       <p className="text-sm font-semibold text-zinc-200 mb-4">
                         {plan.everythingText}
@@ -354,7 +363,7 @@ const Plans = ({ dbPlans = [] }: PlansProps) => {
                     </div>
                   </div>
 
-                  {}
+                  { }
                   <div className="mt-8 pt-6 border-t border-neutral-900/60 text-[11px] text-neutral-500 space-y-2">
                     <p>Unlimited subject to abuse guardrails.</p>
                     <div className="flex flex-col gap-1.5">

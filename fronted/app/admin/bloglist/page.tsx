@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import { usePublication } from '../../hooks/usePublication'
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import {toast } from "sonner";
 import { BlogPublicationsSkeleton } from './blog-loading';
 import {
   CalendarDays,

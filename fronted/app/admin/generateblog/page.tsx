@@ -12,8 +12,6 @@ import dynamic from "next/dynamic";
 
 import EditorLoader from '@/app/Animations/EditorLoader'
 
-
-
 import Loader from "@/app/Animations/Loader";
 
 import AIButton from "@/app/Animations/AIButton";
@@ -22,10 +20,7 @@ import { Listbox } from '@headlessui/react'
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import toast from "react-hot-toast";
-
-
-
+import {toast } from "sonner";
 
 import { blogCategories } from "@/app/assets/assets";
 

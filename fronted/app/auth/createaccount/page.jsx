@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import OtpInput from "react-otp-input";
 
-import toast from "react-hot-toast";
+import {toast } from "sonner";
 
 import { useMutation } from "@tanstack/react-query";
 

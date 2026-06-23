@@ -146,8 +146,8 @@ const Navbar = () => {
                   hover:bg-zinc-900 hover:border-zinc-700 hover:text-zinc-100
                   transition-all duration-200"
               >
-                <User size={20} className="text-indigo-400" />
-                <span className="text-zinc-100">Sign In</span>
+                <User size={20} />
+                <span className="text-zinc-400">Sign In</span>
               </Link>
             )}
 

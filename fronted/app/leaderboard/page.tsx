@@ -13,6 +13,8 @@ const page = async () => {
   );
   const data = await res.json();
 
+  
+
   return (
 
     <Leaderboard data={data} />

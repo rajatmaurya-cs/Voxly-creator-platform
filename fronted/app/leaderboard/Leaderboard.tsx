@@ -18,6 +18,8 @@ type LeaderboardProps = {
 
 const Leaderboard = ({ data }: LeaderboardProps) => {
 
+console.log("The data for leaderboard is✅ :",data)
+
   const users = data?.users || [];
 
   const topThree = users.slice(0, 3);
@@ -33,6 +35,11 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
       .join("")
       .toUpperCase()
       .slice(0, 2);
+  };
+
+  const truncateName = (name: string, maxLength: number = 15) => {
+    if (!name) return "";
+    return name.length > maxLength ? `${name.slice(0, maxLength)}.....` : name;
   };
 
 
@@ -128,7 +135,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
 
 
                 <h3 className="font-bold text-zinc-100">
-                  {topThree[1].fullName}
+                  {truncateName(topThree[1].fullName, 12)}
                 </h3>
 
 
@@ -192,7 +199,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
 
 
                 <h2 className="text-lg font-bold">
-                  {topThree[0].fullName}
+                  {truncateName(topThree[0].fullName, 14)}
                 </h2>
 
 
@@ -254,7 +261,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
 
 
                 <h3 className="font-bold">
-                  {topThree[2].fullName}
+                  {truncateName(topThree[2].fullName, 12)}
                 </h3>
 
 
@@ -339,7 +346,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
                 <div>
 
                   <h4 className="font-semibold text-sm">
-                    {user.fullName}
+                    {truncateName(user.fullName, 18)}
                   </h4>
                 </div>
 

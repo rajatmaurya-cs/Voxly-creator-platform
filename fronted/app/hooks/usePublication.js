@@ -9,7 +9,7 @@ export function usePublication({ category = "All", limit = 3, isAdmin = false, }
     queryFn: async ({ pageParam = 1 }) => {
 
       const res = await apiFetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/blog/admin/blogs?page=${pageParam}&limit=${limit}&category=${category}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/blog/dashboard/blogs?page=${pageParam}&limit=${limit}&category=${category}`,
        
       );
 

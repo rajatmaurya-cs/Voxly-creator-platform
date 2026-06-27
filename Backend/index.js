@@ -30,24 +30,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.options(/.*/, cors(corsOptions));
-
-
-
-
-
-
 app.set("trust proxy", 1);
-
-
-app.get("/api/health", (req, res) => {
-
-  res.json({ status: "ok", service: "VEYRA Backend" });
-
-});
-
-
-
-
 
 let isDbConnected = false;
 
@@ -60,43 +43,7 @@ async function init() {
 }
 
 
-app.use(async (req, res, next) => {
-  try {
-    const refreshToken = req?.cookies?.refreshToken
-
-   if(refreshToken) console.log("The RefreshToken before decoding is present 🎃 ")
-
-    if (refreshToken) {
-      const decoded = jwt.verify(
-        refreshToken,
-        process.env.REFRESH_TOKEN_SECRET
-      );
-      console.log("The RefreshToken after decoding  is also present 🎃")
-    } else {
-      console.log("No RefreshToken found in cookies🎃");
-    }
-
-    const accessToken = req?.cookies?.accessToken
-
-      if(accessToken)console.log("The accessToken before decoding is presetn 🎃 ");
-
-    if (accessToken) {
-      const decoded2 = jwt.verify(
-        accessToken,
-        process.env.ACCESS_TOKEN_SECRET
-      );
-      console.log("The accessToken after decoding is present 🎃");
-    } else {
-      console.log("No accessToken found in cookies🎃");
-    }
-  } catch(error) {
-    console.log("The Error is: ", error)
-  } finally {
-    next()
-  }
-})
-
-
+// ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤ (Initialize the database & Redis)  ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤
 app.use(async (req, res, next) => {
   try {
     await init();
@@ -108,19 +55,7 @@ app.use(async (req, res, next) => {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+// ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤ (Authentication)  ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤
 app.use("/api/auth", (req, res, next) => {
 
   console.log("indes.js /api/auth ✅")
@@ -130,9 +65,7 @@ app.use("/api/auth", (req, res, next) => {
 }, authRoutes);
 
 
-
-
-
+// ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤ (Blog)  ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤
 app.use("/api/blog", (req, res, next) => {
 
   console.log("index.js/api/blog  ✅")
@@ -141,6 +74,8 @@ app.use("/api/blog", (req, res, next) => {
 
 }, blogRouter);
 
+
+// ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤ (Comment)  ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤
 app.use("/api/comment", (req, res, next) => {
 
   console.log("index.js /api/comment ✅")
@@ -149,7 +84,7 @@ app.use("/api/comment", (req, res, next) => {
 }, commentRouter);
 
 
-
+// ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤ (AI Configuration)  ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤
 app.use("/api/ai/config", authMiddleware, (req, res, next) => {
   console.log("/api/ai/config ✅")
   next()
@@ -157,6 +92,7 @@ app.use("/api/ai/config", authMiddleware, (req, res, next) => {
 
 
 
+// ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤ (AI service (generator & summariser))  ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤
 app.use("/api/ai", authMiddleware, (req, res, next) => {
 
   console.log("index.js /api/ai ✅")
@@ -167,7 +103,7 @@ app.use("/api/ai", authMiddleware, (req, res, next) => {
   next()
 
 }, AiRouter);
-
+// ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤ (Razorpay)  ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤
 
 app.use('/api/payment', (req, res, next) => {
 
@@ -177,6 +113,7 @@ app.use('/api/payment', (req, res, next) => {
 
 }, authMiddleware, paymentroutes);
 
+// ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤ (Plan info & Update Plan)  ✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤✤
 app.use('/api/plan', (req, res, next) => {
   console.log("Root File /api/plans✅");
   next();

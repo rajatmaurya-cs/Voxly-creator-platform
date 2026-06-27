@@ -114,6 +114,7 @@ const Page = () => {
 
 
       queryClient.invalidateQueries({ queryKey: ["blogs"] });
+      queryClient.invalidateQueries({ queryKey: ["latest-blogs"] });
       
       queryClient.invalidateQueries({
         queryKey: ["comments"],

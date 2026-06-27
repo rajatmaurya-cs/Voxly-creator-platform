@@ -102,7 +102,7 @@ const Footer = () => {
               </Link>
               
               <Link
-                href="/admin"
+                href="/dashboard"
                 onClick={(e) => {
                   if (!loggedIn) {
                     e.preventDefault();

@@ -171,7 +171,7 @@ export const getAllComments = async (req, res) => {
 
     const userId = req.user.id;
 
-    console.log("The admin is: ", userId)
+   
 
 
     const blogs = await Blog.find({

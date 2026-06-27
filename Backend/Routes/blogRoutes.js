@@ -1,7 +1,7 @@
 import express from "express"
 import upload from '../Middleware/Multer.js'
 import authMiddleware from "../Middleware/authMiddleware.js"
-import  {addBlog , getallblog ,getblogbyid , deleteBlog , toggleblogpublish , GenerateReport ,BlogAdmin , toggleLikeBlog} from '../controller/BlogController.js'
+import  {addBlog , getallblog ,getblogbyid , deleteBlog , toggleblogpublish , GenerateReport ,BlogUserDashboard , toggleLikeBlog} from '../controller/BlogController.js'
 import {getDashboardStats} from '../controller/Dashboard.js'
 const blogRouter = express.Router();
 
@@ -15,10 +15,10 @@ blogRouter.get('/allblog',getallblog)
 
 
 
-blogRouter.get('/admin/blogs' ,(req,res,next)=>{
-    console.log("The /admin/blogs of dashbaord for admin ✅")
+blogRouter.get('/dashboard/blogs' ,(req,res,next)=>{
+    
     next();
-}, authMiddleware ,BlogAdmin)
+}, authMiddleware ,BlogUserDashboard)
 
 
 

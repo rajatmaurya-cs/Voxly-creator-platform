@@ -24,25 +24,25 @@ type NavItem = {
 const navItems: NavItem[] = [
   {
     label: 'Dashboard',
-    href: '/admin',
+    href: '/dashboard',
     icon: Home,
   },
 
   {
     label: 'Write Story',
-    href: '/admin/generateblog',
+    href: '/dashboard/generateblog',
     icon: SquarePlus,
   },
 
   {
     label: 'Publications',
-    href: '/admin/bloglist',
+    href: '/dashboard/bloglist',
     icon: BookCheck,
   },
 
   {
     label: 'Discussions',
-    href: '/admin/commentslist',
+    href: '/dashboard/commentslist',
     icon: MessageCircleMore,
   },
 ]

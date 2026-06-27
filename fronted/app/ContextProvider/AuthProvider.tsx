@@ -19,7 +19,7 @@ type User = {
   name: string;
   email: string;
   avatar: string;
-  role: "ADMIN" | "USER";
+  role: "ADMIN" | "USER" | "SUPERADMIN";
   createdAt: string;
 };
 

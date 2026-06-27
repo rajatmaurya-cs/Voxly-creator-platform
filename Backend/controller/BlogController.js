@@ -152,12 +152,12 @@ export const getallblog = async (req, res) => {
 
 
 
-export const BlogAdmin = async (req, res) => {
+export const BlogUserDashboard = async (req, res) => {
 
 
- 
 
-  console.log("BlogbyAdmin: ", req.user.name)
+
+await new Promise(resolve => setTimeout(resolve, 3000));
 
   const page = parseInt(req.query.page, 10) || 1;
 
@@ -235,9 +235,13 @@ export const deleteBlog = async (req, res) => {
   try {
     const { blogId } = req.body;
 
-   
+   await new Promise(resolve => setTimeout(resolve, 5000));
 
-   
+    return res.status(200).json({
+      success: true,
+      message: "Blog deleted successfully",
+    });
+
 
     const deletedBlog = await Blog.findByIdAndDelete(blogId);
 
@@ -271,7 +275,7 @@ export const toggleblogpublish = async (req, res) => {
 
 
 
-   
+
 
     console.log("Entered in toggleblegpublish")
 

@@ -80,8 +80,8 @@ const Navbar = () => {
   
   const navLinks = [
     {
-      href: "/admin",
-      label: "Admin",
+      href: "/dashboard",
+      label: "Dashboard",
       icon: <LayoutGrid size={20} className="text-indigo-400" />,
       onClick: (e: any) => {
         

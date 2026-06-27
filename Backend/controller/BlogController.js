@@ -1,4 +1,5 @@
 import Blog from '../Models/Blog.js'
+import Comment from '../Models/Comments.js'
 import fs from 'fs'
 import imageKit from '../Config/imagekit.js'
 import { convertHtmlToText } from '../utils/htmlToPlainText.js'
@@ -157,7 +158,7 @@ export const BlogUserDashboard = async (req, res) => {
 
 
 
-await new Promise(resolve => setTimeout(resolve, 3000));
+// await new Promise(resolve => setTimeout(resolve, 3000));
 
   const page = parseInt(req.query.page, 10) || 1;
 
@@ -235,26 +236,21 @@ export const deleteBlog = async (req, res) => {
   try {
     const { blogId } = req.body;
 
-   await new Promise(resolve => setTimeout(resolve, 5000));
+    const deletingBlog = await Blog.findByIdAndDelete(blogId);
 
-    return res.status(200).json({
-      success: true,
-      message: "Blog deleted successfully",
-    });
-
-
-    const deletedBlog = await Blog.findByIdAndDelete(blogId);
-
-    if (!deletedBlog) {
+    if (!deletingBlog) {
       return res.status(404).json({
         success: false,
         message: "Blog not found",
       });
     }
 
+    // Delete all comments associated with the deleted blog
+    await Comment.deleteMany({ blogId });
+
     res.status(200).json({
       success: true,
-      message: "Blog deleted successfully",
+      message: "Blog and associated comments deleted successfully",
     });
 
   } catch (error) {

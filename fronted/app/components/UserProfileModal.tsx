@@ -71,22 +71,8 @@ const UserProfileModal = ({
             <motion.div
                 variants={modalVariants}
                 onClick={(e) => e.stopPropagation()}
-                className="relative w-full max-w-[400px] rounded-[32px] p-[1.5px] shadow-[0_0_80px_-15px_rgba(99,102,241,0.2)] overflow-hidden flex flex-col max-h-[90vh]"
+                className="relative w-full max-w-[400px] rounded-[32px] border border-zinc-800/80 shadow-[0_0_80px_-15px_rgba(99,102,241,0.2)] overflow-hidden flex flex-col max-h-[90vh]"
             >
-                {/* Animated Gradient Border */}
-                <div className="absolute inset-0 z-0 pointer-events-none">
-                    <motion.div
-                        animate={{ rotate: [0, 360] }}
-                        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-                        style={{
-                            backgroundImage: "conic-gradient(from 0deg, transparent 60%, rgba(99,102,241,0.8) 80%, rgba(236,72,153,0.8) 100%)",
-                            originX: 0.5,
-                            originY: 0.5,
-                        }}
-                        className="absolute top-1/2 left-1/2 w-[200%] h-[200%] -translate-x-1/2 -translate-y-1/2"
-                    />
-                </div>
-
                 {/* Inner Content Wrapper */}
                 <div className="relative z-10 w-full rounded-[30px] bg-[#0c0c0e] flex flex-col overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-zinc-800/50 hover:[&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar-thumb]:rounded-full">
                     

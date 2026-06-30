@@ -21,6 +21,10 @@ type User = {
   avatar: string;
   role: "ADMIN" | "USER" | "SUPERADMIN";
   createdAt: string;
+  plan?: any;
+  planExpiresAt?: string;
+  followers?: string[];
+  following?: string[];
 };
 
 type AuthContextType = {

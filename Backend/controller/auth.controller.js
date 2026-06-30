@@ -241,7 +241,9 @@ export const login = async (req, res) => {
         avatar: user.avatar,
         plan: user.plan, 
         createdAt: user.createdAt,
-        planExpiresAt: user.planExpiresAt
+        planExpiresAt: user.planExpiresAt,
+        followers: user.followers || [],
+        following: user.following || []
       },
     });
 
